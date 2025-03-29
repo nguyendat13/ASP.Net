@@ -1,0 +1,173 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\asp.net\\PhatDat_TH2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\migrations\\20250329071257_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\migrations\\20250329071257_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\phatdat_th2.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\phatdat_th2.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\data\\appdatacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\data\\appdatacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Category.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Category.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\Category.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Category.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T07:19:44.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContextModelSnapshot.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Migrations\\AppDbContextModelSnapshot.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Migrations\\AppDbContextModelSnapshot.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T07:16:45.395Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20250329071257_InitialCreate.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Migrations\\20250329071257_InitialCreate.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Migrations\\20250329071257_InitialCreate.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Migrations\\20250329071257_InitialCreate.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Migrations\\20250329071257_InitialCreate.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T07:16:34.691Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Product.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Product.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\Product.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Product.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\Product.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T07:08:41.938Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Program.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Program.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Program.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Program.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAADwvx0AAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T07:03:22.182Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\appsettings.json",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\appsettings.json",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\appsettings.json",
+              "RelativeToolTip": "PhatDat_TH2\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-29T07:03:09.058Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PhatDat_TH2",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\PhatDat_TH2.csproj",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\PhatDat_TH2.csproj",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\PhatDat_TH2.csproj",
+              "RelativeToolTip": "PhatDat_TH2\\PhatDat_TH2.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-03-29T07:11:05.168Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AppDataContext.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Data\\AppDataContext.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Data\\AppDataContext.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Data\\AppDataContext.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Data\\AppDataContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T07:08:31.102Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T06:54:26.009Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
