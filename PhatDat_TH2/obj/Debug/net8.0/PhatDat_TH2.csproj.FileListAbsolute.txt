@@ -166,3 +166,4 @@ D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\refint\PhatDat_TH2.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.pdb
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.genruntimeconfig.cache
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\ref\PhatDat_TH2.dll
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.sourcelink.json
