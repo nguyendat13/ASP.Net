@@ -1,6 +1,6 @@
 ﻿namespace PhatDat_TH2.Model
 {
-    public class Menu
+    public class Menu : BaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

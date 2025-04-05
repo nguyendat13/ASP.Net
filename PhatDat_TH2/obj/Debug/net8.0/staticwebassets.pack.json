@@ -1,10 +1,6 @@
 {
   "Files": [
     {
-      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\PhatDat_TH2.bundle.scp.css",
-      "PackagePath": "staticwebassets\\PhatDat_TH2.bundle.scp.css"
-    },
-    {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

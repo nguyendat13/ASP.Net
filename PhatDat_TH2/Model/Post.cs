@@ -1,6 +1,6 @@
 ﻿namespace PhatDat_TH2.Model
 {
-    public class Post
+    public class Post : BaseEntity
     {
         public int Id { get; set; }
         public string Title { get; set; }

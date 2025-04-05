@@ -1,6 +1,8 @@
-﻿namespace PhatDat_TH2.Models
+﻿using PhatDat_TH2.Model;
+
+namespace PhatDat_TH2.Models
 {
-    public class Brand
+    public class Brand : BaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

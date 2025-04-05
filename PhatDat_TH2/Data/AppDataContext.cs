@@ -18,5 +18,26 @@ namespace PhatDat_TH2.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Banner> Banners { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Duyệt qua tất cả các entity và cấu hình các thuộc tính decimal
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entity.GetProperties())
+                {
+                    // Kiểm tra nếu thuộc tính có kiểu decimal
+                    if (property.ClrType == typeof(decimal) || property.ClrType == typeof(decimal?))
+                    {
+                        // Cấu hình decimal(18, 2) cho tất cả các thuộc tính decimal
+                        property.SetColumnType("decimal(18,2)");
+                    }
+                }
+            }
+        }
+
     }
+
+
 }

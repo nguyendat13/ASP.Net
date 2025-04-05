@@ -1,6 +1,6 @@
 ﻿namespace PhatDat_TH2.Model
 {
-    public class Order
+    public class Order : BaseEntity
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace PhatDat_TH2.Model
 {
-    public class Banner
+    public class Banner : BaseEntity
     {
         public int Id { get; set; }
         public string ImageUrl { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace PhatDat_TH2.Model
 {
-    public class Topic
+    public class Topic : BaseEntity
     {
         public int Id { get; set; }
         public string Title { get; set; }

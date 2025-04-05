@@ -1,6 +1,6 @@
 ﻿namespace PhatDat_TH2.Model
 {
-    public class OrderDetail
+    public class OrderDetail : BaseEntity
     {
         public int Id { get; set; }
         public int OrderId { get; set; }  // Khóa ngoại

@@ -4,8 +4,6 @@ D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.AssemblyInfoInpu
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.AssemblyInfo.cs
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.csproj.CoreCompileInputs.cache
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.MvcApplicationPartsAssemblyInfo.cache
-D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.RazorAssemblyInfo.cache
-D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.RazorAssemblyInfo.cs
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\appsettings.Development.json
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\appsettings.json
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\PhatDat_TH2.staticwebassets.runtime.json
@@ -157,9 +155,7 @@ D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\staticwebassets\msbuild.buil
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.PhatDat_TH2.props
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.PhatDat_TH2.props
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\staticwebassets.pack.json
-D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\scopedcss\bundle\PhatDat_TH2.styles.css
-D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\scopedcss\projectbundle\PhatDat_TH2.bundle.scp.css
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_.02032D0C.Up2Date
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\refint\PhatDat_TH2.dll
@@ -167,3 +163,8 @@ D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.pdb
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.genruntimeconfig.cache
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\ref\PhatDat_TH2.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.sourcelink.json
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.MvcApplicationPartsAssemblyInfo.cs
