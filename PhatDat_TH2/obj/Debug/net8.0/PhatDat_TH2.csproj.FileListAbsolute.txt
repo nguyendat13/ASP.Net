@@ -168,3 +168,4 @@ D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagg
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net8.0\PhatDat_TH2.MvcApplicationPartsAssemblyInfo.cs
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

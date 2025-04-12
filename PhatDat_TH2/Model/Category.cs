@@ -1,4 +1,7 @@
-﻿namespace PhatDat_TH2.Model
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PhatDat_TH2.Model
 {
     public class Category : BaseEntity
     {
@@ -6,8 +9,7 @@
         public string Name { get; set; }
         public string Description { get; set; }
 
-
-        //public List<Product> Products { get; set; }
-
+        // Mối quan hệ One-to-Many với Product
+        public ICollection<Product> Products { get; set; }
     }
 }

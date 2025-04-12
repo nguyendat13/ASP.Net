@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PhatDat_TH2.Data;
 using PhatDat_TH2.Model;
 
@@ -18,14 +19,14 @@ namespace PhatDat_TH2.Controllers
         [HttpGet]
         public IActionResult GetCategories()
         {
-            var categories = _context.Categories.ToList();
+            var categories = _context.Categories.Include(c => c.Products).ToList();
             return Ok(categories);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetCategory(int id)
         {
-            var category = _context.Categories.Find(id);
+            var category = _context.Categories.Include(c => c.Products).FirstOrDefault(c => c.Id == id);
             if (category == null) return NotFound();
 
             return Ok(category);

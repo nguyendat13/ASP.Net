@@ -5,6 +5,26 @@
     {
       "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\data\\appdatacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\data\\appdatacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\controllers\\orderdetailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\controllers\\orderdetailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\orderrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\orderrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\orderdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\orderdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -24,9 +44,74 @@
               "RelativeDocumentMoniker": "PhatDat_TH2\\Data\\AppDataContext.cs",
               "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Data\\AppDataContext.cs",
               "RelativeToolTip": "PhatDat_TH2\\Data\\AppDataContext.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAA3wBkAAABHAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwBoAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T05:16:30.991Z",
+              "WhenOpened": "2025-04-12T15:59:48.845Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "OrderRequest.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\OrderRequest.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\OrderRequest.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\OrderRequest.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\OrderRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T15:56:33.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Controllers\\OrderController.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Controllers\\OrderController.cs",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAawKcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T15:44:22.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Order.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Order.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\Order.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Order.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\Order.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T15:51:54.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "OrderDetail.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\OrderDetail.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\OrderDetail.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\OrderDetail.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\OrderDetail.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAowBgAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T15:45:23.014Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "OrderDetailController.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\OrderDetailController.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Controllers\\OrderDetailController.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\OrderDetailController.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Controllers\\OrderDetailController.cs",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAUwGwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T12:42:29.7Z",
               "EditorCaption": ""
             }
           ]

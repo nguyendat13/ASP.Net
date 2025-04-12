@@ -1,0 +1,146 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using PhatDat_TH2.Data;
+using PhatDat_TH2.Model;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
+namespace PhatDat_TH2.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class UserController : ControllerBase
+    {
+        private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
+
+        public UserController(AppDbContext context, IConfiguration configuration)
+        {
+            _context = context;
+            _configuration = configuration;
+        }
+
+        // Đăng nhập - không yêu cầu xác thực
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginModel loginModel)
+        {
+            if (loginModel == null || string.IsNullOrWhiteSpace(loginModel.Email) || string.IsNullOrWhiteSpace(loginModel.Password))
+                return BadRequest(new { message = "Email và mật khẩu không được để trống." });
+
+            var user = _context.Users.FirstOrDefault(u => u.Email == loginModel.Email && u.Password == loginModel.Password);
+            if (user == null)
+                return Unauthorized(new { message = "Tài khoản hoặc mật khẩu không đúng." });
+
+            // Tạo claims cho token
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToLower()) // đảm bảo khớp với role trong [Authorize]
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds
+            );
+
+            return Ok(new
+            {
+                token = new JwtSecurityTokenHandler().WriteToken(token)
+            });
+        }
+
+        // Lấy tất cả user (chỉ cần xác thực)
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public IActionResult GetUsers()
+        {
+            var users = _context.Users.ToList();
+            return Ok(users);
+        }
+
+        // Lấy user theo id (chỉ cần xác thực)
+        [Authorize(Roles = "user")]
+        [HttpGet("{id}")]
+        public IActionResult GetUser(int id)
+        {
+            var user = _context.Users.Find(id);
+            if (user == null) return NotFound();
+            return Ok(user);
+        }
+
+        // Tạo user mới (cho phép không xác thực để đăng ký)
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Create([FromBody] User user)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            if (_context.Users.Any(u => u.Username == user.Username))
+                return Conflict(new { message = "Username đã tồn tại." });
+
+            if (_context.Users.Any(u => u.Email == user.Email))
+                return Conflict(new { message = "Email đã tồn tại." });
+
+            user.CreatedAt = DateTime.Now;
+            user.CreatedBy = "admin"; // bạn có thể sửa lại từ token nếu cần
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+        }
+
+        // Cập nhật user (yêu cầu role admin)
+        [Authorize(Roles = "admin")]
+        [HttpPut("{id}")]
+        public IActionResult Edit(int id, [FromBody] User user)
+        {
+            var existing = _context.Users.Find(id);
+            if (existing == null) return NotFound();
+
+            if (_context.Users.Any(u => u.Username == user.Username && u.Id != id))
+                return Conflict(new { message = "Username đã tồn tại." });
+
+            if (_context.Users.Any(u => u.Email == user.Email && u.Id != id))
+                return Conflict(new { message = "Email đã tồn tại." });
+
+            // Cập nhật thông tin user
+            existing.Fullname = user.Fullname;
+            existing.Email = user.Email;
+            existing.Username = user.Username;
+            existing.Password = user.Password;
+            existing.Role = user.Role;
+            existing.Status = user.Status;
+            existing.UpdatedAt = DateTime.Now;
+            existing.UpdatedBy = "admin"; // hoặc lấy từ User.Identity.Name
+
+            _context.SaveChanges();
+            return Ok(existing);
+        }
+
+        // Xóa user (yêu cầu role admin)
+        [Authorize(Roles = "admin")]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var user = _context.Users.Find(id);
+            if (user == null) return NotFound();
+
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+    }
+}
