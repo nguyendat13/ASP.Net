@@ -12,8 +12,8 @@ using PhatDat_TH2.Data;
 namespace PhatDat_TH2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250412012614_UpdateAppDbContext")]
-    partial class UpdateAppDbContext
+    [Migration("20250414155039_AddUseratOrder")]
+    partial class AddUseratOrder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -217,9 +217,11 @@ namespace PhatDat_TH2.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StatusOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -227,7 +229,14 @@ namespace PhatDat_TH2.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StatusOrderId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -240,18 +249,8 @@ namespace PhatDat_TH2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -259,17 +258,18 @@ namespace PhatDat_TH2.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("PriceSale")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -337,7 +337,6 @@ namespace PhatDat_TH2.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Avatar")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CategoryId")
@@ -357,12 +356,15 @@ namespace PhatDat_TH2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -378,6 +380,60 @@ namespace PhatDat_TH2.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("PhatDat_TH2.Model.StatusOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StatusOrders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Đang xử lý"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Đang giao"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Đã giao"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Đã hủy"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Chờ xác nhận"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Hoàn trả"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Giao thất bại"
+                        });
                 });
 
             modelBuilder.Entity("PhatDat_TH2.Model.Topic", b =>
@@ -481,59 +537,42 @@ namespace PhatDat_TH2.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PhatDat_TH2.Models.Brand", b =>
+            modelBuilder.Entity("PhatDat_TH2.Model.Order", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("PhatDat_TH2.Model.StatusOrder", "StatusOrder")
+                        .WithMany()
+                        .HasForeignKey("StatusOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.HasOne("PhatDat_TH2.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Navigation("StatusOrder");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Brands");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PhatDat_TH2.Model.OrderDetail", b =>
                 {
-                    b.HasOne("PhatDat_TH2.Model.Order", null)
-                        .WithMany()
+                    b.HasOne("PhatDat_TH2.Model.Order", "Order")
+                        .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("PhatDat_TH2.Model.Product", null)
+                    b.HasOne("PhatDat_TH2.Model.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("PhatDat_TH2.Model.Post", b =>
@@ -561,6 +600,11 @@ namespace PhatDat_TH2.Migrations
             modelBuilder.Entity("PhatDat_TH2.Model.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("PhatDat_TH2.Model.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("PhatDat_TH2.Model.Topic", b =>

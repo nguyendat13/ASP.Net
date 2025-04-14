@@ -12,8 +12,8 @@ using PhatDat_TH2.Data;
 namespace PhatDat_TH2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250412030213_Fix_Order_OrderDetail_Relationship")]
-    partial class Fix_Order_OrderDetail_Relationship
+    [Migration("20250414090736_StatusOrder")]
+    partial class StatusOrder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -230,6 +230,9 @@ namespace PhatDat_TH2.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
@@ -376,6 +379,23 @@ namespace PhatDat_TH2.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("PhatDat_TH2.Model.StatusOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StatusOrders");
+                });
+
             modelBuilder.Entity("PhatDat_TH2.Model.Topic", b =>
                 {
                     b.Property<int>("Id")
@@ -477,46 +497,6 @@ namespace PhatDat_TH2.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PhatDat_TH2.Models.Brand", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Brands");
-                });
-
             modelBuilder.Entity("PhatDat_TH2.Model.OrderDetail", b =>
                 {
                     b.HasOne("PhatDat_TH2.Model.Order", "Order")
@@ -549,11 +529,13 @@ namespace PhatDat_TH2.Migrations
 
             modelBuilder.Entity("PhatDat_TH2.Model.Product", b =>
                 {
-                    b.HasOne("PhatDat_TH2.Model.Category", null)
+                    b.HasOne("PhatDat_TH2.Model.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("PhatDat_TH2.Model.Category", b =>

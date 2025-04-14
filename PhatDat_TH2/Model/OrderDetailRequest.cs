@@ -1,6 +1,6 @@
 ﻿namespace PhatDat_TH2.Model
 {
-    public class OrderDetailDTO
+    public class OrderDetailRequest
     {
         public int OrderId { get; set; }
         public int ProductId { get; set; }

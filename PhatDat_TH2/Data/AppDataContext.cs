@@ -12,6 +12,8 @@ namespace PhatDat_TH2.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<StatusOrder> StatusOrders { get; set; } // Thêm DbSet cho StatusOrder
+
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<User> Users { get; set; }
 
@@ -51,6 +53,15 @@ namespace PhatDat_TH2.Data
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+            modelBuilder.Entity<StatusOrder>().HasData(
+    new StatusOrder { Id = 1, Name = "Đang xử lý" },
+    new StatusOrder { Id = 2, Name = "Đang giao" },
+    new StatusOrder { Id = 3, Name = "Đã giao" },
+    new StatusOrder { Id = 4, Name = "Đã hủy" },
+    new StatusOrder { Id = 5, Name = "Chờ xác nhận" },
+    new StatusOrder { Id = 6, Name = "Hoàn trả" },
+    new StatusOrder { Id = 7, Name = "Giao thất bại" }
+);
 
             // Duyệt qua tất cả các entity và cấu hình các thuộc tính decimal
             foreach (var entity in modelBuilder.Model.GetEntityTypes())

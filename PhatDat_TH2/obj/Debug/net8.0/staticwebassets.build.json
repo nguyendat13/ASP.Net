@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "a4lEBHsLF33CfqKq89Ksr00CwXJRCb797DeTF3j0tM8=",
+  "Hash": "wJRraHP1NZkZWzhZyADMYpOND1b1xX36ZCjFCpn5iA8=",
   "Source": "PhatDat_TH2",
   "BasePath": "_content/PhatDat_TH2",
   "Mode": "Default",
@@ -55,6 +55,25 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\19fb5e48-95ec-4123-9ee5-2421791e6cff.jpg",
+      "SourceId": "PhatDat_TH2",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\",
+      "BasePath": "_content/PhatDat_TH2",
+      "RelativePath": "images/19fb5e48-95ec-4123-9ee5-2421791e6cff.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\19fb5e48-95ec-4123-9ee5-2421791e6cff.jpg"
+    },
+    {
       "Identity": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\3381ad0f-9b0d-4460-a7f5-d0978b8cef8b.png",
       "SourceId": "PhatDat_TH2",
       "SourceType": "Discovered",
@@ -72,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\3381ad0f-9b0d-4460-a7f5-d0978b8cef8b.png"
+    },
+    {
+      "Identity": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\3c65c72f-c099-4269-9e5c-9ea7ab921aaa.png",
+      "SourceId": "PhatDat_TH2",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\",
+      "BasePath": "_content/PhatDat_TH2",
+      "RelativePath": "images/3c65c72f-c099-4269-9e5c-9ea7ab921aaa.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\3c65c72f-c099-4269-9e5c-9ea7ab921aaa.png"
     },
     {
       "Identity": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\40eb8ab5-9d11-466d-858f-cb121ae36cb8.png",
@@ -245,6 +283,25 @@
       "OriginalItemSpec": "wwwroot\\images\\bowl-2.png"
     },
     {
+      "Identity": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\c885ae11-8e6d-4455-bad4-95ccb350bcc7.jpg",
+      "SourceId": "PhatDat_TH2",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\",
+      "BasePath": "_content/PhatDat_TH2",
+      "RelativePath": "images/c885ae11-8e6d-4455-bad4-95ccb350bcc7.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\c885ae11-8e6d-4455-bad4-95ccb350bcc7.jpg"
+    },
+    {
       "Identity": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\couch.png",
       "SourceId": "PhatDat_TH2",
       "SourceType": "Discovered",
@@ -281,6 +338,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\e944b1f7-c5da-4d81-bd8b-513a3905a692.png"
+    },
+    {
+      "Identity": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\f01777dd-d633-4c3a-99f1-86927f248f3f.png",
+      "SourceId": "PhatDat_TH2",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\",
+      "BasePath": "_content/PhatDat_TH2",
+      "RelativePath": "images/f01777dd-d633-4c3a-99f1-86927f248f3f.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\f01777dd-d633-4c3a-99f1-86927f248f3f.png"
     },
     {
       "Identity": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\f7a45e9d-ea15-43cb-9cb6-cadb288dd8bc.png",

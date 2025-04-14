@@ -15,8 +15,6 @@ namespace PhatDat_TH2.Migrations
                 name: "FK_Products_Categories_CategoryId",
                 table: "Products");
 
-            migrationBuilder.DropTable(
-                name: "Brands");
 
             migrationBuilder.AddColumn<int>(
                 name: "CategoryId1",
@@ -64,26 +62,7 @@ namespace PhatDat_TH2.Migrations
                 name: "CategoryId1",
                 table: "Products");
 
-            migrationBuilder.CreateTable(
-                name: "Brands",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Brands", x => x.Id);
-                });
-
+      
             migrationBuilder.AddForeignKey(
                 name: "FK_Products_Categories_CategoryId",
                 table: "Products",

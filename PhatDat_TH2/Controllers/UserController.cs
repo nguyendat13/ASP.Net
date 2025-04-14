@@ -74,15 +74,21 @@ namespace PhatDat_TH2.Controllers
             return Ok(users);
         }
 
-        // Lấy user theo id (chỉ cần xác thực)
-        [Authorize(Roles = "user")]
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetUser(int id)
         {
+            // Lấy người dùng từ cơ sở dữ liệu
             var user = _context.Users.Find(id);
-            if (user == null) return NotFound();
+
+            // Kiểm tra nếu người dùng không tồn tại
+            if (user == null)
+                return NotFound();
+
             return Ok(user);
         }
+
+
 
         // Tạo user mới (cho phép không xác thực để đăng ký)
         [AllowAnonymous]
@@ -90,11 +96,17 @@ namespace PhatDat_TH2.Controllers
         public IActionResult Create([FromBody] User user)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+            // Kiểm tra cả Username và Email
+            var isUsernameExist = _context.Users.Any(u => u.Username == user.Username);
+            var isEmailExist = _context.Users.Any(u => u.Email == user.Email);
 
-            if (_context.Users.Any(u => u.Username == user.Username))
+            if (isUsernameExist && isEmailExist)
+                return Conflict(new { message = "Username và Email đã tồn tại." });
+
+            if (isUsernameExist)
                 return Conflict(new { message = "Username đã tồn tại." });
 
-            if (_context.Users.Any(u => u.Email == user.Email))
+            if (isEmailExist)
                 return Conflict(new { message = "Email đã tồn tại." });
 
             user.CreatedAt = DateTime.Now;

@@ -211,12 +211,15 @@ namespace PhatDat_TH2.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StatusOrderId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
@@ -231,6 +234,10 @@ namespace PhatDat_TH2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StatusOrderId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -376,6 +383,60 @@ namespace PhatDat_TH2.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("PhatDat_TH2.Model.StatusOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StatusOrders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Đang xử lý"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Đang giao"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Đã giao"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Đã hủy"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Chờ xác nhận"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Hoàn trả"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Giao thất bại"
+                        });
+                });
+
             modelBuilder.Entity("PhatDat_TH2.Model.Topic", b =>
                 {
                     b.Property<int>("Id")
@@ -475,6 +536,25 @@ namespace PhatDat_TH2.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("PhatDat_TH2.Model.Order", b =>
+                {
+                    b.HasOne("PhatDat_TH2.Model.StatusOrder", "StatusOrder")
+                        .WithMany()
+                        .HasForeignKey("StatusOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PhatDat_TH2.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StatusOrder");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PhatDat_TH2.Model.OrderDetail", b =>

@@ -36,7 +36,7 @@ namespace PhatDat_TH2.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] OrderDetailDTO dto)
+        public IActionResult Create([FromBody] OrderDetailRequest dto)
         {
             var product = _context.Products.Find(dto.ProductId);
             if (product == null)
@@ -72,7 +72,7 @@ namespace PhatDat_TH2.Controllers
 
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] OrderDetailDTO dto)
+        public IActionResult Update(int id, [FromBody] OrderDetailRequest dto)
         {
             var detail = _context.OrderDetails.Find(id);
             if (detail == null) return NotFound();
