@@ -1,0 +1,28 @@
+/* AdminNavbar.css */
+.admin-navbar {
+    background: linear-gradient(90deg, #007bff, #00bcd4);
+    padding: 15px 30px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-title {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .logout-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+  }
+  
+  .logout-link:hover {
+    color: #f8f9fa;
+  }
+  
