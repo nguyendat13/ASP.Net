@@ -28,6 +28,8 @@ namespace PhatDat_TH2.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel loginModel)
         {
+            if (loginModel == null)
+                return BadRequest(new { message = "Request body không hợp lệ" });
             if (loginModel == null || string.IsNullOrWhiteSpace(loginModel.Email) || string.IsNullOrWhiteSpace(loginModel.Password))
                 return BadRequest(new { message = "Email và mật khẩu không được để trống." });
 
@@ -56,6 +58,9 @@ namespace PhatDat_TH2.Controllers
 
             return Ok(new
             {
+                email = user.Email,     // Trả về email
+                password = user.Password,  // Trả về mật khẩu (nên xem xét không trả mật khẩu ra frontend vì lý do bảo mật)
+                role = user.Role,      // Trả về role
                 token = new JwtSecurityTokenHandler().WriteToken(token)
             });
         }

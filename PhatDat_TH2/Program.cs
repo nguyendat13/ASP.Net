@@ -6,6 +6,14 @@ using PhatDat_TH2.Data;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5094); // HTTP
+    options.ListenLocalhost(7177, listenOptions =>
+    {
+        listenOptions.UseHttps();
+    });
+});
 
 // Cấu hình JWT Bearer Authentication
 builder.Services.AddAuthentication(options =>
@@ -25,26 +33,32 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)
-)
+        )
     };
 });
 
-
-
-// Cấu hình dịch vụ khác như DbContext, Swagger, v.v.
+// Cấu hình DbContext và Swagger
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // Chỉ cho phép origin cụ thể
+             .AllowAnyMethod()
+             .AllowAnyHeader();
+    });
+});
 
-// Thêm dịch vụ Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers(); // Đảm bảo chỉ sử dụng API controller
 
 // Swagger để test API
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpClient();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "PhatDat API", Version = "v1" });
-
-    // Cấu hình Bearer Token cho Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -54,7 +68,6 @@ builder.Services.AddSwaggerGen(c =>
         In = ParameterLocation.Header,
         Description = "Nhập token JWT vào đây"
     });
-
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -70,14 +83,19 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-// Build app
+
 var app = builder.Build();
 
 // Middleware
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors("AllowAllOrigins");
+
+app.UseRouting();
+app.UseStaticFiles();  // Quan trọng để phục vụ tệp tĩnh như hình ảnh
+
 app.UseAuthentication(); // Thêm middleware xác thực JWT
 app.UseAuthorization();
-app.MapControllers();
+app.MapControllers(); // Đăng ký các API controller
 
 app.Run();

@@ -10,6 +10,6 @@ namespace PhatDat_TH2.Model
         public string Description { get; set; }
 
         // Mối quan hệ One-to-Many với Product
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

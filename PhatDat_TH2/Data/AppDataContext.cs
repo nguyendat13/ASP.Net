@@ -8,6 +8,8 @@ namespace PhatDat_TH2.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<Product> Products { get; set; }
+        //public DbSet<ProductImage> ProductImages { get; set; }
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
@@ -20,6 +22,8 @@ namespace PhatDat_TH2.Data
         public DbSet<Banner> Banners { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
+
             modelBuilder.Entity<Order>()
     .HasMany(o => o.OrderDetails)
     .WithOne()
@@ -31,6 +35,7 @@ namespace PhatDat_TH2.Data
        .WithMany(o => o.OrderDetails)
        .HasForeignKey(od => od.OrderId)
        .OnDelete(DeleteBehavior.Restrict); // hoặc .Cascade nếu bạn muốn xoá Order sẽ xoá luôn OrderDetail
+
             modelBuilder.Entity<OrderDetail>()
     .HasOne(od => od.Product)
     .WithMany()

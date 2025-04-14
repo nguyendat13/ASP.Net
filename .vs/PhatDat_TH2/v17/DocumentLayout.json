@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "D:\\asp.net\\PhatDat_TH2\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\data\\appdatacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\data\\appdatacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\productimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\productimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\productrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\productrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +31,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AppDataContext.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Data\\AppDataContext.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Data\\AppDataContext.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Data\\AppDataContext.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Data\\AppDataContext.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T05:28:42.741Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ProductController.cs",
               "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\ProductController.cs",
               "RelativeDocumentMoniker": "PhatDat_TH2\\Controllers\\ProductController.cs",
               "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\ProductController.cs",
               "RelativeToolTip": "PhatDat_TH2\\Controllers\\ProductController.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAwwC0AAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAIwGcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-12T16:12:56.566Z",
+              "WhenOpened": "2025-04-14T05:26:57.084Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductImage.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\ProductImage.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\ProductImage.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\ProductImage.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\ProductImage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T05:26:52.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProductRequest.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\ProductRequest.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\ProductRequest.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\ProductRequest.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\ProductRequest.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA1wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T05:26:50.229Z",
               "EditorCaption": ""
             }
           ]

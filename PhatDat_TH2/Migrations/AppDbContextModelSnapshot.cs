@@ -477,46 +477,6 @@ namespace PhatDat_TH2.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PhatDat_TH2.Models.Brand", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Brands");
-                });
-
             modelBuilder.Entity("PhatDat_TH2.Model.OrderDetail", b =>
                 {
                     b.HasOne("PhatDat_TH2.Model.Order", "Order")
@@ -549,11 +509,13 @@ namespace PhatDat_TH2.Migrations
 
             modelBuilder.Entity("PhatDat_TH2.Model.Product", b =>
                 {
-                    b.HasOne("PhatDat_TH2.Model.Category", null)
+                    b.HasOne("PhatDat_TH2.Model.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("PhatDat_TH2.Model.Category", b =>
