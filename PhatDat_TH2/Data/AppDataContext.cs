@@ -22,9 +22,14 @@ namespace PhatDat_TH2.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Banner> Banners { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Cart>()
+        .HasIndex(c => c.UserId)
+        .IsUnique(); // Đảm bảo mỗi User chỉ có 1 Cart
 
             modelBuilder.Entity<Order>()
     .HasMany(o => o.OrderDetails)

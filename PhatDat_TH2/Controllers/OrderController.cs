@@ -134,37 +134,20 @@ namespace PhatDat_TH2.Controllers
             if (user == null)
                 return NotFound(new { message = $"Không tìm thấy người dùng với ID {orderRequest.UserId}" });
 
-            // Lấy tên đầy đủ và email từ User
             string customerFullName = user.Fullname;
             string customerEmail = user.Email;
 
-            // Tìm đơn hàng đang xử lý của user (nếu có)
-            var existingOrder = _context.Orders
-                .Include(o => o.OrderDetails)
-                .FirstOrDefault(o => o.UserId == orderRequest.UserId && o.StatusOrderId == 1);
-
-            Order order;
-
-            if (existingOrder != null)
+            var order = new Order
             {
-                order = existingOrder;
-            }
-            else
-            {
-                order = new Order
-                {
-                    CustomerName = customerFullName, // Gắn tên đầy đủ của khách hàng
-                    UserId = orderRequest.UserId,
-                    Email = customerEmail, // Gắn email vào đơn hàng
-                    OrderDate = DateTime.Now,
-                    CreatedAt = DateTime.Now,
-                    CreatedBy = "System",
-                    StatusOrderId = 1,
-                    OrderDetails = new List<OrderDetail>()
-                };
-
-                _context.Orders.Add(order);
-            }
+                CustomerName = customerFullName,
+                UserId = orderRequest.UserId,
+                Email = customerEmail,
+                OrderDate = DateTime.Now,
+                CreatedAt = DateTime.Now,
+                CreatedBy = "System",
+                StatusOrderId = 1, // Trạng thái "Đang xử lý"
+                OrderDetails = new List<OrderDetail>()
+            };
 
             foreach (var item in orderRequest.Items)
             {
@@ -175,35 +158,23 @@ namespace PhatDat_TH2.Controllers
                 var priceSale = product.Price - (product.Price * product.Discount / 100m);
                 var itemTotal = priceSale * item.Quantity;
 
-                // Kiểm tra xem sản phẩm đã có trong đơn hàng chưa
-                var existingDetail = order.OrderDetails.FirstOrDefault(od => od.ProductId == product.Id);
-                if (existingDetail != null)
+                var orderDetail = new OrderDetail
                 {
-                    existingDetail.Quantity += item.Quantity;
-                    existingDetail.PriceSale = priceSale;
-                    existingDetail.Price = product.Price;
-                    existingDetail.Discount = product.Discount;
-                }
-                else
-                {
-                    var orderDetail = new OrderDetail
-                    {
-                        ProductId = product.Id,
-                        ProductName = product.Name,
-                        Quantity = item.Quantity,
-                        Price = product.Price,
-                        Discount = product.Discount,
-                        PriceSale = priceSale
-                    };
-                    order.OrderDetails.Add(orderDetail);
-                }
+                    ProductId = product.Id,
+                    ProductName = product.Name,
+                    Quantity = item.Quantity,
+                    Price = product.Price,
+                    Discount = product.Discount,
+                    PriceSale = priceSale
+                };
+                order.OrderDetails.Add(orderDetail);
 
                 totalPrice += itemTotal;
             }
 
-            // Cập nhật lại tổng giá
-            order.TotalPrice = order.OrderDetails.Sum(od => od.PriceSale * od.Quantity);
+            order.TotalPrice = totalPrice;
 
+            _context.Orders.Add(order);
             _context.SaveChanges();
 
             return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);

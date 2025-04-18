@@ -58,6 +58,7 @@ namespace PhatDat_TH2.Controllers
 
             return Ok(new
             {
+                userId= user.Id,
                 email = user.Email,     // Trả về email
                 password = user.Password,  // Trả về mật khẩu (nên xem xét không trả mật khẩu ra frontend vì lý do bảo mật)
                 role = user.Role,      // Trả về role
@@ -66,6 +67,8 @@ namespace PhatDat_TH2.Controllers
         }
 
         // Lấy tất cả user (chỉ cần xác thực)
+      
+        
         [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult GetUsers()
