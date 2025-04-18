@@ -31,8 +31,13 @@ import ProductListUI from './components/site/products/ProductList.jsx';
 import ProductDetailUI  from './components/site/products/ProductDetail.jsx'   ;
 import OrderEdit from './components/admin/orders/OrderEdit.jsx';
 import OrderDetail from './components/admin/orders/OrderDetail.jsx';
-
-
+import LoginUser from './components/site/accountUser/LoginUser.jsx';
+import LogoutUser from './components/site/accountUser/LogoutUser.jsx';
+import RequireLogin from './components/site/accountUser/RequireLogin .jsx';
+import Cart from './components/site/accountUser/Cart.jsx';
+import Checkout from './components/site/accountUser/Checkout.jsx';
+import OrdersList from './components/site/accountUser/Order.jsx';
+import OrderDetails from './components/site/accountUser/OrderDetail.jsx';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');
 
@@ -47,10 +52,16 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/login-user" element={<LoginUser />} />
+      <Route path="/logout-user" element={<LogoutUser />} />  {/* ✅ Route logout user */}
 
       {/* Route người dùng */}
       <Route path="/" element={<UserLayout />}>
         <Route index element={<Home />} />
+        <Route path="carts" element={<Cart />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="/orders" element={<OrdersList />} />
+        <Route path="order/:orderId" element={<OrderDetails />} />
         <Route path="products" element={<ProductListUI />} />
         <Route path="products/:id" element={<ProductDetailUI />} />
       </Route>
