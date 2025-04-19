@@ -36,6 +36,7 @@ namespace PhatDat_TH2.Controllers
         public IActionResult GetOrders()
         {
             var orders = _context.Orders
+                                  .Where(o => o.StatusOrderId != 4) // bỏ đơn hàng có status = 4
                                  .Include(o => o.User)
                                  .Include(o => o.StatusOrder) // Bao gồm thông tin trạng thái đơn hàng
                                  .Include(o => o.OrderDetails) // Bao gồm thông tin chi tiết đơn hàng
@@ -72,6 +73,7 @@ namespace PhatDat_TH2.Controllers
         public IActionResult GetOrder(int id)
         {
             var order = _context.Orders
+        .Where(o => o.Id == id && o.StatusOrderId != 4) // bỏ nếu status = 4
                  .Include(o => o.User)
                 .Include(o => o.StatusOrder)
                 .Include(o => o.OrderDetails)
@@ -110,14 +112,31 @@ namespace PhatDat_TH2.Controllers
         public IActionResult GetOrdersByUserId(int userId)
         {
             var orders = _context.Orders
-                .Where(o => o.UserId == userId)
+                  .Where(o => o.UserId == userId && o.StatusOrderId != 4) // lọc status
+                .Include(o => o.User) // cần để lấy Fullname, Email
+                .Include(o => o.StatusOrder)
+                .Include(o => o.Method) // nếu bạn có liên kết với phương thức thanh toán
                 .Include(o => o.OrderDetails)
                     .ThenInclude(od => od.Product)
-                .Include(o => o.StatusOrder)
+                .Select(o => new
+                {
+                    o.Id,
+                    o.UserId,
+                    CustomerName = o.User != null ? o.User.Fullname : "Không rõ",
+                    EmailCustomer = o.User != null ? o.User.Email : "Không rõ",
+                    o.OrderDate,
+                    o.StatusOrderId,
+                    StatusName = o.StatusOrder != null ? o.StatusOrder.Name : "Không rõ",
+                    o.MethodId,
+                    MethodName = o.Method != null ? o.Method.Name : "Không rõ",
+                    o.TotalPrice,
+                })
                 .ToList();
 
             if (!orders.Any())
+            {
                 return NotFound($"Không tìm thấy đơn hàng nào cho userId {userId}");
+            }
 
             return Ok(orders);
         }
@@ -148,6 +167,7 @@ namespace PhatDat_TH2.Controllers
                 CreatedAt = DateTime.Now,
                 CreatedBy = "System",
                 StatusOrderId = 1, // Trạng thái "Đang xử lý"
+                MethodId=orderRequest.MethodId,
                 OrderDetails = new List<OrderDetail>()
             };
 
@@ -250,17 +270,87 @@ namespace PhatDat_TH2.Controllers
                 .Include(o => o.OrderDetails) // Load các chi tiết đơn hàng
                 .FirstOrDefault(o => o.Id == id);
 
-            if (order == null) return NotFound();
+            if (order == null)
+                return NotFound(new { message = "Không tìm thấy đơn hàng." });
+
+            // Chỉ cho phép xóa nếu đơn hàng đã bị hủy (StatusOrderId = 4)
+            if (order.StatusOrderId != 4)
+                return BadRequest(new { message = "Chỉ có thể xóa vĩnh viễn các đơn hàng đã bị hủy." });
 
             // Xóa chi tiết đơn hàng trước
             _context.OrderDetails.RemoveRange(order.OrderDetails);
 
-            // Sau đó xóa order
+            // Sau đó xóa đơn hàng
             _context.Orders.Remove(order);
             _context.SaveChanges();
 
-            return NoContent();
+            return Ok(new { message = "Đã xóa vĩnh viễn đơn hàng bị hủy." });
         }
+
+
+        [HttpPut("cancel/{id}")]
+        public async Task<IActionResult> CancelOrder(int id)
+        {
+            var order = await _context.Orders
+                .Include(o => o.StatusOrder) // Đảm bảo rằng StatusOrder đã được bao gồm
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order == null)
+                return NotFound("Không tìm thấy đơn hàng.");
+
+            // Kiểm tra trạng thái hiện tại có phải là "Đang xử lý" (StatusOrderId = 1) không
+            if (order.StatusOrderId != 1)
+            {
+                return BadRequest("Chỉ có đơn hàng đang xử lý mới có thể hủy.");
+            }
+
+            // Lấy trạng thái "Đã hủy" từ StatusOrders
+            var canceledStatus = await _context.StatusOrders
+                .FirstOrDefaultAsync(s => s.Name == "Đã hủy");
+            if (canceledStatus == null)
+            {
+                return BadRequest("Không tìm thấy trạng thái 'Đã hủy'.");
+            }
+
+            // Cập nhật trạng thái của đơn hàng
+            order.StatusOrderId = canceledStatus.Id;
+            order.UpdatedAt = DateTime.Now;
+            order.UpdatedBy = "admin"; // Hoặc lấy thông tin người dùng từ session nếu cần
+
+            // Lưu thay đổi
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Đơn hàng đã được hủy thành công." });
+        }
+
+
+        [HttpGet("canceled/{userId}")]
+        public IActionResult GetCanceledOrders(int userId)
+        {
+            var canceledOrders = _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.StatusOrder)
+                .Where(o => o.StatusOrderId == 4 && o.UserId == userId)
+                .Select(o => new
+                {
+                    o.Id,
+                    o.UserId,
+                    CustomerName = o.User.Fullname,
+                    EmailCustomer = o.User.Email,
+                    o.OrderDate,
+                    StatusName = o.StatusOrder.Name,
+                    o.TotalPrice,
+                })
+                .ToList();
+
+            if (!canceledOrders.Any())
+            {
+                return NotFound(new { message = "Không tìm thấy đơn hàng đã hủy của người dùng này." });
+            }
+
+            return Ok(canceledOrders);
+        }
+
 
     }
 }

@@ -6,6 +6,7 @@ using PhatDat_TH2.Data;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenLocalhost(5094); // HTTP
@@ -85,6 +86,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage(); // Hiển thị chi tiết lỗi 500
+}
 
 // Middleware
 app.UseSwagger();

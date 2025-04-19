@@ -1,6 +1,5 @@
 ﻿using PhatDat_TH2.Model;
 using Microsoft.EntityFrameworkCore;
-using PhatDat_TH2.Model;
 
 namespace PhatDat_TH2.Data
 {
@@ -24,6 +23,7 @@ namespace PhatDat_TH2.Data
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Method> Methods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -66,6 +66,11 @@ namespace PhatDat_TH2.Data
     new StatusOrder { Id = 5, Name = "Chờ xác nhận" },
     new StatusOrder { Id = 6, Name = "Hoàn trả" },
     new StatusOrder { Id = 7, Name = "Giao thất bại" }
+);
+            modelBuilder.Entity<Method>().HasData(
+    new Method { Id = 1, Name = "Thanh toán khi nhận hàng" },
+    new Method { Id = 2, Name = "Chuyển khoản ngân hàng" },
+    new Method { Id = 3, Name = "Thanh toán ví điện tử" }
 );
 
             // Duyệt qua tất cả các entity và cấu hình các thuộc tính decimal

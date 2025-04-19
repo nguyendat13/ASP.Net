@@ -25,5 +25,11 @@ namespace PhatDat_TH2.Model
 
         // Tổng giá trị đơn hàng
         public decimal TotalPrice { get; set; }
+
+        // Thêm method
+        public int MethodId { get; set; }
+        public Method Method { get; set; }
     }
+
+
 }

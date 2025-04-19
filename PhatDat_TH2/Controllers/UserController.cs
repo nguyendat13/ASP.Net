@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PhatDat_TH2.Data;
 using PhatDat_TH2.Model;
+using PhatDat_TH2.Model.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -121,7 +122,8 @@ namespace PhatDat_TH2.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
-        // Cập nhật user (yêu cầu role admin)
+       
+        // Cập nhật user (yêu cầu role admin) 
         [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public IActionResult Edit(int id, [FromBody] User user)
@@ -162,5 +164,44 @@ namespace PhatDat_TH2.Controllers
 
             return NoContent();
         }
+
+            [AllowAnonymous]
+            [HttpPost("register")]
+            public IActionResult Register([FromBody] UserRegisterDTO dto)
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var isUsernameExist = _context.Users.Any(u => u.Username == dto.Username);
+                var isEmailExist = _context.Users.Any(u => u.Email == dto.Email);
+
+                if (isUsernameExist && isEmailExist)
+                    return Conflict(new { message = "Username và Email đã tồn tại." });
+
+                if (isUsernameExist)
+                    return Conflict(new { message = "Username đã tồn tại." });
+
+                if (isEmailExist)
+                    return Conflict(new { message = "Email đã tồn tại." });
+
+                var user = new User
+                {
+                    Fullname = dto.Fullname,
+                    Username = dto.Username,
+                    Email = dto.Email,
+                    Password = dto.Password,
+                    Phone = dto.Phone,
+                    Gender = dto.Gender,
+                    Role = "user", // ✅ gán mặc định là user
+                    CreatedAt = DateTime.Now,
+                    CreatedBy = "system"
+                };
+
+                _context.Users.Add(user);
+                _context.SaveChanges();
+
+                return Ok(new { message = "Đăng ký thành công!", userId = user.Id });
+            }
+    
     }
 }
