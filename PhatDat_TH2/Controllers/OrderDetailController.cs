@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhatDat_TH2.Data;
 using PhatDat_TH2.Model;
@@ -7,6 +8,8 @@ namespace PhatDat_TH2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class OrderDetailController : ControllerBase
     {
         private readonly AppDbContext _context;

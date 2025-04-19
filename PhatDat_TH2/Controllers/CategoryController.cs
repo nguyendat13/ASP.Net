@@ -63,7 +63,7 @@ namespace PhatDat_TH2.Controllers
 
 
         [HttpPost]
-        public IActionResult Create([FromBody] Category category)
+        public IActionResult Create([FromBody] CategoryDTO categoryDto)
         {
             if (!ModelState.IsValid)
             {
@@ -71,19 +71,17 @@ namespace PhatDat_TH2.Controllers
                 return BadRequest(errors); // Trả về chi tiết lỗi
             }
 
-
             // Kiểm tra xem tên danh mục đã tồn tại trong cơ sở dữ liệu chưa
-            var existingCategory = _context.Categories.FirstOrDefault(c => c.Name == category.Name);
+            var existingCategory = _context.Categories.FirstOrDefault(c => c.Name == categoryDto.Name);
             if (existingCategory != null)
             {
                 return BadRequest("Danh mục với tên này đã tồn tại.");
             }
 
-            // Chỉ thêm thông tin cơ bản, bỏ qua nếu phía client gửi kèm product
             var newCategory = new Category
             {
-                Name = category.Name,
-                Description = category.Description,
+                Name = categoryDto.Name,
+                Description = categoryDto.Description,
                 CreatedAt = DateTime.Now,
                 CreatedBy = "admin"
             };

@@ -9,6 +9,8 @@ namespace PhatDat_TH2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class OrderController : ControllerBase
     {
         private readonly AppDbContext _context;
