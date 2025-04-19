@@ -38,6 +38,8 @@ import Cart from './components/site/accountUser/Cart.jsx';
 import Checkout from './components/site/accountUser/Checkout.jsx';
 import OrdersList from './components/site/accountUser/Order.jsx';
 import OrderDetails from './components/site/accountUser/OrderDetail.jsx';
+import RegisterUser from './components/site/accountUser/RegisterUser.jsx';
+import CancelledOrders from './components/site/accountUser/CancelledOrders.jsx';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');
 
@@ -52,6 +54,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/register-user" element={<RegisterUser />} />
       <Route path="/login-user" element={<LoginUser />} />
       <Route path="/logout-user" element={<LogoutUser />} />  {/* ✅ Route logout user */}
 
@@ -60,8 +63,9 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="carts" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
-        <Route path="/orders" element={<OrdersList />} />
+        <Route path="orders" element={<OrdersList />} />
         <Route path="order/:orderId" element={<OrderDetails />} />
+        <Route path="/cancelledOrders" element={<CancelledOrders />} />  {/* Trang đơn hàng đã hủy */}
         <Route path="products" element={<ProductListUI />} />
         <Route path="products/:id" element={<ProductDetailUI />} />
       </Route>

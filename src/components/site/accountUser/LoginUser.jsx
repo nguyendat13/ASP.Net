@@ -1,7 +1,7 @@
 // components/accountUser/LoginUser.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 
 const LoginUser = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -76,6 +76,7 @@ const LoginUser = ({ onLogin }) => {
         <button type="submit" style={{ padding: '10px 15px', background: '#28a745', color: 'white', border: 'none' }}>
           Đăng Nhập
         </button>
+
       </form>
 
       {message && (
@@ -83,6 +84,11 @@ const LoginUser = ({ onLogin }) => {
           {message}
         </div>
       )}
+
+<p style={{ marginTop: '20px' }}>
+          Bạn chưa có tài khoản? <Link to="/register-user">Đăng ký ngay</Link>
+        </p>
+
     </div>
   );
 };

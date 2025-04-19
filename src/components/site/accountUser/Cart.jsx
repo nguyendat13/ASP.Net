@@ -17,10 +17,8 @@ const Cart = () => {
     axios
       .get(`https://localhost:7177/api/Cart/user/${userId}`)
       .then((res) => {
-        console.log("Dữ liệu giỏ hàng:", res.data);
-        // Giả sử bạn có thông tin discount từ API, bạn sẽ tính giá sau giảm
         const updatedCartItems = res.data.items.map(item => {
-          const discount = item.discount || 0; // Giảm giá mặc định là 0 nếu không có
+          const discount = item.discount || 0;
           const priceAfterDiscount = item.price - (item.price * discount / 100);
           return {
             ...item,
@@ -35,28 +33,57 @@ const Cart = () => {
   }, [navigate]);
 
   const handleRemove = (productId) => {
-    const userId = localStorage.getItem('userId'); 
-
+    const userId = localStorage.getItem("userId");
     axios
       .delete('https://localhost:7177/api/Cart/remove-item', {
-        data: {
-          userId: userId,
-          productId: productId
-        }
+        data: { userId, productId }
       })
       .then(() => {
-        setCartItems(cartItems.filter(item => item.productId !== productId));
+        setCartItems(prev => prev.filter(item => item.productId !== productId));
       })
       .catch((err) => {
         console.error("Lỗi khi xoá sản phẩm khỏi giỏ hàng:", err);
       });
   };
 
+  const handleQuantityChange = (productId, newQuantity) => {
+    const userId = localStorage.getItem("userId");
+    if (newQuantity <= 0) return;
+
+    axios.put('https://localhost:7177/api/Cart/update-item', {
+      userId,
+      productId,
+      quantity: newQuantity,
+    })
+    .then(() => {
+      setCartItems(prev =>
+        prev.map(item =>
+          item.productId === productId
+            ? { ...item, quantity: newQuantity }
+            : item
+        )
+      );
+    })
+    .catch(err => {
+      console.error("Lỗi khi cập nhật số lượng:", err);
+    });
+  };
+
+  const handleClearCart = () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) return;
+
+    if (window.confirm("Bạn có chắc chắn muốn xoá toàn bộ giỏ hàng không?")) {
+      axios.delete(`https://localhost:7177/api/Cart/clear/${userId}`)
+        .then(() => setCartItems([]))
+        .catch(err => console.error("Lỗi khi xoá toàn bộ giỏ hàng:", err));
+    }
+  };
+
   const handleCheckout = () => {
     navigate("/checkout", { state: { cartItems } });
   };
 
-  // Tính tổng tiền sau khi áp dụng discount cho tất cả các sản phẩm trong giỏ hàng
   const totalPrice = cartItems.reduce((total, item) => {
     return total + (item.priceAfterDiscount * item.quantity);
   }, 0);
@@ -83,11 +110,26 @@ const Cart = () => {
             <tbody>
               {cartItems.map((item) => (
                 <tr key={item.productId}>
-                  <td><img src={`https://localhost:7177${item.avatar}`} alt={item.productName} width="80" /></td>
+                  <td>
+                    <img
+                      src={`https://localhost:7177${item.avatar}`}
+                      alt={item.productName}
+                      width="80"
+                    />
+                  </td>
                   <td>{item.productName}</td>
                   <td>{item.price.toLocaleString()} đ</td>
                   <td>{item.discount}%</td>
-                  <td>{item.quantity}</td>
+                  <td>
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      min="1"
+                      onChange={(e) => handleQuantityChange(item.productId, parseInt(e.target.value))}
+                      className="form-control"
+                      style={{ width: "80px" }}
+                    />
+                  </td>
                   <td>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</td>
                   <td>
                     <button className="btn btn-danger" onClick={() => handleRemove(item.productId)}>
@@ -98,7 +140,10 @@ const Cart = () => {
               ))}
             </tbody>
           </table>
-          <div className="text-end">
+          <div className="d-flex justify-content-between align-items-center">
+            <button className="btn btn-outline-danger" onClick={handleClearCart}>
+              Xoá tất cả
+            </button>
             <h4>Tổng tiền: {totalPrice.toLocaleString()} đ</h4>
             <button className="btn btn-success" onClick={handleCheckout}>
               Thanh toán

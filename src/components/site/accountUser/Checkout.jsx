@@ -6,6 +6,8 @@ const Checkout = () => {
   const [customerName, setCustomerName] = useState("");
   const [address, setAddress] = useState(""); // Lưu địa chỉ người dùng
   const [statusOrderId] = useState(1); // Giả sử trạng thái là "Đang xử lý"
+  const [methodId, setMethodId] = useState(1); // <-- Thêm useState cho phương thức thanh toán
+
   const navigate = useNavigate();
   const location = useLocation();
   const cartItems = location.state?.cartItems || [];
@@ -43,6 +45,7 @@ const Checkout = () => {
       statusOrderId,
       userId: parseInt(userId),
       address, // Địa chỉ người dùng
+      methodId,
       items: cartItems.map((item) => ({
         productId: item.productId,
         quantity: item.quantity,
@@ -140,6 +143,22 @@ const Checkout = () => {
                   .toLocaleString()}{" "}
                 đ
               </h5>
+              <div className="form-group mb-3">
+  <label htmlFor="paymentMethod" className="form-label">
+    Phương thức thanh toán:
+  </label>
+  <select
+    className="form-select"
+    id="paymentMethod"
+    value={methodId}
+    onChange={(e) => setMethodId(parseInt(e.target.value))}
+  >
+    <option value={1}>Thanh toán khi nhận hàng (COD)</option>
+    <option value={2}>Chuyển khoản ngân hàng</option>
+    <option value={3}>Ví điện tử</option>
+  </select>
+</div>
+
               <button
                 type="button"
                 className="btn btn-primary"
