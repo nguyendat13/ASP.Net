@@ -28,7 +28,7 @@ const Login = ({onLogin}) => {
         }
       );
   
-      const { token, role } = response.data;
+      const { token, role,userId} = response.data;
   
       if (role !== 'admin') {
         setMessage('Chỉ quản trị viên (admin) mới được phép đăng nhập.');
@@ -40,6 +40,7 @@ const Login = ({onLogin}) => {
       console.log('Full response:', response.data);
   
       // Lưu token nếu muốn sử dụng sau
+      localStorage.setItem("adminId", userId); // lưu thêm user id
       localStorage.setItem('jwt-token', token);
       localStorage.setItem('role', role);
       localStorage.setItem('email', email);

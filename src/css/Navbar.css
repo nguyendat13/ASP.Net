@@ -1,0 +1,117 @@
+/* Navbar */
+.navbar {
+  background-color: #343a40;
+  transition: all 0.3s ease;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.navbar:hover {
+  background-color: #23272b;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  width: 30px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.nav-link {
+  color: #fff !important;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #f0ad4e !important;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu {
+  background-color: #343a40;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0ad4e;
+}
+
+.navbar-toggler {
+  border-color: #fff;
+}
+
+.navbar-toggler-icon {
+  background-color: #fff;
+}
+
+.navbar-nav.ms-auto {
+  margin-left: auto;
+}
+
+.navbar-nav .nav-item {
+  margin-left: 20px;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+}
+
+.navbar-nav .nav-link.btn {
+  color: #f0ad4e !important;
+  text-decoration: none;
+}
+
+.navbar-nav .nav-link.btn:hover {
+  color: #fff !important;
+}
+
+/* Tối ưu hóa hiển thị trên màn hình nhỏ */
+@media (max-width: 767px) {
+  .navbar {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .navbar-nav {
+    text-align: center;
+  }
+
+  .nav-item {
+    margin: 10px 0;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 1.2rem;
+  }
+
+  /* Điều chỉnh vị trí dropdown */
+  .user-nav-item .dropdown-menu {
+    top: 100%; /* Đảm bảo dropdown xuất hiện ngay dưới item */
+    right: 0;  /* Căn chỉnh dropdown vào bên phải */
+    left: auto; /* Hủy bỏ left nếu có */
+    max-width: 200px; /* Giới hạn chiều rộng dropdown */
+    width: auto; /* Đảm bảo chiều rộng phù hợp */
+    z-index: 1000; /* Đảm bảo menu luôn hiển thị trên các phần tử khác */
+  }
+  .user-nav-item{
+    position: relative;
+    right: 100px;
+  }
+}

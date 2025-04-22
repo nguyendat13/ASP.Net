@@ -1,0 +1,65 @@
+.home-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.banner-images {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.banner-images img {
+  width: 48%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.home-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.home-subtitle {
+  font-size: 1.2rem;
+  color: #777;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  border-left: 4px solid #0d6efd;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+
+.product-card, .post-card {
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border: none;
+  border-radius: 8px;
+}
+
+.product-card:hover, .post-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image, .post-image {
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.card-body .price {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.loading-text {
+  font-style: italic;
+  color: #888;
+}

@@ -11,20 +11,25 @@ const OrderEdit = () => {
   const [order, setOrder] = useState({ customerName: '', statusOrderId: '' });
   const [statuses, setStatuses] = useState([]);
 
-  // Lấy thông tin đơn hàng
   useEffect(() => {
-    axios.get(`https://localhost:7177/api/Order/${id}`).then(res => {
+    const token = localStorage.getItem('jwt-token');
+  
+    axios.get(`https://localhost:7177/api/Order/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(res => {
       setOrder({
         customerName: res.data.customerName,
         statusOrderId: res.data.statusOrderId,
       });
     });
-
-    // Lấy danh sách trạng thái đơn hàng
-    axios.get(`https://localhost:7177/api/StatusOrder`).then(res => {
+  
+    axios.get(`https://localhost:7177/api/StatusOrder`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(res => {
       setStatuses(res.data);
     });
   }, [id]);
+  
 
   const handleChange = e => {
     setOrder({ ...order, [e.target.name]: e.target.value });
@@ -40,8 +45,12 @@ const OrderEdit = () => {
     };
 
     try {
-      await axios.put(`https://localhost:7177/api/Order/${id}`, updateData);
-      alert('Cập nhật đơn hàng thành công!');
+      await axios.put(`https://localhost:7177/api/Order/${id}`, updateData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('jwt-token')}`,
+        },
+      });
+            alert('Cập nhật đơn hàng thành công!');
       navigate('/admin/orders');
     } catch (err) {
       console.error(err);

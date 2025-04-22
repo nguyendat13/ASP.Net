@@ -36,10 +36,21 @@ import LogoutUser from './components/site/accountUser/LogoutUser.jsx';
 import RequireLogin from './components/site/accountUser/RequireLogin .jsx';
 import Cart from './components/site/accountUser/Cart.jsx';
 import Checkout from './components/site/accountUser/Checkout.jsx';
-import OrdersList from './components/site/accountUser/Order.jsx';
-import OrderDetails from './components/site/accountUser/OrderDetail.jsx';
+import OrderDetails from './components/site/accountUser/orders/OrderDetail.jsx';
 import RegisterUser from './components/site/accountUser/RegisterUser.jsx';
-import CancelledOrders from './components/site/accountUser/CancelledOrders.jsx';
+import CancelledOrders from './components/site/accountUser/orders/CancelledOrders.jsx';
+import CategoryProductsPage from './components/site/categories/CategoryPage.jsx';
+import UserProfilePage from './components/site/accountUser/UserProfilePage.jsx';
+import ShippingOrdersList from './components/site/accountUser/orders/ShippingOrdersList.jsx';
+import OrdersProcessing from './components/site/accountUser/orders/Order.jsx';
+import DeliveredOrdersList from './components/site/accountUser/orders/DeliveredOrdersList.jsx';
+import ReturnedOrdersList from './components/site/accountUser/orders/ReturnedOrdersList.jsx';
+import FailedOrdersList from './components/site/accountUser/orders/FailedOrdersList.jsx';
+import Topics from './components/admin/topic/TopicList.jsx';
+import Posts from './components/admin/posts/PostList.jsx';
+import Menus from './components/admin/menus/MenuList.jsx';
+import ChatboxUser from './components/site/accountUser/chatbox/ChatboxUser.jsx';
+import ChatboxAdmin from './components/site/accountUser/chatbox/ChatboxAdmin.jsx';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');
 
@@ -61,13 +72,22 @@ const App = () => {
       {/* Route người dùng */}
       <Route path="/" element={<UserLayout />}>
         <Route index element={<Home />} />
+        <Route path="chat" element={<ChatboxUser senderId={13} receiverId={3} />} />
+        <Route path="/user-profile" element={<UserProfilePage />} />
         <Route path="carts" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
-        <Route path="orders" element={<OrdersList />} />
+        <Route path="orders" element={<OrdersProcessing />} />
         <Route path="order/:orderId" element={<OrderDetails />} />
-        <Route path="/cancelledOrders" element={<CancelledOrders />} />  {/* Trang đơn hàng đã hủy */}
+        <Route path="cancelledOrders" element={<CancelledOrders />} />  {/* Trang đơn hàng đã hủy */}
+        <Route path="shippingOrders" element={<ShippingOrdersList />} />
+        <Route path="deliveredOrders" element={<DeliveredOrdersList />} />
+        <Route path="returnedOrders" element={<ReturnedOrdersList />} />
+        <Route path="failedOrders" element={<FailedOrdersList />} />
+
         <Route path="products" element={<ProductListUI />} />
         <Route path="products/:id" element={<ProductDetailUI />} />
+        <Route path="categories/:categoryId" element={<CategoryProductsPage />} />
+
       </Route>
 
 
@@ -79,6 +99,7 @@ const App = () => {
         {isAdmin ? (
           <Route path="/admin" element={<AdminDashboard />}>
              <Route path="dashboard" element={<Dashboard />} />
+             <Route path="chat" element={<ChatboxAdmin senderId={3} receiverId={13} />} />
 
              <Route path="categories" element={<Categories />} />
              <Route path="categories/create" element={<CategoryCreate />} />
@@ -99,6 +120,12 @@ const App = () => {
             <Route path="orders" element={<Orders />} />
             <Route path="orders/edit/:id" element={<OrderEdit />} />  
             <Route path="orders/detail/:id" element={<OrderDetail />} />
+
+
+            <Route path="topics" element={<Topics />} />
+            <Route path="posts" element={<Posts />} />
+            <Route path="menus" element={<Menus />} />
+
           </Route>
         ) : (
           <Route path="/admin/*" element={<Navigate to="/login" />} />

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const CancelledOrders = () => {
   const [cancelledOrders, setCancelledOrders] = useState([]);
   const userId = localStorage.getItem("userId"); // Lấy userId từ localStorage
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!userId) {
@@ -54,7 +56,9 @@ const CancelledOrders = () => {
   return (
     <div className="container mt-4">
       <h2 className="mb-4 text-center">Danh sách đơn hàng đã hủy</h2>
-
+      <button className="btn btn-secondary mt-4" onClick={() => navigate("/orders")}>
+  🡸 Quay lại trang chính
+        </button>
       <div className="card shadow-sm">
         <div className="card-body">
           <table className="table table-bordered table-striped">

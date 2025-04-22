@@ -9,7 +9,8 @@ const Logout = ({ onLogout }) => {
      localStorage.removeItem('jwt-token');
      localStorage.removeItem('role');
      localStorage.removeItem('email');
- 
+     localStorage.removeItem("adminId"); // lưu thêm user id
+
     if (onLogout) onLogout();
     // Thông báo đăng xuất
     // Chuyển hướng về trang đăng nhập

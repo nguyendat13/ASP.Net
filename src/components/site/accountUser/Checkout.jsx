@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import { QRCodeCanvas } from 'qrcode.react';
 
 const Checkout = () => {
   const [customerName, setCustomerName] = useState("");
   const [address, setAddress] = useState(""); // Lưu địa chỉ người dùng
   const [statusOrderId] = useState(1); // Giả sử trạng thái là "Đang xử lý"
   const [methodId, setMethodId] = useState(1); // <-- Thêm useState cho phương thức thanh toán
+  const [methods, setMethods] = useState([]);
+  const [transactionId, setTransactionId] = useState(null);
+  const [paymentUrl, setPaymentUrl] = useState("");
+  const [vnpayUrl, setVnpayUrl] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,6 +40,14 @@ const Checkout = () => {
     }
   }, []);
 
+
+  useEffect(() => {
+    fetch("https://localhost:7177/api/Method")
+      .then((res) => res.json())
+      .then((data) => setMethods(data))
+      .catch((err) => console.error("Lỗi khi fetch phương thức thanh toán:", err));
+  }, []);
+  
   const handleConfirmPayment = () => {
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("token-user");
@@ -70,6 +83,38 @@ const Checkout = () => {
       });
   };
 
+  const handleVnPayPayment = () => {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token-user");
+  
+    const totalAmount = cartItems.reduce(
+      (total, item) => total + item.priceAfterDiscount * item.quantity,
+      0
+    );
+  
+    const paymentRequest = {
+      amount: totalAmount,
+      userId: parseInt(userId),
+      methodId: methodId,
+    };
+  
+    axios
+      .post("https://localhost:7177/api/Payment/create-vnpay-payment", paymentRequest, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setVnpayUrl(res.data.paymentUrl); // Gán URL để render mã QR
+      })
+      .catch((err) => {
+        console.error("Lỗi khi tạo thanh toán VNPay:", err);
+        alert("Không thể khởi tạo thanh toán.");
+      });
+  };
+  
+
+  
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">🛒 Xác nhận thanh toán</h2>
@@ -144,26 +189,46 @@ const Checkout = () => {
                 đ
               </h5>
               <div className="form-group mb-3">
-  <label htmlFor="paymentMethod" className="form-label">
-    Phương thức thanh toán:
-  </label>
-  <select
-    className="form-select"
-    id="paymentMethod"
-    value={methodId}
-    onChange={(e) => setMethodId(parseInt(e.target.value))}
-  >
-    <option value={1}>Thanh toán khi nhận hàng (COD)</option>
-    <option value={2}>Chuyển khoản ngân hàng</option>
-    <option value={3}>Ví điện tử</option>
-  </select>
-</div>
+              <label htmlFor="paymentMethod" className="form-label">
+                Phương thức thanh toán:
+              </label>
+              <select
+                className="form-select"
+                id="paymentMethod"
+                value={methodId}
+                onChange={(e) => setMethodId(parseInt(e.target.value))}
+              >
+                <option value="">-- Chọn phương thức --</option>
+                {methods.map((method) => (
+                  <option key={method.id} value={method.id}>
+                    {method.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            
+            {vnpayUrl && (
+  <div className="text-center mt-4">
+    <h5>📱 Quét mã QR để thanh toán qua VNPay</h5>
+    <QRCodeCanvas value={vnpayUrl} size={256} />
+    <button
+      className="btn btn-success mt-3"
+      onClick={handleConfirmPayment}
+    >
+      Tôi đã thanh toán
+    </button>
+  </div>
+)}
+
+
 
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={handleConfirmPayment}
-              >
+                onClick={() =>
+                  methodId === 3 ? handleVnPayPayment() : handleConfirmPayment()
+                }              >
                 Xác nhận thanh toán
               </button>
             </div>

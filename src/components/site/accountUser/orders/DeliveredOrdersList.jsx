@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const OrdersList = () => {
+const DeliveredOrdersList = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -23,54 +23,31 @@ const OrdersList = () => {
         },
       })
       .then((response) => {
-        const filteredOrders = (response.data || []).filter(
-          (order) => order.statusOrderId !== 4 // 4 là trạng thái "đã hủy"
+        const deliveredOrders = (response.data || []).filter(
+          (order) => order.statusName === "Đã giao"
         );
-        setOrders(filteredOrders);
+        setOrders(deliveredOrders);
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Lỗi khi lấy danh sách đơn hàng:", err);
+        console.error("Lỗi khi lấy đơn hàng đã giao:", err);
         setLoading(false);
       });
   }, []);
 
-  const cancelOrder = (orderId) => {
-    const token = localStorage.getItem("token-user");
-
-    axios
-      .put(`https://localhost:7177/api/Order/cancel/${orderId}`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => {
-        alert("Đơn hàng đã được hủy thành công.");
-        setOrders((prev) => prev.filter((order) => order.id !== orderId));
-        navigate("/cancelledOrders");
-      })
-      .catch((error) => {
-        console.error("Lỗi khi hủy đơn hàng:", error);
-        alert("Không thể hủy đơn hàng.");
-      });
-  };
-
   if (loading) {
-    return <div className="text-center mt-5">Đang tải danh sách đơn hàng...</div>;
+    return <div className="text-center mt-5">Đang tải đơn hàng đã giao...</div>;
   }
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Danh sách đơn hàng của bạn</h2>
-      <div className="mb-3 text-center">
-        <Link to="/cancelledOrders" className="btn btn-secondary">
-          Xem đơn hàng đã hủy
-        </Link>
-      </div>
-
+      <h2 className="text-center mb-4">Đơn hàng đã giao</h2>
+      <button className="btn btn-secondary mt-4" onClick={() => navigate("/orders")}>
+        🡸 Quay lại trang chính
+      </button>
       {orders.length === 0 ? (
         <div className="alert alert-info text-center">
-          Bạn chưa có đơn hàng nào (ngoại trừ các đơn đã hủy).
+          Hiện không có đơn hàng nào đã giao.
         </div>
       ) : (
         <div className="card">
@@ -85,7 +62,6 @@ const OrdersList = () => {
                   <th>Thanh toán</th>
                   <th>Tổng tiền</th>
                   <th>Chi tiết</th>
-                  <th>Hủy đơn</th>
                 </tr>
               </thead>
               <tbody>
@@ -105,16 +81,6 @@ const OrdersList = () => {
                         Xem chi tiết
                       </button>
                     </td>
-                    <td>
-                      {order.statusName === "Đang xử lý" && (
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => cancelOrder(order.id)}
-                        >
-                          Hủy đơn
-                        </button>
-                      )}
-                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -126,4 +92,4 @@ const OrdersList = () => {
   );
 };
 
-export default OrdersList;
+export default DeliveredOrdersList;

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 
 const OrderDetails = () => {
   const { orderId } = useParams(); // Lấy orderId từ URL (ví dụ /order/14)
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   useEffect(() => {
     // Lấy token từ localStorage
     const token = localStorage.getItem("token-user");
@@ -40,7 +40,9 @@ const OrderDetails = () => {
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">Chi tiết đơn hàng #{orderDetails.id}</h2>
-
+      <button className="btn btn-secondary mt-4" onClick={() => navigate("/orders")}>
+  🡸 Quay lại trang chính
+</button>
       <div className="card">
         <div className="card-body">
           <h4>Thông tin khách hàng</h4>

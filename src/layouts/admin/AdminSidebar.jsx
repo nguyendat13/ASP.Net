@@ -29,6 +29,11 @@ const AdminSidebar = () => {
               <li><Link to="/admin/products" className="sidebar-link">Sản phẩm</Link></li>
               <li><Link to="/admin/users" className="sidebar-link">Người dùng</Link></li>
               <li><Link to="/admin/orders" className="sidebar-link">Đơn hàng</Link></li>
+              <li><Link to="/admin/banners" className="sidebar-link">Banner</Link></li> {/* Thêm Banner */}
+              <li><Link to="/admin/menus" className="sidebar-link">Menu</Link></li> {/* Thêm Menu */}
+              <li><Link to="/admin/posts" className="sidebar-link">Bài viết</Link></li> {/* Thêm Post */}
+              <li><Link to="/admin/topics" className="sidebar-link">Chủ đè</Link></li> {/* Thêm Topic */}
+              <li><Link to="/admin/contacts" className="sidebar-link">Liên hệ</Link></li> {/* Thêm Contact */}
             </ul>
           </nav>
         </>

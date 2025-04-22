@@ -5,6 +5,11 @@ import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
+  const [error, setError] = useState('');
+
+  const token = localStorage.getItem('jwt-token');
+  const email = localStorage.getItem('email');
+  const role = localStorage.getItem('role');
 
   useEffect(() => {
     fetchOrders();
@@ -12,21 +17,34 @@ const OrderList = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get('https://localhost:7177/api/Order');
+      const response = await axios.get(`https://localhost:7177/api/Order`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        // Nếu backend yêu cầu email, thì dùng:
+        // params: { email } 
+      });
       setOrders(response.data);
     } catch (error) {
       console.error('Error fetching orders:', error);
+      setError('Lỗi khi tải đơn hàng');
     }
   };
 
   const deleteOrder = async (id) => {
     try {
-      await axios.delete(`https://localhost:7177/api/Order/${id}`);
+      await axios.delete(`https://localhost:7177/api/Order/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       fetchOrders();
     } catch (error) {
       console.error('Error deleting order:', error);
     }
   };
+
+  if (error) return <p className="text-danger">{error}</p>;
 
   return (
     <div className="form-container">
@@ -52,12 +70,16 @@ const OrderList = () => {
                 <Link to={`/admin/orders/detail/${order.id}`} className="btn btn-info btn-sm">
                   <FaEye />
                 </Link>
-                <Link to={`/admin/orders/edit/${order.id}`} className="btn btn-warning btn-sm">
-                  <FaEdit />
-                </Link>
-                <button onClick={() => deleteOrder(order.id)} className="btn btn-danger btn-sm">
-                  <FaTrash />
-                </button>
+                {role === 'admin' && (
+                  <>
+                    <Link to={`/admin/orders/edit/${order.id}`} className="btn btn-warning btn-sm">
+                      <FaEdit />
+                    </Link>
+                    <button onClick={() => deleteOrder(order.id)} className="btn btn-danger btn-sm">
+                      <FaTrash />
+                    </button>
+                  </>
+                )}
               </td>
             </tr>
           ))}

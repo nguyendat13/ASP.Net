@@ -13,12 +13,18 @@ const OrderDetail = () => {
 
   const fetchOrderDetail = async () => {
     try {
-      const response = await axios.get(`https://localhost:7177/api/Order/${id}`);
+      const token = localStorage.getItem('jwt-token');
+      const response = await axios.get(`https://localhost:7177/api/Order/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setOrder(response.data);
     } catch (error) {
       console.error('Lỗi khi tải chi tiết đơn hàng:', error);
     }
   };
+  
 
   if (!order) return <div>Đang tải dữ liệu...</div>;
 
