@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../css/home.css";
 
@@ -7,6 +7,8 @@ const Home = () => {
   const [newProducts, setNewProducts] = useState([]);
   const [topSellingProducts, setTopSellingProducts] = useState([]);
   const [latestPosts, setLatestPosts] = useState([]);
+  const navigate = useNavigate();
+  const [showChat, setShowChat] = useState(false); // toggle popup chat
 
   useEffect(() => {
     axios.get("https://localhost:7177/api/Product/new")
@@ -63,11 +65,15 @@ const Home = () => {
       </div>
     ))
   );
-
+  const toggleChat = () => {
+    setShowChat(!showChat);
+  };
   return (
     <div className="container mt-5 home-container">
       {/* Banner */}
       <div className="banner mb-5">
+      
+
         <div className="banner-images">
           <img src="/assets/banner/hero-img-2.jpg" alt="Banner 1" />
           <img src="/assets/banner/hero-img-1.png" alt="Banner 2" />

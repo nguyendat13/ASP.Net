@@ -73,7 +73,7 @@ const App = () => {
       <Route path="/" element={<UserLayout />}>
         <Route index element={<Home />} />
         <Route path="chat" element={<ChatboxUser senderId={13} receiverId={3} />} />
-        <Route path="/user-profile" element={<UserProfilePage />} />
+        <Route path="user-profile" element={<UserProfilePage />} />
         <Route path="carts" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="orders" element={<OrdersProcessing />} />

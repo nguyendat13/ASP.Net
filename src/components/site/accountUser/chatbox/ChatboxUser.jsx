@@ -1,10 +1,10 @@
-import React from 'react';
-import Chatbox from './ChatBox';
+  import React from 'react';
+  import Chatbox from './ChatBox';
 
-const ChatboxUser = ({ senderId, receiverId }) => {
-  return (
-    <Chatbox senderId={senderId} receiverId={receiverId} userType="user" />
-  );
-};
+  const ChatboxUser = ({ senderId, receiverId }) => {
+    return (
+      <Chatbox senderId={senderId} receiverId={receiverId} userType="user" />
+    );
+  };
 
-export default ChatboxUser;
+  export default ChatboxUser;

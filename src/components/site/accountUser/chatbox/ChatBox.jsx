@@ -6,32 +6,50 @@ const Chatbox = ({ senderId, receiverId, userType }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [connection, setConnection] = useState(null);
-  const [userStatus, setUserStatus] = useState('Offline'); // Trạng thái người dùng
+  const [userStatus, setUserStatus] = useState('Offline');
+  const optimisticMessage = { senderId, message: newMessage };
 
-  // Kết nối SignalR khi component mount
   useEffect(() => {
     const connect = new HubConnectionBuilder()
-      .withUrl('https://localhost:7177/chathub')  // Đảm bảo URL đúng
+      .withUrl('https://localhost:7177/chathub')
       .build();
 
     setConnection(connect);
 
-    // Lắng nghe sự kiện nhận tin nhắn
+    // Fetch messages when the component mounts
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch(`https://localhost:7177/api/Chat/getMessages/${senderId}/${receiverId}`);
+        const data = await response.json();
+        setMessages(data);
+      } catch (error) {
+        console.error('Failed to fetch messages:', error);
+      }
+    };
+
+    // Handle received messages
     connect.on('ReceiveMessage', (sender, receiver, message) => {
-      // Kiểm tra nếu sender và receiver khớp với nhau
-      if ((sender === senderId && receiver === receiverId) || (receiver === senderId && sender === receiverId)) {
+      if (
+        (sender === senderId && receiver === receiverId) ||
+        (sender === receiverId && receiver === senderId)
+      ) {
         setMessages((prevMessages) => [...prevMessages, { senderId: sender, message }]);
       }
     });
 
-    // Lắng nghe sự kiện cập nhật trạng thái người dùng
+    // Handle user status updates
     connect.on('UpdateUserStatus', (userId, status) => {
       if (userId === receiverId) {
-        setUserStatus(status);  // Cập nhật trạng thái người dùng khi có tin nhắn mới
+        setUserStatus(status);
       }
     });
 
+    // Start the connection and fetch messages
     connect.start()
+      .then(() => {
+        console.log('SignalR connection established');
+        fetchMessages(); // Fetch messages after connection is established
+      })
       .catch((err) => console.error('Error while establishing connection: ', err));
 
     return () => {
@@ -39,39 +57,39 @@ const Chatbox = ({ senderId, receiverId, userType }) => {
     };
   }, [senderId, receiverId]);
 
-  // Gửi tin nhắn và cập nhật UI ngay lập tức
   const sendMessage = async () => {
-    const message = {
-      senderId,
-      receiverId,
-      message: newMessage,
-    };
+    if (!newMessage.trim()) return; // Don't send empty messages
 
-    const response = await fetch('https://localhost:7177/api/Chat/sendMessage', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    });
+    try {
+      // Optimistically update the UI
+      const optimisticMessage = { senderId, message: newMessage };
+      setMessages((prevMessages) => [...prevMessages, optimisticMessage]);
+      setNewMessage('');
 
-    if (response.ok) {
-      // Sau khi gửi tin nhắn thành công, cập nhật giao diện
-      setMessages((prevMessages) => [...prevMessages, { senderId, message: newMessage }]);
-      setNewMessage('');  // Xóa input sau khi gửi
+      // Send the message to the server
+      const response = await fetch('https://localhost:7177/api/Chat/sendMessage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          senderId,
+          receiverId,
+          message: newMessage,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      // No need to manually update messages here because SignalR will handle it
+    } catch (error) {
+      console.error('Error sending message:', error);
+      // Roll back the optimistic update if there's an error
+      setMessages((prevMessages) => prevMessages.filter(msg => msg !== optimisticMessage));
     }
   };
-
-  // Lấy tin nhắn từ backend (lần đầu khi trang load)
-  const fetchMessages = async () => {
-    const response = await fetch(`https://localhost:7177/api/Chat/getMessages/${senderId}/${receiverId}`);
-    const data = await response.json();
-    setMessages(data);
-  };
-
-  useEffect(() => {
-    fetchMessages();
-  }, [senderId, receiverId]);
 
   return (
     <div className="chat-box">
@@ -79,9 +97,9 @@ const Chatbox = ({ senderId, receiverId, userType }) => {
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.senderId === senderId ? 'sent' : 'received'}`}>
             <strong>
-              {message.senderId === senderId 
-                ? (userType === 'user' ? 'Admin' : 'You') 
-                : (userType === 'admin' ? 'User' : 'You')}
+              {message.senderId === senderId
+                ? (userType === 'user' ? 'You' : 'You') // Fixed: Show "You" if sender is current user
+                : (userType === 'admin' ? 'User' : 'Admin')}
             </strong>: {message.message}
           </div>
         ))}
@@ -95,6 +113,7 @@ const Chatbox = ({ senderId, receiverId, userType }) => {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type your message..."
+          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
         />
         <button onClick={sendMessage}>Send</button>
       </div>
