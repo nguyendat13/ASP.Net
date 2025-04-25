@@ -16,8 +16,9 @@ const AdminDashboard = () => {
       <AdminSidebar />
       <div style={{ flex: 1 }}>
         <AdminNavbar />
-             {/* Chat Icon */}
-             <div className="chat-icon" onClick={toggleChat}>
+        <div id="admin-content" style={{ padding: '20px' }}>
+                {/* Chat Icon */}
+                <div className="chat-icon" onClick={toggleChat}>
         <FaComments size={32} />
       </div>
 
@@ -31,7 +32,6 @@ const AdminDashboard = () => {
           <ChatboxAdmin senderId={3} receiverId={13} />
         </div>
       )}
-        <div id="admin-content" style={{ padding: '20px' }}>
           <Outlet />
         </div>
       </div>

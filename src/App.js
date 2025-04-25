@@ -51,6 +51,21 @@ import Posts from './components/admin/posts/PostList.jsx';
 import Menus from './components/admin/menus/MenuList.jsx';
 import ChatboxUser from './components/site/accountUser/chatbox/ChatboxUser.jsx';
 import ChatboxAdmin from './components/site/accountUser/chatbox/ChatboxAdmin.jsx';
+import TopicCreate from './components/admin/topic/TopicCreate.jsx';
+import TopicDetail from './components/admin/topic/TopicDetail.jsx';
+import TopicEdit from './components/admin/topic/TopicEdit.jsx';
+import TopicTrash from './components/admin/topic/TopicTrash.jsx';
+import PostCreate from './components/admin/posts/PostCreate.jsx';
+import PostEdit from './components/admin/posts/PostEdit.jsx';
+import PostDetail from './components/admin/posts/PostDetail.jsx';
+import PostTrash from './components/admin/posts/PostTrash.jsx';
+import ContactList from './components/admin/contacts/ContactList.jsx';
+import ContactTrash from './components/admin/contacts/ContactTrash.jsx';
+import ContactDetail from './components/admin/contacts/ContactDetail.jsx';
+import BannerList from './components/admin/banners/BannerList.jsx';
+import BannersCreate from './components/admin/banners/BannerCreate.jsx';
+import BannersEdit from './components/admin/banners/BannerEdit.jsx';
+import BannersDetail from './components/admin/banners/BannerDetail.jsx';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');
 
@@ -123,7 +138,26 @@ const App = () => {
 
 
             <Route path="topics" element={<Topics />} />
+            <Route path="topics/create" element={<TopicCreate />} />
+            <Route path="topics/detail/:id" element={<TopicDetail />} />
+            <Route path="topics/edit/:id" element={<TopicEdit />} />
+            <Route path="topics/:id/trash" element={<TopicTrash />} />
+
             <Route path="posts" element={<Posts />} />
+            <Route path="posts/create" element={<PostCreate />} />
+            <Route path="posts/:id/edit" element={<PostEdit />} />
+            <Route path="posts/:id" element={<PostDetail />} />
+            <Route path="posts/:id/trash" element={<PostTrash />} />
+
+            <Route path="contacts" element={<ContactList />} />
+            <Route path="contacts/trash" element={<ContactTrash />} />
+            <Route path="contacts/detail/:id" element={<ContactDetail />} />
+
+            <Route path="banners" element={<BannerList />} />
+            <Route path="banners/create" element={<BannersCreate />} />{" "}
+            <Route path="banners/edit/:id" element={<BannersEdit />} />{" "}
+            <Route path="banners/detail/:id" element={<BannersDetail />} />
+
             <Route path="menus" element={<Menus />} />
 
           </Route>

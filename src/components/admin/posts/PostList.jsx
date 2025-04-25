@@ -7,66 +7,70 @@ const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
   const API_URL = 'https://localhost:7177/api/Post';
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const fetchPosts = () => {
-    axios
-      .get(API_URL)
-      .then((res) => {
+    axios.get(API_URL)
+      .then(res => {
         setPosts(res.data);
         setLoading(false);
       })
-      .catch(() => {
-        setError('Lỗi khi tải bài viết');
+      .catch(err => {
+        console.error(err);
+        setError('Lỗi khi tải danh sách bài viết!');
         setLoading(false);
       });
-  };
+  }, []);
 
-  const handleDelete = (id) => {
-    if (window.confirm('Bạn có chắc muốn xoá bài viết này không?')) {
-      axios.delete(`${API_URL}/${id}`).then(fetchPosts);
+  const handleDelete = async (id) => {
+    const confirm = window.confirm('Bạn có chắc muốn xoá bài viết này không?');
+    if (!confirm) return;
+
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      setPosts(prev => prev.filter(post => post.id !== id));
+    } catch (err) {
+      console.error(err);
+      alert('Xoá thất bại!');
     }
   };
 
-  if (loading) return <p>Đang tải...</p>;
+  if (loading) return <p>Đang tải bài viết...</p>;
   if (error) return <p className="text-danger">{error}</p>;
 
   return (
     <div className="container mt-4">
-      <h2>Quản lý Bài viết</h2>
-      <Link to="/admin/posts/create" className="btn btn-primary mb-3">
-        Thêm Bài viết
-      </Link>
-      <table className="table table-bordered table-hover mt-3">
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h4>Quản lý Bài viết</h4>
+        <Link to="/admin/posts/create" className="btn btn-primary">Thêm bài viết</Link>
+      </div>
+      <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
             <th>ID</th>
             <th>Tiêu đề</th>
+            <th>Nội dung</th>
+            <th>Chủ đề</th>
             <th>Ngày xuất bản</th>
-            <th>Chức năng</th>
+            <th className="text-center">Chức năng</th>
           </tr>
         </thead>
         <tbody>
-          {posts.map((p) => (
-            <tr key={p.id}>
-              <td>{p.id}</td>
-              <td>{p.title}</td>
-              <td>{new Date(p.publishedDate).toLocaleDateString()}</td>
-              <td>
-                <Link to={`/admin/posts/detail/${p.id}`} className="btn btn-sm btn-info me-2">
-                  <FaEye />
-                </Link>
-                <Link to={`/admin/posts/edit/${p.id}`} className="btn btn-sm btn-warning me-2">
-                  <FaEdit />
-                </Link>
-                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(p.id)}>
-                  <FaTrashAlt />
-                </button>
+          {posts.map(post => (
+            <tr key={post.id}>
+              <td>{post.id}</td>
+              <td>{post.title}</td>
+              <td style={{ maxWidth: 200 }}>
+                {post.content.length > 100 ? post.content.slice(0, 100) + '...' : post.content}
+              </td>
+              <td>{post.topicName || 'Không có'}</td>
+              <td>{new Date(post.publishedDate).toLocaleDateString()}</td>
+              <td className="text-center">
+                <div className="d-flex justify-content-center gap-2">
+                  <Link to={`/admin/posts/${post.id}`} className="btn btn-sm btn-info"><FaEye /></Link>
+                  <Link to={`/admin/posts/${post.id}/edit`} className="btn btn-sm btn-warning"><FaEdit /></Link>
+                  <button className="btn btn-sm btn-danger" onClick={() => handleDelete(post.id)}><FaTrashAlt /></button>
+                </div>
               </td>
             </tr>
           ))}

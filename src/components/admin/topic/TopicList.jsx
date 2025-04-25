@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { FaEye, FaEdit, FaTrashAlt } from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { FaEye, FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const Topics = () => {
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  const API_URL = 'https://localhost:7177/api/Topic';
+  const API_URL = "https://localhost:7177/api/Topic";
 
   useEffect(() => {
     fetchTopics();
@@ -22,13 +22,13 @@ const Topics = () => {
         setLoading(false);
       })
       .catch(() => {
-        setError('Lỗi khi tải chủ đề');
+        setError("Lỗi khi tải chủ đề");
         setLoading(false);
       });
   };
 
   const handleDelete = (id) => {
-    if (window.confirm('Bạn có chắc muốn xoá chủ đề này không?')) {
+    if (window.confirm("Bạn có chắc muốn xoá chủ đề này không?")) {
       axios.delete(`${API_URL}/${id}`).then(fetchTopics);
     }
   };
@@ -56,17 +56,28 @@ const Topics = () => {
             <tr key={t.id}>
               <td>{t.id}</td>
               <td>{t.title}</td>
-              <td>{t.description || 'Không có mô tả'}</td>
+              <td>{t.description || "Không có mô tả"}</td>
               <td>
-                <Link to={`/admin/topics/detail/${t.id}`} className="btn btn-sm btn-info me-2">
-                  <FaEye />
-                </Link>
-                <Link to={`/admin/topics/edit/${t.id}`} className="btn btn-sm btn-warning me-2">
-                  <FaEdit />
-                </Link>
-                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(t.id)}>
-                  <FaTrashAlt />
-                </button>
+                <div className="d-flex align-items-center gap-2 flex-nowrap">
+                  <Link
+                    to={`/admin/topics/detail/${t.id}`}
+                    className="btn btn-sm btn-info"
+                  >
+                    <FaEye />
+                  </Link>
+                  <Link
+                    to={`/admin/topics/edit/${t.id}`}
+                    className="btn btn-sm btn-warning"
+                  >
+                    <FaEdit />
+                  </Link>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => handleDelete(t.id)}
+                  >
+                    <FaTrashAlt />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
