@@ -13,8 +13,16 @@
       "PackagePath": "staticwebassets\\images\\19fb5e48-95ec-4123-9ee5-2421791e6cff.jpg"
     },
     {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\2163d522-1966-4452-9f77-d7792e956975.jpg",
+      "PackagePath": "staticwebassets\\images\\2163d522-1966-4452-9f77-d7792e956975.jpg"
+    },
+    {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\220d3488-a1ae-407b-992e-3c2293b03004.png",
       "PackagePath": "staticwebassets\\images\\220d3488-a1ae-407b-992e-3c2293b03004.png"
+    },
+    {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\3148167a-cbab-4fd4-a9d8-680dc3c68eaa.jpg",
+      "PackagePath": "staticwebassets\\images\\3148167a-cbab-4fd4-a9d8-680dc3c68eaa.jpg"
     },
     {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\3381ad0f-9b0d-4460-a7f5-d0978b8cef8b.png",
@@ -25,8 +33,20 @@
       "PackagePath": "staticwebassets\\images\\3c65c72f-c099-4269-9e5c-9ea7ab921aaa.png"
     },
     {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\3e75b32a-2ba3-4a5c-be1d-30586ff21f4e.jpg",
+      "PackagePath": "staticwebassets\\images\\3e75b32a-2ba3-4a5c-be1d-30586ff21f4e.jpg"
+    },
+    {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\408a52b7-4d5c-42f0-8c23-8f013dd71578.jpg",
+      "PackagePath": "staticwebassets\\images\\408a52b7-4d5c-42f0-8c23-8f013dd71578.jpg"
+    },
+    {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\40eb8ab5-9d11-466d-858f-cb121ae36cb8.png",
       "PackagePath": "staticwebassets\\images\\40eb8ab5-9d11-466d-858f-cb121ae36cb8.png"
+    },
+    {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\597c0afb-746c-4b92-b7fe-06db0f3dc878.jpg",
+      "PackagePath": "staticwebassets\\images\\597c0afb-746c-4b92-b7fe-06db0f3dc878.jpg"
     },
     {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\5fb5a042-1f3b-4e89-aa52-d3f4949fc58a.png",
@@ -37,8 +57,16 @@
       "PackagePath": "staticwebassets\\images\\624c533f-b837-4747-a272-ae485ee60ba9.jpg"
     },
     {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\6d61d02f-5936-4559-8e66-f79ac0a38c3b.png",
+      "PackagePath": "staticwebassets\\images\\6d61d02f-5936-4559-8e66-f79ac0a38c3b.png"
+    },
+    {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\7e0128e5-7f70-441b-ac4d-6f052150237f.png",
       "PackagePath": "staticwebassets\\images\\7e0128e5-7f70-441b-ac4d-6f052150237f.png"
+    },
+    {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\8d0b4d57-14cf-4bdc-b312-637ecd966517.jpg",
+      "PackagePath": "staticwebassets\\images\\8d0b4d57-14cf-4bdc-b312-637ecd966517.jpg"
     },
     {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\8f67a023-435b-4e07-9405-6b391dba79a5.png",
@@ -49,6 +77,10 @@
       "PackagePath": "staticwebassets\\images\\922d415a-02df-46d4-aff5-1188c0fe0b02.png"
     },
     {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\9c525850-753a-4967-84d8-3c8d5c1f82d2.jpg",
+      "PackagePath": "staticwebassets\\images\\9c525850-753a-4967-84d8-3c8d5c1f82d2.jpg"
+    },
+    {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\acf57395-3a4e-4bb5-8c03-2a68c51021e0.png",
       "PackagePath": "staticwebassets\\images\\acf57395-3a4e-4bb5-8c03-2a68c51021e0.png"
     },
@@ -57,8 +89,32 @@
       "PackagePath": "staticwebassets\\images\\b242ea40-1d1f-4f7a-ade1-240defe73677.png"
     },
     {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\banners\\bowl-2.png",
+      "PackagePath": "staticwebassets\\images\\banners\\bowl-2.png"
+    },
+    {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\banners\\bowl-3.png",
+      "PackagePath": "staticwebassets\\images\\banners\\bowl-3.png"
+    },
+    {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\banners\\contact.png",
+      "PackagePath": "staticwebassets\\images\\banners\\contact.png"
+    },
+    {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\banners\\couch.png",
+      "PackagePath": "staticwebassets\\images\\banners\\couch.png"
+    },
+    {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\banners\\post-3.jpg",
+      "PackagePath": "staticwebassets\\images\\banners\\post-3.jpg"
+    },
+    {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\bowl-2.png",
       "PackagePath": "staticwebassets\\images\\bowl-2.png"
+    },
+    {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\c1ae9d37-4a2b-420b-8892-74e44bd57f06.jpg",
+      "PackagePath": "staticwebassets\\images\\c1ae9d37-4a2b-420b-8892-74e44bd57f06.jpg"
     },
     {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\c885ae11-8e6d-4455-bad4-95ccb350bcc7.jpg",
@@ -67,6 +123,10 @@
     {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\couch.png",
       "PackagePath": "staticwebassets\\images\\couch.png"
+    },
+    {
+      "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\e71bc40c-90ea-4f2e-867c-112f016d4e7b.jpg",
+      "PackagePath": "staticwebassets\\images\\e71bc40c-90ea-4f2e-867c-112f016d4e7b.jpg"
     },
     {
       "Id": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\wwwroot\\images\\e944b1f7-c5da-4d81-bd8b-513a3905a692.png",

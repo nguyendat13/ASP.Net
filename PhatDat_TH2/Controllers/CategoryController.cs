@@ -92,15 +92,22 @@ namespace PhatDat_TH2.Controllers
             return CreatedAtAction(nameof(GetCategory), new { id = newCategory.Id }, newCategory);
         }
 
-
         [HttpPut("{id}")]
-        public IActionResult Edit(int id, Category category)
+        public IActionResult Edit(int id, [FromBody] CategoryDTO categoryDto)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return BadRequest(errors); // Trả về chi tiết lỗi
+            }
+
             var existing = _context.Categories.Find(id);
             if (existing == null) return NotFound();
 
-            existing.Name = category.Name;
-            existing.Description = category.Description;
+            // Cập nhật dữ liệu từ DTO vào entity
+            existing.Name = categoryDto.Name;
+            existing.Description = categoryDto.Description;
+
             _context.SaveChanges();
 
             return Ok(existing);
@@ -117,5 +124,21 @@ namespace PhatDat_TH2.Controllers
 
             return NoContent();
         }
+
+
+        // Lấy sản phẩm theo danh mục
+        [HttpGet("products/{categoryId}")]
+        public IActionResult GetProductsByCategory(int categoryId)
+        {
+            var products = _context.Products
+                .Where(p => p.CategoryId == categoryId)
+                .ToList();
+
+            if (products == null || !products.Any())
+                return NotFound("Không có sản phẩm nào trong danh mục này.");
+
+            return Ok(products);
+        }
     }
 }
+

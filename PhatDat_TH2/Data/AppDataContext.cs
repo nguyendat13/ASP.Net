@@ -24,9 +24,17 @@ namespace PhatDat_TH2.Data
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Method> Methods { get; set; }
+        public DbSet<Payment> Payments { get; set; } // KHÔNG phải Payment (sai cú pháp)
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Payment>()
+    .HasOne(p => p.Method)
+    .WithMany()
+    .HasForeignKey(p => p.MethodId);
+
             modelBuilder.Entity<Cart>()
         .HasIndex(c => c.UserId)
         .IsUnique(); // Đảm bảo mỗi User chỉ có 1 Cart
@@ -58,6 +66,19 @@ namespace PhatDat_TH2.Data
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
+            modelBuilder.Entity<ChatMessage>()
+       .HasOne(c => c.Sender)
+       .WithMany()
+       .HasForeignKey(c => c.SenderId)
+       .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ChatMessage>()
+                .HasOne(c => c.Receiver)
+                .WithMany()
+                .HasForeignKey(c => c.ReceiverId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<StatusOrder>().HasData(
     new StatusOrder { Id = 1, Name = "Đang xử lý" },
     new StatusOrder { Id = 2, Name = "Đang giao" },

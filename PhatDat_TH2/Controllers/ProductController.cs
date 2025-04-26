@@ -105,26 +105,43 @@ namespace PhatDat_TH2.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromForm] ProductRequest request, IFormFile? image)
         {
-            var existing = await _context.Products.FindAsync(id);
-            if (existing == null) return NotFound();
-
-            existing.Name = request.Name;
-            existing.Description = request.Description;
-            existing.Price = request.Price;
-            existing.Discount = request.Discount;
-            existing.CategoryId = request.CategoryId;
-            existing.UpdatedAt = DateTime.UtcNow;
-            existing.UpdatedBy = "admin";
-
-            if (image != null)
+            // Tìm sản phẩm theo id
+            var existingProduct = await _context.Products.FindAsync(id);
+            if (existingProduct == null)
             {
-                string avatarPath = await SaveImage(image);
-                existing.Avatar = avatarPath;
+                return NotFound();
             }
 
+            // Kiểm tra nếu danh mục tồn tại
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId);
+            if (category == null)
+            {
+                return BadRequest("Danh mục không tồn tại.");
+            }
+
+            // Cập nhật thông tin sản phẩm từ ProductRequest
+            existingProduct.Name = request.Name;
+            existingProduct.Description = request.Description;
+            existingProduct.Price = request.Price;
+            existingProduct.Discount = request.Discount;
+            existingProduct.CategoryId = request.CategoryId;
+            existingProduct.UpdatedAt = DateTime.UtcNow;
+            existingProduct.UpdatedBy = "admin";  // Bạn có thể thay đổi theo người dùng thực hiện cập nhật
+
+            // Xử lý hình ảnh nếu có
+            if (image != null)
+            {
+                string avatarPath = await SaveImage(image); // Lưu hình ảnh
+                existingProduct.Avatar = avatarPath;  // Cập nhật đường dẫn hình ảnh
+            }
+
+            // Lưu thay đổi vào cơ sở dữ liệu
             await _context.SaveChangesAsync();
-            return Ok(existing);
+
+            // Trả về thông tin sản phẩm đã được cập nhật
+            return Ok(existingProduct);
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -205,6 +222,90 @@ namespace PhatDat_TH2.Controllers
                 ".bmp" => "image/bmp",
                 _ => "application/octet-stream"
             };
+        }
+        // Get new products (products created recently)
+        [HttpGet("new")]
+        public IActionResult GetNewProducts()
+        {
+            var newProducts = _context.Products
+                                       .OrderByDescending(p => p.CreatedAt) // Sắp xếp theo ngày tạo
+                                       .Take(5) // Lấy 5 sản phẩm mới nhất
+                                       .Include(p => p.Category)
+                                       .Select(p => new
+                                       {
+                                           p.Id,
+                                           p.Name,
+                                           p.Description,
+                                           p.Price,
+                                           p.Avatar,
+                                           p.Discount,
+                                           p.CategoryId,
+                                           CategoryName = p.Category.Name
+                                       })
+                                       .ToList();
+
+            return Ok(newProducts);
+        }
+        // Get top-selling products (products with highest sales)
+        [HttpGet("top-selling")]
+        public IActionResult GetTopSellingProducts()
+        {
+            // Ví dụ giả định có bảng OrderItem để theo dõi doanh thu, bạn cần điều chỉnh theo thực tế của dự án.
+            var topSellingProducts = _context.OrderDetails
+                                             .GroupBy(oi => oi.ProductId)
+                                             .Select(group => new
+                                             {
+                                                 ProductId = group.Key,
+                                                 TotalSales = group.Sum(oi => oi.Quantity)
+                                             })
+                                             .OrderByDescending(p => p.TotalSales)
+                                             .Take(5)
+                                             .Join(_context.Products,
+                                                   p => p.ProductId,
+                                                   product => product.Id,
+                                                   (p, product) => new
+                                                   {
+                                                       product.Id,
+                                                       product.Name,
+                                                       product.Description,
+                                                       product.Price,
+                                                       product.Avatar,
+                                                       product.Discount,
+                                                       product.CategoryId,
+                                                       CategoryName = product.Category.Name,
+                                                       TotalSales = p.TotalSales
+                                                   })
+                                             .ToList();
+
+            return Ok(topSellingProducts);
+        }
+        [HttpGet("search")]
+        public IActionResult SearchProducts([FromQuery(Name = "query")] string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return BadRequest("Từ khóa tìm kiếm không hợp lệ.");
+            }
+
+            var products = _context.Products
+                .Where(p => p.Name.Contains(query) || p.Description.Contains(query))
+                .ToList();
+
+            return Ok(products);
+        }
+
+        [HttpGet("related")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetRelatedProducts(int productId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null) return NotFound("Không tìm thấy sản phẩm.");
+
+            var related = await _context.Products
+                .Where(p => p.CategoryId == product.CategoryId && p.Id != productId)
+                .Take(4)
+                .ToListAsync();
+
+            return Ok(related);
         }
 
     }

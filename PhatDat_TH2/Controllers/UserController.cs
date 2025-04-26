@@ -141,6 +141,9 @@ namespace PhatDat_TH2.Controllers
             existing.Fullname = user.Fullname;
             existing.Email = user.Email;
             existing.Username = user.Username;
+            existing.Phone = user.Phone;
+            existing.Gender = user.Gender;
+
             existing.Password = user.Password;
             existing.Role = user.Role;
             existing.Status = user.Status;

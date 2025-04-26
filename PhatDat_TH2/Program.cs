@@ -4,6 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PhatDat_TH2.Data;
 using System.Text;
+using PhatDat_TH2.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using PhatDat_TH2.Services;
+using System.Security.Claims;
+using PhatDat_TH2.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,22 +41,56 @@ builder.Services.AddAuthentication(options =>
            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)
         )
     };
+
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            // Cho phép truyền token qua query string khi kết nối WebSocket
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chathub"))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        },
+        OnTokenValidated = context =>
+        {
+            // Đảm bảo SignalR nhận được UserIdentifier chính xác
+            var claimsIdentity = context.Principal?.Identity as System.Security.Claims.ClaimsIdentity;
+            var userId = claimsIdentity?.FindFirst("userId")?.Value;
+            if (!string.IsNullOrEmpty(userId))
+            {
+                claimsIdentity.AddClaim(new System.Security.Claims.Claim(ClaimTypes.NameIdentifier, userId));
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
 
 // Cấu hình DbContext và Swagger
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policy =>
     {
         policy.WithOrigins("http://localhost:3000") // Chỉ cho phép origin cụ thể
              .AllowAnyMethod()
-             .AllowAnyHeader();
+             .AllowAnyHeader()
+             .AllowCredentials(); // Quan trọng để cho phép cookie và headers đặc biệt
     });
 });
+// Đảm bảo đăng ký ChatService
+builder.Services.AddScoped<ChatService>(); // Hoặc AddSingleton<ChatService>(), tùy vào yêu cầu
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers(); // Đảm bảo chỉ sử dụng API controller
+builder.Services.AddSignalR(); // Thêm SignalR vào dịch vụ
 
 // Swagger để test API
 builder.Services.AddEndpointsApiExplorer();
@@ -85,7 +124,9 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage(); // Hiển thị chi tiết lỗi 500
@@ -94,13 +135,23 @@ if (app.Environment.IsDevelopment())
 // Middleware
 app.UseSwagger();
 app.UseSwaggerUI();
+
+// Sử dụng CORS trước khi xử lý yêu cầu
 app.UseCors("AllowAllOrigins");
 
-app.UseRouting();
+// Đảm bảo gọi UseRouting() trước UseAuthentication và UseAuthorization
+app.UseRouting(); // Đặt sau UseCors, nhưng trước UseAuthentication và UseAuthorization
+
+// Sử dụng Authentication và Authorization
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseStaticFiles();  // Quan trọng để phục vụ tệp tĩnh như hình ảnh
 
-app.UseAuthentication(); // Thêm middleware xác thực JWT
-app.UseAuthorization();
-app.MapControllers(); // Đăng ký các API controller
+// Cấu hình API Controller
+app.MapControllers();
+
+// Cấu hình SignalR Hub
+app.MapHub<ChatHub>("/chathub"); // Đăng ký SignalR Hub
 
 app.Run();

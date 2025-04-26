@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhatDat_TH2.Data;
+using PhatDat_TH2.Model.DTO;
 using PhatDat_TH2.Model;
 using Microsoft.EntityFrameworkCore;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class TopicController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -15,45 +16,84 @@ public class TopicController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetTopics() => Ok(_context.Topics.Include(t => t.Posts).ToList());
-
-    [HttpGet("{id}")]
-    public IActionResult GetTopic(int id)
+    public async Task<IActionResult> GetTopics()
     {
-        var topic = _context.Topics.Include(t => t.Posts).FirstOrDefault(t => t.Id == id);
-        if (topic == null) return NotFound();
-        return Ok(topic);
+        var topics = await _context.Topics
+            .Select(t => new TopicDTO
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Description = t.Description
+            })
+            .ToListAsync();
+
+        return Ok(topics);
     }
 
+  [HttpGet("{id}")]
+public async Task<IActionResult> GetTopic(int id)
+{
+    var topic = await _context.Topics
+        .Include(t => t.Posts)
+        .Where(t => t.Id == id)
+        .Select(t => new TopicDTO
+        {
+            Id=t.Id,
+            Title = t.Title,
+            Description = t.Description,
+            Posts = t.Posts.Select(p => new PostDTO
+            {
+                Title = p.Title,
+                Content = p.Content,
+                TopicId = p.TopicId
+            }).ToList()
+        })
+        .FirstOrDefaultAsync();
+
+    if (topic == null) return NotFound();
+
+    return Ok(topic);
+}
+
+
     [HttpPost]
-    public IActionResult Create(Topic topic)
+    public async Task<IActionResult> Create([FromBody] TopicDTO topicDto)
     {
+        var topic = new Topic
+        {
+            Title = topicDto.Title,
+            Description = topicDto.Description
+        };
+
         _context.Topics.Add(topic);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
+
         return CreatedAtAction(nameof(GetTopic), new { id = topic.Id }, topic);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(int id, Topic updated)
+    public async Task<IActionResult> Update(int id, [FromBody] TopicDTO topicDto)
     {
-        var topic = _context.Topics.Find(id);
+        var topic = await _context.Topics.FindAsync(id);
         if (topic == null) return NotFound();
 
-        topic.Title = updated.Title;
-        topic.Description = updated.Description;
-        _context.SaveChanges();
+        topic.Title = topicDto.Title;
+        topic.Description = topicDto.Description;
+
+        await _context.SaveChangesAsync();
 
         return Ok(topic);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var topic = _context.Topics.Find(id);
+        var topic = await _context.Topics.FindAsync(id);
         if (topic == null) return NotFound();
 
         _context.Topics.Remove(topic);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
+
         return NoContent();
     }
 }
