@@ -66,7 +66,7 @@ const BannerList = () => {
               <td>
                 {banner.imageUrl ? (
                   <img
-                    src={banner.imageUrl}
+                    src={`https://localhost:7177${banner.imageUrl}`}
                     alt={`Banner ${banner.id}`}
                     width="100"
                     height="60"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaTags, FaMoneyBillWave, FaPercent, FaFolderOpen } from "react-icons/fa";
+import RelatedProducts from "./RelatedProducts";
 
 const ProductDetail = () => {
   const { id } = useParams(); // Lấy ID từ URL
@@ -65,6 +66,8 @@ const ProductDetail = () => {
           <button className="btn btn-primary" onClick={handleAddToCart}>Thêm vào giỏ</button>
           </div>
       </div>
+      <RelatedProducts productId={product.id} />
+
     </div>
   );
 };

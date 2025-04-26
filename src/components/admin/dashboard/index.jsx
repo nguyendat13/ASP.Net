@@ -1,64 +1,81 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
+  const [stats, setStats] = useState({
+    totalProducts: 0,
+    totalUsers: 0,
+    totalOrders: 0,
+    revenue: 0,
+    totalPosts: 0
+  });
+
+  useEffect(() => {
+    fetch('https://localhost:7177/api/Dashboard')
+      .then(res => res.json())
+      .then(data => setStats(data))
+      .catch(() => alert('Không thể tải dữ liệu thống kê.'));
+  }, []);
+
   return (
     <Container fluid style={{ padding: '30px' }}>
       <Row>
-        {/* Card 1: Tổng sản phẩm */}
         <Col md={4} className="mb-4">
           <Card bg="primary" text="white" style={{ height: '200px' }}>
             <Card.Body>
               <Card.Title>Tổng sản phẩm</Card.Title>
-              <Card.Text>350</Card.Text>
-              <Button variant="light">Xem chi tiết</Button>
+              <Card.Text>{stats.totalProducts}</Card.Text>
+              <Button variant="light">
+                <Link to="/admin/products" style={{ textDecoration: 'none' }}>Xem chi tiết</Link>
+              </Button>
             </Card.Body>
           </Card>
         </Col>
 
-        {/* Card 2: Tổng người dùng */}
         <Col md={4} className="mb-4">
           <Card bg="success" text="white" style={{ height: '200px' }}>
             <Card.Body>
               <Card.Title>Tổng người dùng</Card.Title>
-              <Card.Text>1,250</Card.Text>
-              <Button variant="light">Xem chi tiết</Button>
-            </Card.Body>
+              <Card.Text>{stats.totalUsers}</Card.Text>
+              <Button variant="light">
+                <Link to="/admin/users" style={{ textDecoration: 'none' }}>Xem chi tiết</Link>
+              </Button>
+             </Card.Body>
           </Card>
         </Col>
 
-        {/* Card 3: Tổng đơn hàng */}
         <Col md={4} className="mb-4">
           <Card bg="warning" text="white" style={{ height: '200px' }}>
             <Card.Body>
               <Card.Title>Tổng đơn hàng</Card.Title>
-              <Card.Text>580</Card.Text>
-              <Button variant="light">Xem chi tiết</Button>
-            </Card.Body>
+              <Card.Text>{stats.totalOrders}</Card.Text>
+              <Button variant="light">
+                <Link to="/admin/orders" style={{ textDecoration: 'none' }}>Xem chi tiết</Link>
+              </Button>            </Card.Body>
           </Card>
         </Col>
       </Row>
 
       <Row>
-        {/* Card 4: Doanh thu */}
         <Col md={6} className="mb-4">
           <Card bg="danger" text="white" style={{ height: '200px' }}>
             <Card.Body>
               <Card.Title>Doanh thu</Card.Title>
-              <Card.Text>1,200,000 VNĐ</Card.Text>
+              <Card.Text>{stats.revenue.toLocaleString('vi-VN')} VNĐ</Card.Text>
               <Button variant="light">Xem chi tiết</Button>
             </Card.Body>
           </Card>
         </Col>
 
-        {/* Card 5: Tổng bài viết */}
         <Col md={6} className="mb-4">
           <Card bg="info" text="white" style={{ height: '200px' }}>
             <Card.Body>
               <Card.Title>Tổng bài viết</Card.Title>
-              <Card.Text>120</Card.Text>
-              <Button variant="light">Xem chi tiết</Button>
-            </Card.Body>
+              <Card.Text>{stats.totalPosts}</Card.Text>
+              <Button variant="light">
+                <Link to="/admin/posts" style={{ textDecoration: 'none' }}>Xem chi tiết</Link>
+              </Button>            </Card.Body>
           </Card>
         </Col>
       </Row>

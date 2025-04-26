@@ -66,6 +66,7 @@ import BannerList from './components/admin/banners/BannerList.jsx';
 import BannersCreate from './components/admin/banners/BannerCreate.jsx';
 import BannersEdit from './components/admin/banners/BannerEdit.jsx';
 import BannersDetail from './components/admin/banners/BannerDetail.jsx';
+import SearchPage from './components/site/products/ProductSearch.jsx';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');
 
@@ -98,7 +99,7 @@ const App = () => {
         <Route path="deliveredOrders" element={<DeliveredOrdersList />} />
         <Route path="returnedOrders" element={<ReturnedOrdersList />} />
         <Route path="failedOrders" element={<FailedOrdersList />} />
-
+        <Route path="search" element={<SearchPage />} />  {/* Trang tìm kiếm */}
         <Route path="products" element={<ProductListUI />} />
         <Route path="products/:id" element={<ProductDetailUI />} />
         <Route path="categories/:categoryId" element={<CategoryProductsPage />} />

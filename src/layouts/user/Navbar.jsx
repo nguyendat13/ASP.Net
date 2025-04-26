@@ -1,11 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { FaShoppingCart, FaUser } from 'react-icons/fa';
+import { FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa';  // Import biểu tượng tìm kiếm
 import "../../css/Navbar.css";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(''); // Lưu trữ từ khóa tìm kiếm
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,13 @@ const Navbar = () => {
 
     fetchCategories();
   }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/search?q=${searchTerm}`); // Điều hướng đến trang tìm kiếm với query
+    }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow-sm">
@@ -76,6 +84,20 @@ const Navbar = () => {
           PHAT DAT STORE
         </Link>
 
+        {/* Tìm kiếm */}
+        <form className="d-flex ms-3" onSubmit={handleSearch}>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Tìm kiếm sản phẩm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button type="submit" className="btn btn-outline-light ms-2">
+                <FaSearch />
+              </button>
+            </form>
+
         <ul className="navbar-nav ms-auto">
           {!isLoggedIn ? (
             <li className="nav-item">
@@ -88,26 +110,25 @@ const Navbar = () => {
                   <FaShoppingCart /> Giỏ hàng
                 </Link>
               </li>
-              
-          {/* Icon User với dropdown */}
-          <li className="user-nav-item dropdown">
-            <Link 
-              className="nav-link dropdown-toggle" 
-              to="#" 
-              id="userDropdown" 
-              role="button" 
-              data-bs-toggle="dropdown" 
-              aria-expanded="false">
-              <FaUser /> {/* Icon người dùng */}
-            </Link>
-            <ul className="dropdown-menu" aria-labelledby="userDropdown" style={{ right: '0', left: 'auto', position: 'absolute' }}>
-            <li><Link className="dropdown-item" to="/user-profile">Thông tin người dùng</Link></li>
-              <li><Link className="dropdown-item" to="/orders">Đơn hàng</Link></li>
-              <li><hr className="dropdown-divider" /></li>
-              <li><Link to="/logout-user" className="dropdown-item">Đăng xuất</Link></li>
-            </ul>
-          </li>
 
+              {/* Icon User với dropdown */}
+              <li className="user-nav-item dropdown">
+                <Link 
+                  className="nav-link dropdown-toggle" 
+                  to="#" 
+                  id="userDropdown" 
+                  role="button" 
+                  data-bs-toggle="dropdown" 
+                  aria-expanded="false">
+                  <FaUser /> {/* Icon người dùng */}
+                </Link>
+                <ul className="dropdown-menu" aria-labelledby="userDropdown" style={{ right: '0', left: 'auto', position: 'absolute' }}>
+                  <li><Link className="dropdown-item" to="/user-profile">Thông tin người dùng</Link></li>
+                  <li><Link className="dropdown-item" to="/orders">Đơn hàng</Link></li>
+                  <li><hr className="dropdown-divider" /></li>
+                  <li><Link to="/logout-user" className="dropdown-item">Đăng xuất</Link></li>
+                </ul>
+              </li>
             </>
           )}
         </ul>

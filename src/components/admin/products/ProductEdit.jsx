@@ -111,12 +111,11 @@ const EditProduct = () => {
 
                 <select className='form-input' value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
                     {categories.map((cat) => (
-                        <option key={cat.categoryId} value={cat.categoryId}>
+                        <option key={cat.id} value={cat.id}>
                             {cat.name}
                         </option>
                     ))}
                 </select>
-
 
                 <input className="form-input" type="file" onChange={handleImageChange} />
                 <button className="form-submit-btn" type="submit">Cập Nhật Sản Phẩm</button>
