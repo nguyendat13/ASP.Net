@@ -95,4 +95,36 @@
     resize: none;
     word-break: break-all;
   }
-  
+/* Style cho Nút Đăng nhập Google */
+.google-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background-color: #4285F4; /* Màu xanh của Google */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Thêm shadow cho nút */
+}
+
+.google-login-btn:hover {
+  background-color: #357AE8; /* Màu khi hover */
+}
+
+.google-login-btn:focus {
+  outline: none;
+}
+
+/* Icon Google bên trái */
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}

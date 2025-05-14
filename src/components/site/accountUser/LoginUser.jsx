@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google'; // Import GoogleLogin component
 import '../../../css/LoginAdmin.css'; // import file CSS mới
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 const LoginUser = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +20,9 @@ const LoginUser = ({ onLogin }) => {
       navigate('/');
     }
   }, []);
-
+const handleGoogleLogin = () => {
+    window.location.href = "https://localhost:7177/api/ExternalLogin/google";
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -50,6 +54,8 @@ const LoginUser = ({ onLogin }) => {
       setMessage(`Lỗi: ${error.response?.data?.message || error.message}`);
     }
   };
+
+  
 
   return (
     <div className="login-container">
@@ -85,6 +91,12 @@ const LoginUser = ({ onLogin }) => {
       <p>
         Bạn chưa có tài khoản? <Link to="/register-user">Đăng ký ngay</Link>
       </p>
+
+    <div className="google-login-btn" onClick={handleGoogleLogin}>
+        <FontAwesomeIcon icon={faGoogle} className="google-icon" />
+        Đăng nhập với Google
+      </div>
+
     </div>
   );
 };

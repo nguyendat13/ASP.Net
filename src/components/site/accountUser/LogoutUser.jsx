@@ -11,6 +11,7 @@ const LogoutUser = () => {
     localStorage.removeItem('email-user');
     localStorage.removeItem("userId"); // lưu thêm user id
 
+
     // Chuyển về trang chủ
     navigate('/login-user');
   }, [navigate]);
