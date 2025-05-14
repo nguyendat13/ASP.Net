@@ -174,3 +174,4 @@ D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Microsoft.Extensions.Hosting
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Newtonsoft.Json.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll

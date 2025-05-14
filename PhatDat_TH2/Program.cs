@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 using PhatDat_TH2.Services;
 using System.Security.Claims;
 using PhatDat_TH2.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,12 +22,16 @@ builder.WebHost.ConfigureKestrel(options =>
     });
 });
 
-// Cấu hình JWT Bearer Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Thêm Cookie Authentication
 })
+  .AddCookie(options =>
+  {
+      options.LoginPath = "/login-user";  // Đường dẫn đăng nhập của bạn
+  })
 .AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -38,16 +43,14 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
-           Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)
         )
     };
-
 
     options.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
         {
-            // Cho phép truyền token qua query string khi kết nối WebSocket
             var accessToken = context.Request.Query["access_token"];
             var path = context.HttpContext.Request.Path;
             if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chathub"))
@@ -58,15 +61,55 @@ builder.Services.AddAuthentication(options =>
         },
         OnTokenValidated = context =>
         {
-            // Đảm bảo SignalR nhận được UserIdentifier chính xác
-            var claimsIdentity = context.Principal?.Identity as System.Security.Claims.ClaimsIdentity;
+            var claimsIdentity = context.Principal?.Identity as ClaimsIdentity;
             var userId = claimsIdentity?.FindFirst("userId")?.Value;
             if (!string.IsNullOrEmpty(userId))
             {
-                claimsIdentity.AddClaim(new System.Security.Claims.Claim(ClaimTypes.NameIdentifier, userId));
+                claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));
             }
             return Task.CompletedTask;
         }
+    };
+})
+
+.AddGoogle("Google", options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    options.CallbackPath = "/signin-google";
+
+    options.Events.OnCreatingTicket = async context =>
+    {
+        var email = context.Principal.FindFirst(ClaimTypes.Email)?.Value;
+        var name = context.Principal.FindFirst(ClaimTypes.Name)?.Value;
+
+        var dbContext = context.HttpContext.RequestServices.GetRequiredService<AppDbContext>();
+
+        var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (user == null)
+        {
+            user = new PhatDat_TH2.Model.User
+            {
+                Fullname = name ?? "No Name",
+                Email = email,
+                Username = email.Split('@')[0],
+                Password = "",
+                Role = "user",
+                Phone = "",
+                Gender = "",
+                Status = true,
+                CreatedBy = "Google",
+                CreatedAt = DateTime.Now
+            };
+
+            dbContext.Users.Add(user);
+            await dbContext.SaveChangesAsync();
+        }
+
+        // Thêm claim để xử lý về sau (nếu cần JWT tạo thủ công sau khi login)
+        var identity = (ClaimsIdentity)context.Principal.Identity;
+        identity.AddClaim(new Claim("userId", user.Id.ToString()));
+        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
     };
 });
 
