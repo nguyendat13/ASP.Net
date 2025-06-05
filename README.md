@@ -24,10 +24,10 @@
 
 ```bash
 # Clone repository
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/nguyendat13/fruit-store.git
 
 # Di chuyển vào thư mục backend
-cd your-repo
+cd fruit-store
 
 # Restore các package cần thiết
 dotnet restore
