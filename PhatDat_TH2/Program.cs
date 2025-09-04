@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PhatDat_TH2.Data;
 using PhatDat_TH2.Hubs;
+using PhatDat_TH2.Library;
 using PhatDat_TH2.Model;
 using PhatDat_TH2.Repository;
 using PhatDat_TH2.Repository.IRepository;
@@ -142,6 +143,7 @@ builder.Services.AddSignalR(); // Thêm SignalR vào dịch vụ
 // Swagger để test API
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpClient();
+builder.Services.Configure<GeminiSettings>(builder.Configuration.GetSection("GeminiAi"));
 
 builder.Services.AddSwaggerGen(c =>
 {
