@@ -68,6 +68,7 @@ import BannersEdit from './components/admin/banners/BannerEdit.jsx';
 import BannersDetail from './components/admin/banners/BannerDetail.jsx';
 import SearchPage from './components/site/products/ProductSearch.jsx';
 import GoogleSuccess from './components/site/accountUser/loginGoogle/GoogleSuccess.jsx';
+import PaymentCallback from './components/site/accountUser/PaymentCallback.jsx';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');
 
@@ -85,7 +86,7 @@ const App = () => {
       <Route path="/register-user" element={<RegisterUser />} />
       <Route path="/login-user" element={<LoginUser />} />
       <Route path="/logout-user" element={<LogoutUser />} />  {/* ✅ Route logout user */}
-<Route path="/google-success" element={<GoogleSuccess />} />
+      <Route path="/google-success" element={<GoogleSuccess />} />
 
       {/* Route người dùng */}
       <Route path="/" element={<UserLayout />}>
@@ -105,7 +106,9 @@ const App = () => {
         <Route path="products" element={<ProductListUI />} />
         <Route path="products/:id" element={<ProductDetailUI />} />
         <Route path="categories/:categoryId" element={<CategoryProductsPage />} />
-
+          <Route path="/payment-callback" element={<PaymentCallback />} />
+          <Route path="/payment-success" element={<div>Thanh toán thành công!</div>} />
+          <Route path="/payment-fail" element={<div>Thanh toán thất bại!</div>} />
       </Route>
 
 
