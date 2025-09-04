@@ -17,43 +17,40 @@ const ProductList = () => {
   }, []);
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4 text-center">Danh sách sản phẩm</h2>
+    <div className="container-fluid mt-5" style={{ background: 'linear-gradient(120deg, #23272b 70%, #4CAF50 100%)', borderRadius: '24px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', padding: '32px 0', minHeight: '80vh' }}>
+      <h2 className="mb-4 text-center" style={{ color: '#FFD700', fontWeight: 'bold', textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>Danh sách sản phẩm</h2>
       <div className="row">
         {products.map((product) => (
-          <div key={product.id} className="col-sm-6 col-md-4 col-lg-3 mb-4">
-            <div className="card h-100 shadow-sm rounded">
-              <img
-                src={`https://localhost:7177${product.avatar}`}
-                className="card-img-top"
-                alt={product.name}
-                style={{ height: "200px", objectFit: "cover" }}
-              />
+          <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div className="card h-100 shadow-sm rounded" style={{ background: '#23272b', color: '#FFD700', border: '2px solid #FFA500', boxShadow: '0 4px 16px rgba(0,0,0,0.2)' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#23272b', borderRadius: '8px', overflow: 'hidden', height: '200px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
+                <img
+                  src={`https://localhost:7177${product.avatar}`}
+                  alt={product.name}
+                  style={{ maxHeight: '180px', maxWidth: '90%', objectFit: 'contain', borderRadius: '8px', border: '2px solid #FFA500', background: '#23272b', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
+                />
+              </div>
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title text-primary">
-                  <FaTags className="me-2" />
-                  {product.name}
+                <h5 className="card-title d-flex align-items-center" style={{ color: '#FFD700', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                  <FaTags style={{ color: '#FFA500', marginRight: '8px' }} /> {product.name}
                 </h5>
-                <p className="card-text flex-grow-1">
+                <p className="card-text flex-grow-1" style={{ color: '#FFA500' }}>
                   {product.description?.length > 100
                     ? product.description.substring(0, 100) + "..."
                     : product.description}
                 </p>
-                <p className="mb-1">
-                  <FaMoneyBillWave className="me-2 text-success" />
-                  <strong>{product.price.toLocaleString()} đ</strong>
+                <p className="mb-1 d-flex align-items-center" style={{ fontSize: '1.1rem', color: '#FFD700', fontWeight: 'bold' }}>
+                  <FaMoneyBillWave style={{ color: '#FFA500', marginRight: '8px' }} /> {product.price.toLocaleString()} đ
                 </p>
                 {product.discount > 0 && (
-                  <p className="mb-1 text-danger">
-                    <FaPercent className="me-2" />
-                    Giảm giá: {product.discount}%
+                  <p className="mb-1 d-flex align-items-center" style={{ color: '#FFA500', fontWeight: 'bold' }}>
+                    <FaPercent style={{ marginRight: '8px' }} /> Giảm giá: {product.discount}%
                   </p>
                 )}
-                <p className="mb-0 text-muted">
-                  <FaFolderOpen className="me-2" />
-                  {product.categoryName}
+                <p className="mb-0 d-flex align-items-center" style={{ color: '#FFD700', fontWeight: 'bold' }}>
+                  <FaFolderOpen style={{ color: '#FFA500', marginRight: '8px' }} /> {product.categoryName}
                 </p>
-                <Link to={`/products/${product.id}`} className="btn btn-outline-primary mt-3">
+                <Link to={`/products/${product.id}`} className="btn btn-outline-warning mt-3" style={{ color: '#23272b', fontWeight: 'bold', border: '2px solid #FFA500', background: '#FFD700' }}>
                   Xem chi tiết
                 </Link>
               </div>

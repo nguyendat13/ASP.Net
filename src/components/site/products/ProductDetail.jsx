@@ -44,30 +44,38 @@ const ProductDetail = () => {
   if (!product) return <div>Loading...</div>;
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4 text-center">Chi tiết sản phẩm</h2>
-      <div className="row">
-        <div className="col-md-6">
-          <img
-            src={`https://localhost:7177${product.avatar}`}
-            alt={product.name}
-            className="img-fluid"
-            style={{ maxHeight: "500px", objectFit: "cover" }}
-          />
-        </div>
-        <div className="col-md-6">
-          <h3>{product.name}</h3>
-          <p>{product.description}</p>
-          <p><strong>💰 Giá: {product.price.toLocaleString()} đ</strong></p>
-          {product.discount > 0 && (
-            <p><FaPercent /> Giảm giá: {product.discount}%</p>
-          )}
-          <p><FaFolderOpen /> Danh mục: {product.categoryName}</p>
-          <button className="btn btn-primary" onClick={handleAddToCart}>Thêm vào giỏ</button>
+    <div className="container-fluid mt-5" style={{ background: 'linear-gradient(120deg, #23272b 70%, #4CAF50 100%)', borderRadius: '24px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', padding: '32px 0', minHeight: '80vh' }}>
+      <h2 className="mb-4 text-center" style={{ color: '#FFD700', fontWeight: 'bold', textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>Chi tiết sản phẩm</h2>
+      <div className="row justify-content-center align-items-center">
+        <div className="col-12 col-md-5 mb-4 d-flex justify-content-center">
+          <div style={{ background: '#23272b', borderRadius: '16px', boxShadow: '0 4px 16px rgba(0,0,0,0.2)', padding: '16px' }}>
+            <img
+              src={`https://localhost:7177${product.avatar}`}
+              alt={product.name}
+              style={{ maxHeight: '350px', maxWidth: '100%', objectFit: 'contain', borderRadius: '12px', border: '2px solid #FFA500', background: '#23272b', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
+            />
           </div>
+        </div>
+        <div className="col-12 col-md-7">
+          <h3 className="d-flex align-items-center" style={{ color: '#FFD700', fontWeight: 'bold', fontSize: '2rem' }}>
+            <FaTags style={{ color: '#FFA500', marginRight: '10px' }} /> {product.name}
+          </h3>
+          <p style={{ color: '#FFA500', fontSize: '1.1rem' }}>{product.description}</p>
+          <p className="d-flex align-items-center" style={{ fontSize: '1.3rem', color: '#FFD700', fontWeight: 'bold' }}>
+            <FaMoneyBillWave style={{ color: '#FFA500', marginRight: '8px' }} /> {product.price.toLocaleString()} đ
+          </p>
+          {product.discount > 0 && (
+            <p className="d-flex align-items-center" style={{ color: '#FFA500', fontWeight: 'bold' }}>
+              <FaPercent style={{ marginRight: '8px' }} /> Giảm giá: {product.discount}%
+            </p>
+          )}
+          <p className="d-flex align-items-center" style={{ color: '#FFD700', fontWeight: 'bold' }}>
+            <FaFolderOpen style={{ color: '#FFA500', marginRight: '8px' }} /> Danh mục: {product.categoryName}
+          </p>
+          <button className="btn btn-warning mt-3 px-4 py-2" style={{ color: '#23272b', fontWeight: 'bold', fontSize: '1.1rem', border: '2px solid #FFA500', background: '#FFD700' }} onClick={handleAddToCart}>Thêm vào giỏ</button>
+        </div>
       </div>
       <RelatedProducts productId={product.id} />
-
     </div>
   );
 };

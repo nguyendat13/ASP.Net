@@ -39,10 +39,19 @@ const OrderDetails = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Chi tiết đơn hàng #{orderDetails.id}</h2>
-      <button className="btn btn-secondary mt-4" onClick={() => navigate("/orders")}>
-  🡸 Quay lại trang chính
-</button>
+      <h2 className="text-center mb-4 fw-bold" style={{ color: '#43a047', letterSpacing: 1 }}>
+        Chi tiết đơn hàng #{orderDetails.id}
+      </h2>
+      <div className="d-flex justify-content-start mb-3">
+        <button
+          className="btn btn-dark d-flex align-items-center gap-2 shadow-sm"
+          style={{ borderRadius: 8, fontWeight: 500, background: '#23272a', color: '#ff9800', border: 'none' }}
+          onClick={() => navigate("/orders")}
+        >
+          <span style={{ fontSize: '1.3rem', color: '#43a047' }}>&#8592;</span>
+          Quay lại trang chính
+        </button>
+      </div>
       <div className="card">
         <div className="card-body">
           <h4>Thông tin khách hàng</h4>

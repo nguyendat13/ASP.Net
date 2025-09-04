@@ -45,53 +45,58 @@ const RegisterUser = () => {
   };
 
   return (
-    <div style={{ maxWidth: '450px', margin: '50px auto', padding: '20px', border: '1px solid #ccc' }}>
-      <h2>Đăng Ký Người Dùng</h2>
-      <form onSubmit={handleSubmit}>
-        {['fullname', 'username', 'email', 'password', 'phone'].map((field) => (
-          <div key={field} style={{ marginBottom: '15px' }}>
-            <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
-            <input
-              type={field === 'password' ? 'password' : 'text'}
-              name={field}
-              value={formData[field]}
+    <div style={{ minHeight: '100vh', width: '100vw', background: '#181a1b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="register-container d-flex flex-column align-items-center justify-content-center" style={{ maxWidth: '450px', width: '100%', background: '#23272a', borderRadius: 16, boxShadow: '0 0 16px #212121', padding: '32px 24px' }}>
+        <h2 className="fw-bold mb-4 d-flex align-items-center gap-2" style={{ color: '#43a047', letterSpacing: 1 }}>
+          Đăng Ký Người Dùng
+        </h2>
+        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+          {['fullname', 'username', 'email', 'password', 'phone'].map((field) => (
+            <div key={field} className="mb-3">
+              <label className="fw-bold" style={{ color: '#fbc02d' }}>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+              <input
+                type={field === 'password' ? 'password' : 'text'}
+                name={field}
+                value={formData[field]}
+                onChange={handleChange}
+                className="form-control"
+                style={{ background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }}
+                required
+              />
+            </div>
+          ))}
+
+          <div className="mb-3">
+            <label className="fw-bold" style={{ color: '#fbc02d' }}>Giới tính:</label>
+            <select
+              name="gender"
+              value={formData.gender}
               onChange={handleChange}
-              style={{ width: '100%', padding: '8px' }}
+              className="form-select"
+              style={{ background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }}
               required
-            />
+            >
+              <option value="">-- Chọn giới tính --</option>
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              <option value="Khác">Khác</option>
+            </select>
           </div>
-        ))}
 
-        <div style={{ marginBottom: '15px' }}>
-          <label>Giới tính:</label>
-          <select
-            name="gender"
-            value={formData.gender}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px' }}
-            required
-          >
-            <option value="">-- Chọn giới tính --</option>
-            <option value="Nam">Nam</option>
-            <option value="Nữ">Nữ</option>
-            <option value="Khác">Khác</option>
-          </select>
-        </div>
+          <button type="submit" className="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2" style={{ borderRadius: 8, fontWeight: 500, background: '#43a047', color: '#fff', border: 'none', padding: '10px 0' }}>
+            Đăng Ký
+          </button>
+        </form>
 
-        <button type="submit" style={{ padding: '10px 15px', background: '#007bff', color: 'white', border: 'none' }}>
-          Đăng Ký
-        </button>
-      </form>
-
-      {message && (
-        <div style={{ marginTop: '20px', padding: '10px', background: message.includes('Lỗi') ? '#ffdddd' : '#ddffdd' }}>
-          {message}
-        </div>
-      )}
-      <p style={{ marginTop: '20px' }}>
-  Bạn đã có tài khoản? <Link to="/login-user">Đăng nhập ngay</Link>
-</p>
-
+        {message && (
+          <div className="mt-4" style={{ padding: '10px', background: message.includes('Lỗi') ? '#e53935' : '#43a047', color: '#fff', borderRadius: 8, fontWeight: 600 }}>
+            {message}
+          </div>
+        )}
+        <p className="mt-4" style={{ color: '#fff' }}>
+          Bạn đã có tài khoản? <Link to="/login-user" style={{ color: '#ff9800', fontWeight: 600 }}>Đăng nhập ngay</Link>
+        </p>
+      </div>
     </div>
   );
 };

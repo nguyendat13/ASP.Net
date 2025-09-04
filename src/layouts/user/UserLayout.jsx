@@ -1,40 +1,40 @@
 import { Outlet } from 'react-router-dom';
-import Navbar from './Navbar'; // nếu có
-import Footer from './Footer'; // nếu có
-import React, { useEffect, useState } from "react";
+import Navbar from './Navbar';
+import Footer from './Footer';
+import React, { useState } from "react";
 import { FaComments } from 'react-icons/fa';
-import ChatboxUser from '../../components/site/accountUser/chatbox/ChatboxUser';
+import ChatboxAI from '../../components/site/accountUser/chatbox/ChatBox';
 
-const UserLayout = () => {
-    const [showChat, setShowChat] = useState(false); // toggle popup chat
-  
-  const toggleChat = () => {
-    setShowChat(!showChat);
-  };
-  return (
-    <div>
-      <Navbar />
-      <div className="container mt-4">
-          {/* Chat Icon */}
-                <div className="chat-icon" onClick={toggleChat}>
-                <FaComments size={32} />
-              </div>
-        
-              {/* Chatbox Popup */}
-              {showChat && (
-                <div className="chat-popup">
-                  <div className="chat-popup-header">
-                    <span>💬 Tin nhắn</span>
-                    <button onClick={toggleChat} className="close-btn">✖</button>
-                  </div>
-                  <ChatboxUser senderId={13} receiverId={3} />
+const UserLayout = ({ userId }) => {
+    const [showChat, setShowChat] = useState(false);
+
+    const toggleChat = () => setShowChat(!showChat);
+
+    return (
+        <div style={{ background: 'linear-gradient(120deg, #23272b 70%, #4CAF50 100%)', minHeight: '100vh' }}>
+            <Navbar />
+            <div className="container mt-4" style={{ maxWidth: '1200px', background: 'rgba(34, 39, 43, 0.95)', borderRadius: '16px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', padding: '32px 24px' }}>
+                {/* Chat Icon */}
+                <div className="chat-icon" onClick={toggleChat} style={{ position: 'fixed', bottom: '32px', right: '32px', zIndex: 1000, background: '#FFA500', borderRadius: '50%', boxShadow: '0 4px 16px rgba(0,0,0,0.2)', padding: '12px', cursor: 'pointer' }}>
+                    <FaComments size={32} color="#23272b" />
                 </div>
-              )}
-        <Outlet />
-      </div>
-      <Footer />
-    </div>
-  );
+
+                {/* Chatbox Popup */}
+                {showChat && (
+                    <div className="chat-popup" style={{ position: 'fixed', bottom: '80px', right: '32px', zIndex: 1100, background: '#23272b', borderRadius: '16px', boxShadow: '0 8px 32px rgba(0,0,0,0.3)', width: '400px', maxWidth: '90vw', color: '#FFD700' }}>
+                        <div className="chat-popup-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: '1px solid #FFA500', background: '#23272b', borderTopLeftRadius: '16px', borderTopRightRadius: '16px' }}>
+                            <span style={{ fontWeight: 'bold', color: '#FFA500' }}>💬 Trợ lý ảo</span>
+                            <button onClick={toggleChat} className="close-btn" style={{ background: 'none', border: 'none', color: '#FFD700', fontSize: '1.2rem', cursor: 'pointer' }}>✖</button>
+                        </div>
+                        <ChatboxAI userId={userId} />
+                    </div>
+                )}
+
+                <Outlet />
+            </div>
+            <Footer />
+        </div>
+    );
 };
 
 export default UserLayout;

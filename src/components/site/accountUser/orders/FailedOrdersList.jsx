@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaArrowLeft, FaRegTimesCircle, FaSearch } from "react-icons/fa";
 
 const FailedOrdersList = () => {
   const [orders, setOrders] = useState([]);
@@ -36,24 +37,34 @@ const FailedOrdersList = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center mt-5">Đang tải đơn hàng giao thất bại...</div>;
+  return <div className="text-center mt-5 text-light">Đang tải đơn hàng giao thất bại...</div>;
   }
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Đơn hàng giao thất bại</h2>
-      <button className="btn btn-secondary mt-4" onClick={() => navigate("/orders")}>
-        🡸 Quay lại trang chính
-      </button>
+      <h2 className="text-center mb-4 fw-bold" style={{ color: '#e53935', letterSpacing: 1 }}>
+        <FaRegTimesCircle className="me-2" style={{ color: '#212121', fontSize: 28 }} />
+        Đơn hàng giao thất bại
+      </h2>
+      <div className="d-flex justify-content-start mb-3">
+        <button
+          className="btn btn-dark d-flex align-items-center gap-2 shadow-sm"
+          style={{ borderRadius: 8, fontWeight: 500, background: '#23272a', color: '#ff9800', border: 'none' }}
+          onClick={() => navigate("/orders")}
+        >
+          <FaArrowLeft style={{ fontSize: '1.3rem', color: '#43a047' }} />
+          Quay lại trang chính
+        </button>
+      </div>
       {orders.length === 0 ? (
-        <div className="alert alert-info text-center">
+        <div className="alert alert-info text-center fw-bold" style={{ background: '#212121', color: '#e53935', border: 'none' }}>
           Hiện không có đơn hàng nào giao thất bại.
         </div>
       ) : (
-        <div className="card">
+        <div className="card shadow-lg" style={{ background: '#23272a', borderRadius: 16 }}>
           <div className="card-body">
-            <table className="table table-bordered table-striped">
-              <thead className="table-dark">
+            <table className="table table-bordered table-striped" style={{ background: '#23272a', color: '#fff', borderRadius: 12 }}>
+              <thead className="table-dark" style={{ background: '#212121', color: '#e53935' }}>
                 <tr>
                   <th>Mã đơn</th>
                   <th>Khách hàng</th>
@@ -66,19 +77,20 @@ const FailedOrdersList = () => {
               </thead>
               <tbody>
                 {orders.map((order) => (
-                  <tr key={order.id}>
+                  <tr key={order.id} style={{ background: '#23272a', color: '#fff' }}>
                     <td>{order.id}</td>
                     <td>{order.customerName}</td>
                     <td>{new Date(order.orderDate).toLocaleDateString()}</td>
-                    <td>{order.statusName}</td>
+                    <td style={{ color: '#e53935', fontWeight: 600 }}>{order.statusName}</td>
                     <td>{order.methodName}</td>
-                    <td>{order.totalPrice?.toLocaleString()} ₫</td>
+                    <td style={{ color: '#e53935', fontWeight: 700 }}>{order.totalPrice?.toLocaleString()} ₫</td>
                     <td>
                       <button
-                        className="btn btn-info btn-sm"
+                        className="btn btn-outline-warning btn-sm d-flex align-items-center gap-1"
+                        style={{ borderRadius: 8, fontWeight: 500 }}
                         onClick={() => navigate(`/order/${order.id}`)}
                       >
-                        Xem chi tiết
+                        <FaSearch style={{ color: '#43a047', fontSize: 16 }} /> Xem chi tiết
                       </button>
                     </td>
                   </tr>

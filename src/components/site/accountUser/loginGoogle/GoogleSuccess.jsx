@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { FaGoogle, FaSpinner } from 'react-icons/fa';
 
 const GoogleSuccess = () => {
   const navigate = useNavigate();
@@ -27,8 +28,14 @@ const GoogleSuccess = () => {
   }, [token, userId, email, navigate]);
 
   return (
-    <div>
-      <h3>Đang xử lý đăng nhập...</h3>
+    <div className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: '60vh', background: '#23272a' }}>
+      <div className="mb-3">
+        <FaGoogle style={{ color: '#43a047', fontSize: 48 }} />
+      </div>
+      <h3 className="fw-bold mb-2" style={{ color: '#ff9800', letterSpacing: 1 }}>
+        Đang xử lý đăng nhập Google...
+      </h3>
+      <FaSpinner className="fa-spin" style={{ color: '#fbc02d', fontSize: 32 }} />
     </div>
   );
 };

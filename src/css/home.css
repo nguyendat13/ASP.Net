@@ -20,27 +20,31 @@
 .home-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #333;
+  color: #FFD700;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .home-subtitle {
   font-size: 1.2rem;
-  color: #777;
+  color: #FFA500;
 }
 
 .section-title {
   font-size: 1.8rem;
   font-weight: 600;
-  border-left: 4px solid #0d6efd;
+  border-left: 4px solid #FFA500;
   padding-left: 10px;
   margin-bottom: 20px;
+  color: #FFD700;
 }
 
 .product-card, .post-card {
   transition: transform 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
   border: none;
   border-radius: 8px;
+  background: #23272b;
+  color: #FFD700;
 }
 
 .product-card:hover, .post-card:hover {
@@ -55,7 +59,7 @@
 }
 
 .card-body .price {
-  color: #dc3545;
+  color: #FFA500;
   font-weight: bold;
 }
 

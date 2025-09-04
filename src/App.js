@@ -49,8 +49,6 @@ import FailedOrdersList from './components/site/accountUser/orders/FailedOrdersL
 import Topics from './components/admin/topic/TopicList.jsx';
 import Posts from './components/admin/posts/PostList.jsx';
 import Menus from './components/admin/menus/MenuList.jsx';
-import ChatboxUser from './components/site/accountUser/chatbox/ChatboxUser.jsx';
-import ChatboxAdmin from './components/site/accountUser/chatbox/ChatboxAdmin.jsx';
 import TopicCreate from './components/admin/topic/TopicCreate.jsx';
 import TopicDetail from './components/admin/topic/TopicDetail.jsx';
 import TopicEdit from './components/admin/topic/TopicEdit.jsx';
@@ -68,7 +66,10 @@ import BannersEdit from './components/admin/banners/BannerEdit.jsx';
 import BannersDetail from './components/admin/banners/BannerDetail.jsx';
 import SearchPage from './components/site/products/ProductSearch.jsx';
 import GoogleSuccess from './components/site/accountUser/loginGoogle/GoogleSuccess.jsx';
+import PaymentSuccess from './components/site/accountUser/PaymentSuccess.jsx';
+import PaymentFail from './components/site/accountUser/PaymentFail.jsx';
 import PaymentCallback from './components/site/accountUser/PaymentCallback.jsx';
+import ChatboxAI from './components/site/accountUser/chatbox/ChatBox.jsx';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');
 
@@ -91,7 +92,7 @@ const App = () => {
       {/* Route người dùng */}
       <Route path="/" element={<UserLayout />}>
         <Route index element={<Home />} />
-        <Route path="chat" element={<ChatboxUser senderId={13} receiverId={3} />} />
+        <Route path="chat" element={<ChatboxAI />} />
         <Route path="user-profile" element={<UserProfilePage />} />
         <Route path="carts" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
@@ -107,8 +108,8 @@ const App = () => {
         <Route path="products/:id" element={<ProductDetailUI />} />
         <Route path="categories/:categoryId" element={<CategoryProductsPage />} />
           <Route path="/payment-callback" element={<PaymentCallback />} />
-          <Route path="/payment-success" element={<div>Thanh toán thành công!</div>} />
-          <Route path="/payment-fail" element={<div>Thanh toán thất bại!</div>} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-fail" element={<PaymentFail />} />
       </Route>
 
 
@@ -120,7 +121,6 @@ const App = () => {
         {isAdmin ? (
           <Route path="/admin" element={<AdminDashboard />}>
              <Route path="dashboard" element={<Dashboard />} />
-             <Route path="chat" element={<ChatboxAdmin senderId={3} receiverId={13} />} />
 
              <Route path="categories" element={<Categories />} />
              <Route path="categories/create" element={<CategoryCreate />} />

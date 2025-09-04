@@ -1,19 +1,23 @@
 /* Navbar */
-.navbar {
-  background-color: #343a40;
+
+.custom-navbar {
+  background: linear-gradient(90deg, #23272b 60%, #4CAF50 100%);
   transition: all 0.3s ease;
   padding-left: 20px;
   padding-right: 20px;
+  border-bottom: 3px solid #FFA500;
 }
 
-.navbar:hover {
-  background-color: #23272b;
+/* Hiệu ứng hover cho navbar */
+.custom-navbar:hover {
+  background: linear-gradient(90deg, #23272b 40%, #FFA500 100%);
 }
 
+/* Logo và tên cửa hàng */
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #fff;
+  color: #FFD700;
   display: flex;
   align-items: center;
 }
@@ -24,46 +28,63 @@
   margin-right: 10px;
 }
 
+/* Link menu */
 .nav-link {
-  color: #fff !important;
-  font-size: 1rem;
+  color: #FFD700 !important;
+  font-size: 1.25rem;
   transition: color 0.2s ease;
+  font-weight: 600;
+  padding-left: 18px;
+  padding-right: 18px;
 }
 
+
+/* Hover cho link menu */
 .nav-link:hover {
-  color: #f0ad4e !important;
+  color: #FFA500 !important;
 }
 
 .nav-item.dropdown:hover .dropdown-menu {
   display: block;
 }
 
+/* Dropdown menu */
 .dropdown-menu {
-  background-color: #343a40;
-  border: none;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #23272b;
+  border: 1px solid #FFA500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Dropdown item */
 .dropdown-item {
-  color: #fff;
+  color: #FFD700;
   transition: background-color 0.2s ease;
 }
 
+/* Hover cho dropdown item */
 .dropdown-item:hover {
-  background-color: #f0ad4e;
+  background-color: #FFA500;
+  color: #23272b;
 }
 
+/* Toggler */
 .navbar-toggler {
-  border-color: #fff;
+  border-color: #FFA500;
 }
 
+/* Icon toggler */
 .navbar-toggler-icon {
-  background-color: #fff;
+  background-color: #FFA500;
 }
 
+/* Tách icon giỏ hàng và user ra xa nhau */
 .navbar-nav.ms-auto {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
+
 
 .navbar-nav .nav-item {
   margin-left: 20px;
@@ -112,6 +133,6 @@
   }
   .user-nav-item{
     position: relative;
-    right: 100px;
+    right: 100px; 
   }
 }

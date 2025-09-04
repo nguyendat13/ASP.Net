@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 const CancelledOrders = () => {
   const [cancelledOrders, setCancelledOrders] = useState([]);
@@ -55,11 +56,20 @@ const CancelledOrders = () => {
   };
   return (
     <div className="container mt-4">
-      <h2 className="mb-4 text-center">Danh sách đơn hàng đã hủy</h2>
-      <button className="btn btn-secondary mt-4" onClick={() => navigate("/orders")}>
-  🡸 Quay lại trang chính
+      <h2 className="mb-4 text-center fw-bold" style={{ color: '#e53935', letterSpacing: 1 }}>
+        Đơn hàng đã hủy
+      </h2>
+      <div className="d-flex justify-content-start mb-3">
+        <button
+          className="btn btn-dark d-flex align-items-center gap-2 shadow-sm"
+          style={{ borderRadius: 8, fontWeight: 500, background: '#23272a', color: '#ff9800', border: 'none' }}
+          onClick={() => navigate("/orders")}
+        >
+          <FaArrowLeft style={{ fontSize: '1.3rem', color: '#43a047' }} />
+          Quay lại trang chính
         </button>
-      <div className="card shadow-sm">
+      </div>
+      <div className="card shadow-lg" style={{ background: '#23272a', borderRadius: 16 }}>
         <div className="card-body">
           <table className="table table-bordered table-striped">
             <thead className="table-dark">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import { FaShoppingCart, FaMoneyBillWave, FaCheckCircle } from "react-icons/fa";
 
 const Checkout = () => {
   const [customerName, setCustomerName] = useState("");
@@ -188,46 +189,50 @@ window.location.href = paymentRes.data.paymentUrl;
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">🛒 Xác nhận thanh toán</h2>
+      <h2 className="text-center mb-4 fw-bold d-flex align-items-center justify-content-center gap-2" style={{ color: '#43a047', letterSpacing: 1 }}>
+        <FaShoppingCart style={{ color: '#ff9800', fontSize: 32 }} /> Xác nhận thanh toán
+      </h2>
 
-      <div className="card">
+      <div className="card shadow-lg" style={{ background: '#23272a', borderRadius: 16 }}>
         <div className="card-body">
           <form>
             <div className="form-group mb-3">
-              <label>Tên khách hàng:</label>
-              <input type="text" className="form-control" value={customerName} readOnly />
+              <label className="fw-bold" style={{ color: '#fbc02d' }}>Tên khách hàng:</label>
+              <input type="text" className="form-control" value={customerName} readOnly style={{ background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }} />
             </div>
 
             <div className="form-group mb-3">
-              <label>Email:</label>
-              <input type="email" className="form-control" value={email} readOnly />
+              <label className="fw-bold" style={{ color: '#fbc02d' }}>Email:</label>
+              <input type="email" className="form-control" value={email} readOnly style={{ background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }} />
             </div>
 
             <div className="form-group mb-3">
-              <label>Số điện thoại:</label>
+              <label className="fw-bold" style={{ color: '#fbc02d' }}>Số điện thoại:</label>
               <input
                 type="text"
                 className="form-control"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
+                style={{ background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }}
               />
             </div>
 
             <div className="form-group mb-3">
-              <label>Địa chỉ giao hàng:</label>
+              <label className="fw-bold" style={{ color: '#fbc02d' }}>Địa chỉ giao hàng:</label>
               <input
                 type="text"
                 className="form-control"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 required
+                style={{ background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }}
               />
             </div>
 
-            <h4 className="mb-3">Danh sách sản phẩm:</h4>
-            <table className="table table-striped">
-              <thead>
+            <h4 className="mb-3 fw-bold" style={{ color: '#ff9800' }}>Danh sách sản phẩm:</h4>
+            <table className="table table-bordered" style={{ background: '#23272a', color: '#fff', borderRadius: 12 }}>
+              <thead className="table-dark" style={{ background: '#212121', color: '#43a047' }}>
                 <tr>
                   <th>Sản phẩm</th>
                   <th>Số lượng</th>
@@ -238,26 +243,29 @@ window.location.href = paymentRes.data.paymentUrl;
               </thead>
               <tbody>
                 {cartItems.map((item) => (
-                  <tr key={item.productId}>
+                  <tr key={item.productId} style={{ background: '#23272a', color: '#fff' }}>
                     <td>{item.productName}</td>
                     <td>{item.quantity}</td>
-                    <td>{item.price.toLocaleString()} đ</td>
-                    <td>{item.discount}%</td>
-                    <td>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</td>
+                    <td style={{ color: '#e53935', fontWeight: 700 }}>{item.price.toLocaleString()} đ</td>
+                    <td style={{ color: '#fbc02d', fontWeight: 600 }}>{item.discount}%</td>
+                    <td style={{ color: '#43a047', fontWeight: 700 }}>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
             <div className="d-flex justify-content-between align-items-center mt-3">
-              <h5>Tổng tiền: {totalAmount.toLocaleString()} đ</h5>
+              <h5 className="fw-bold d-flex align-items-center gap-2" style={{ color: '#ff9800' }}>
+                <FaMoneyBillWave style={{ color: '#43a047', fontSize: 22 }} /> Tổng tiền: {totalAmount.toLocaleString()} đ
+              </h5>
 
               <div className="form-group mb-0">
-                <label>Phương thức thanh toán:</label>
+                <label className="fw-bold" style={{ color: '#fbc02d' }}>Phương thức thanh toán:</label>
                 <select
                   className="form-select"
                   value={methodId}
                   onChange={(e) => setMethodId(parseInt(e.target.value))}
+                  style={{ background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }}
                 >
                   <option value="">-- Chọn phương thức --</option>
                   {methods.map((method) => (
@@ -270,8 +278,8 @@ window.location.href = paymentRes.data.paymentUrl;
             </div>
 
             <div className="text-end mt-4">
-              <button type="button" className="btn btn-primary" onClick={handlePayment}>
-                Xác nhận thanh toán
+              <button type="button" className="btn btn-success d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500, background: '#43a047', color: '#fff', border: 'none' }} onClick={handlePayment}>
+                <FaCheckCircle style={{ color: '#fbc02d', fontSize: 18 }} /> Xác nhận thanh toán
               </button>
             </div>
           </form>

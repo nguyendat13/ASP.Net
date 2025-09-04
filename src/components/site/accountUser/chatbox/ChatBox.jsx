@@ -1,124 +1,136 @@
-import React, { useState, useEffect } from 'react';
-import { HubConnectionBuilder } from '@microsoft/signalr';
-import "../../../../css/chatbox.css";
+    import React, { useState, useRef, useEffect } from "react";
+    import axios from "axios";
+import { FaPaperPlane } from "react-icons/fa";
 
-const Chatbox = ({ senderId, receiverId, userType }) => {
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
-  const [connection, setConnection] = useState(null);
-  const [userStatus, setUserStatus] = useState('Offline');
-  const optimisticMessage = { senderId, message: newMessage };
+    const ChatboxAI = ({ userId }) => {
+    const [messages, setMessages] = useState([]);
+    const [input, setInput] = useState("");
+    const messagesEndRef = useRef(null);
 
-  useEffect(() => {
-    const connect = new HubConnectionBuilder()
-      .withUrl('https://localhost:7177/chathub')
-      .build();
-
-    setConnection(connect);
-
-    // Fetch messages when the component mounts
-    const fetchMessages = async () => {
-      try {
-        const response = await fetch(`https://localhost:7177/api/Chat/getMessages/${senderId}/${receiverId}`);
-        const data = await response.json();
-        setMessages(data);
-      } catch (error) {
-        console.error('Failed to fetch messages:', error);
-      }
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    // Handle received messages
-    connect.on('ReceiveMessage', (sender, receiver, message) => {
-      if (
-        (sender === senderId && receiver === receiverId) ||
-        (sender === receiverId && receiver === senderId)
-      ) {
-        setMessages((prevMessages) => [...prevMessages, { senderId: sender, message }]);
-      }
-    });
+    useEffect(scrollToBottom, [messages]);
 
-    // Handle user status updates
-    connect.on('UpdateUserStatus', (userId, status) => {
-      if (userId === receiverId) {
-        setUserStatus(status);
-      }
-    });
+    const sendMessage = async () => {
+        if (!input.trim()) return;
 
-    // Start the connection and fetch messages
-    connect.start()
-      .then(() => {
-        console.log('SignalR connection established');
-        fetchMessages(); // Fetch messages after connection is established
-      })
-      .catch((err) => console.error('Error while establishing connection: ', err));
+        const userMessage = { sender: "user", text: input };
+        setMessages(prev => [...prev, userMessage]);
 
-    return () => {
-      connect.stop();
+        try {
+        const res = await axios.post("https://localhost:7177/api/AIChat/ask", {
+            question: input,
+        });
+        const aiMessage = { sender: "ai", text: res.data.answer };
+        setMessages(prev => [...prev, aiMessage]);
+        } catch (err) {
+        const errorMessage = { sender: "ai", text: "Xin lỗi, AI đang bận. Thử lại sau." };
+        setMessages(prev => [...prev, errorMessage]);
+        }
+
+        setInput("");
     };
-  }, [senderId, receiverId]);
 
-  const sendMessage = async () => {
-    if (!newMessage.trim()) return; // Don't send empty messages
+    const handleKeyPress = (e) => { if (e.key === "Enter") sendMessage(); };
 
-    try {
-      // Optimistically update the UI
-      const optimisticMessage = { senderId, message: newMessage };
-      setMessages((prevMessages) => [...prevMessages, optimisticMessage]);
-      setNewMessage('');
+    const containerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    width: "360px",
+    height: "500px",
+    border: "1px solid #23272a",
+    borderRadius: "18px",
+    overflow: "hidden",
+    backgroundColor: "#181a1b",
+    boxShadow: "0 4px 16px #23272a",
+    marginLeft: "auto",
+    marginRight: "40px"
+    };
 
-      // Send the message to the server
-      const response = await fetch('https://localhost:7177/api/Chat/sendMessage', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          senderId,
-          receiverId,
-          message: newMessage,
-        }),
-      });
+    const messagesStyle = {
+        flex: 1,
+        padding: "15px",
+        overflowY: "auto",
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+        backgroundColor: "#23272a"
+    };
 
-      if (!response.ok) {
-        throw new Error('Failed to send message');
-      }
+    const inputContainerStyle = {
+        display: "flex",
+        borderTop: "1px solid #23272a",
+        padding: "10px",
+        backgroundColor: "#181a1b"
+    };
 
-      // No need to manually update messages here because SignalR will handle it
-    } catch (error) {
-      console.error('Error sending message:', error);
-      // Roll back the optimistic update if there's an error
-      setMessages((prevMessages) => prevMessages.filter(msg => msg !== optimisticMessage));
-    }
-  };
+    const inputStyle = {
+        flex: 1,
+        padding: "10px",
+        border: "1px solid #43a047",
+        borderRadius: "20px",
+        outline: "none",
+        marginRight: "10px",
+        fontSize: "14px",
+        backgroundColor: "#23272a",
+        color: "#fff"
+    };
 
-  return (
-    <div className="chat-box">
-      <div className="messages">
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.senderId === senderId ? 'sent' : 'received'}`}>
-            <strong>
-              {message.senderId === senderId
-                ? (userType === 'user' ? 'You' : 'You') // Fixed: Show "You" if sender is current user
-                : (userType === 'admin' ? 'User' : 'Admin')}
-            </strong>: {message.message}
-          </div>
-        ))}
-      </div>
-      <div className="status">
-        <strong>Status: </strong>{userStatus}
-      </div>
-      <div className="input-container">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type your message..."
-          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-        />
-        <button onClick={sendMessage}>Send</button>
-      </div>
-    </div>
-  );
-};
+    const buttonStyle = {
+        padding: "10px 20px",
+        border: "none",
+        borderRadius: "20px",
+        backgroundColor: "#43a047",
+        color: "#fff",
+        fontWeight: "bold",
+        cursor: "pointer",
+        fontSize: "16px",
+        display: "flex",
+        alignItems: "center",
+        gap: "8px"
+    };
 
-export default Chatbox;
+    return (
+                <div style={containerStyle}>
+                    <div style={messagesStyle}>
+                        {messages.map((msg, idx) => (
+                            <div
+                                key={idx}
+                                style={{
+                                    alignSelf: msg.sender === "user" ? "flex-end" : "flex-start",
+                                    backgroundColor: msg.sender === "user" ? "#43a047" : "#23272a",
+                                    color: msg.sender === "user" ? "#fff" : "#ff9800",
+                                    padding: "10px 14px",
+                                    borderRadius: "18px",
+                                    maxWidth: "75%",
+                                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                                    wordWrap: "break-word",
+                                    fontWeight: msg.sender === "user" ? 500 : 400,
+                                    fontSize: "15px"
+                                }}
+                            >
+                                {msg.text}
+                            </div>
+                        ))}
+                        <div ref={messagesEndRef} />
+                    </div>
+                    <div style={inputContainerStyle}>
+                        <input
+                            type="text"
+                            value={input}
+                            onChange={e => setInput(e.target.value)}
+                            onKeyPress={handleKeyPress}
+                            placeholder="Nhập câu hỏi của bạn..."
+                            style={inputStyle}
+                        />
+                        <button onClick={sendMessage} style={buttonStyle}>
+                            <FaPaperPlane style={{ color: '#fbc02d', fontSize: 18 }} /> Gửi
+                        </button>
+                    </div>
+                </div>
+    );
+    };
+
+    export default ChatboxAI;

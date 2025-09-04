@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaComments, FaTimes } from 'react-icons/fa'; // Import biểu tượng từ react-icons
 import '../../css/AdminSidebar.css'; // Import file CSS
-import ChatboxAdmin from "../../components/site/accountUser/chatbox/ChatboxAdmin";
 import "../../css/chatbox.css"
 const AdminSidebar = () => {
   // State để theo dõi trạng thái mở/đóng sidebar

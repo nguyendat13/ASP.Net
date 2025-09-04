@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa';  // Import biểu tượng tìm kiếm
+import { FaShoppingCart, FaUser, FaSearch, FaLeaf, FaStore, FaHome } from 'react-icons/fa'; // Thêm icon React
 import "../../css/Navbar.css";
 
 const Navbar = () => {
@@ -39,24 +39,33 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow-sm">
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-
-      <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav me-auto">
+    <nav className="navbar navbar-expand-lg custom-navbar px-4 shadow-sm">
+      <div className="container-fluid">
+        <div className="d-flex align-items-center">
+          {/* Logo và tên cửa hàng */}
+          <Link className="navbar-brand d-flex align-items-center" to="/">
+            <FaStore style={{ color: '#FFA500', fontSize: '2rem', marginRight: '8px' }} />
+            <span style={{ color: '#FFD700', fontWeight: 'bold', fontSize: '1.5rem', letterSpacing: '2px' }}>PHAT DAT STORE</span>
+          </Link>
+          {/* Toggler cho mobile */}
+          <button
+            className="navbar-toggler ms-2"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav mx-auto">
           <li className="nav-item">
-            <Link className="nav-link" to="/">Trang chủ</Link>
+            <Link className="nav-link d-flex align-items-center" to="/">
+              <FaHome style={{ color: '#4CAF50', marginRight: '5px' }} /> Trang chủ
+            </Link>
           </li>
-
           <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Danh mục
@@ -75,63 +84,63 @@ const Navbar = () => {
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link" to="/products">Sản phẩm</Link>
+            <Link className="nav-link d-flex align-items-center" to="/products">
+              <FaLeaf style={{ color: '#4CAF50', marginRight: '5px' }} /> Sản phẩm
+            </Link>
           </li>
-        </ul>
-
-        {/* Logo */}
-        <Link className="navbar-brand mx-auto" to="/">
-          PHAT DAT STORE
-        </Link>
-
-        {/* Tìm kiếm */}
-        <form className="d-flex ms-3" onSubmit={handleSearch}>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Tìm kiếm sản phẩm"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <button type="submit" className="btn btn-outline-light ms-2">
-                <FaSearch />
-              </button>
-            </form>
-
-        <ul className="navbar-nav ms-auto">
-          {!isLoggedIn ? (
-            <li className="nav-item">
-              <Link className="nav-link" to="/login-user">Đăng nhập</Link>
-            </li>
-          ) : (
-            <>
+          </ul>
+          {/* Tìm kiếm */}
+          <form className="d-flex mx-auto" style={{ maxWidth: '300px' }} onSubmit={handleSearch}>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Tìm kiếm sản phẩm"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ background: '#23272b', color: '#FFD700', border: '1px solid #FFA500' }}
+            />
+            <button type="submit" className="btn btn-success ms-2" style={{ background: '#4CAF50', border: 'none' }}>
+              <FaSearch style={{ color: '#FFD700' }} />
+            </button>
+          </form>
+          <ul className="navbar-nav ms-auto">
+            {!isLoggedIn ? (
               <li className="nav-item">
-                <Link className="nav-link" to="/carts">
-                  <FaShoppingCart /> Giỏ hàng
+                <Link className="nav-link d-flex align-items-center" to="/login-user" style={{ fontSize: '1.25rem' }}>
+                  <FaUser style={{ color: '#FFA500', marginRight: '8px', fontSize: '1.5rem' }} /> Đăng nhập
                 </Link>
               </li>
-
-              {/* Icon User với dropdown */}
-              <li className="user-nav-item dropdown">
-                <Link 
-                  className="nav-link dropdown-toggle" 
-                  to="#" 
-                  id="userDropdown" 
-                  role="button" 
-                  data-bs-toggle="dropdown" 
-                  aria-expanded="false">
-                  <FaUser /> {/* Icon người dùng */}
-                </Link>
-                <ul className="dropdown-menu" aria-labelledby="userDropdown" style={{ right: '0', left: 'auto', position: 'absolute' }}>
-                  <li><Link className="dropdown-item" to="/user-profile">Thông tin người dùng</Link></li>
-                  <li><Link className="dropdown-item" to="/orders">Đơn hàng</Link></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><Link to="/logout-user" className="dropdown-item">Đăng xuất</Link></li>
-                </ul>
-              </li>
-            </>
-          )}
-        </ul>
+            ) : (
+              <>
+                <li className="nav-item d-flex align-items-center">
+                  <Link className="nav-link d-flex align-items-center" to="/carts" style={{ fontSize: '1.25rem', paddingRight: '0' }}>
+                    <FaShoppingCart style={{ color: '#FFD700', fontSize: '1.7rem', marginRight: '8px' }} />
+                  </Link>
+                  {/* Icon User với dropdown */}
+                  <div className="user-nav-item dropdown">
+                    <Link 
+                      className="nav-link dropdown-toggle d-flex align-items-center" 
+                      to="#" 
+                      id="userDropdown" 
+                      role="button" 
+                      data-bs-toggle="dropdown" 
+                      aria-expanded="false"
+                      style={{ fontSize: '1.25rem', paddingLeft: '20px' }}
+                    >
+                      <FaUser style={{ color: '#FFA500', fontSize: '1.5rem' }} />
+                    </Link>
+                    <ul className="dropdown-menu" aria-labelledby="userDropdown" style={{ right: '0', left: 'auto', position: 'absolute' }}>
+                      <li><Link className="dropdown-item" to="/user-profile">Thông tin người dùng</Link></li>
+                      <li><Link className="dropdown-item" to="/orders">Đơn hàng</Link></li>
+                      <li><hr className="dropdown-divider" /></li>
+                      <li><Link to="/logout-user" className="dropdown-item">Đăng xuất</Link></li>
+                    </ul>
+                  </div>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
       </div>
     </nav>
   );

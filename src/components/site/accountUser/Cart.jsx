@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaShoppingCart, FaTrashAlt, FaMoneyBillWave, FaCheckCircle } from "react-icons/fa";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -90,13 +91,17 @@ const Cart = () => {
 
   return (
     <div className="container mt-4">
-      <h2>🛒 Giỏ hàng của bạn</h2>
+      <h2 className="fw-bold mb-4 d-flex align-items-center gap-2" style={{ color: '#43a047', letterSpacing: 1 }}>
+        <FaShoppingCart style={{ color: '#ff9800', fontSize: 32 }} /> Giỏ hàng của bạn
+      </h2>
       {cartItems.length === 0 ? (
-        <p>Không có sản phẩm nào trong giỏ.</p>
+        <div className="alert alert-warning text-center fw-bold" style={{ background: '#212121', color: '#ff9800', border: 'none' }}>
+          Không có sản phẩm nào trong giỏ.
+        </div>
       ) : (
         <>
-          <table className="table table-bordered mt-3">
-            <thead>
+          <table className="table table-bordered mt-3" style={{ background: '#23272a', color: '#fff', borderRadius: 12 }}>
+            <thead className="table-dark" style={{ background: '#212121', color: '#43a047' }}>
               <tr>
                 <th>Ảnh</th>
                 <th>Tên sản phẩm</th>
@@ -109,17 +114,18 @@ const Cart = () => {
             </thead>
             <tbody>
               {cartItems.map((item) => (
-                <tr key={item.productId}>
+                <tr key={item.productId} style={{ background: '#23272a', color: '#fff' }}>
                   <td>
                     <img
                       src={`https://localhost:7177${item.avatar}`}
                       alt={item.productName}
                       width="80"
+                      style={{ borderRadius: 8, border: '2px solid #43a047' }}
                     />
                   </td>
                   <td>{item.productName}</td>
-                  <td>{item.price.toLocaleString()} đ</td>
-                  <td>{item.discount}%</td>
+                  <td style={{ color: '#e53935', fontWeight: 700 }}>{item.price.toLocaleString()} đ</td>
+                  <td style={{ color: '#fbc02d', fontWeight: 600 }}>{item.discount}%</td>
                   <td>
                     <input
                       type="number"
@@ -127,26 +133,28 @@ const Cart = () => {
                       min="1"
                       onChange={(e) => handleQuantityChange(item.productId, parseInt(e.target.value))}
                       className="form-control"
-                      style={{ width: "80px" }}
+                      style={{ width: "80px", background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }}
                     />
                   </td>
-                  <td>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</td>
+                  <td style={{ color: '#43a047', fontWeight: 700 }}>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</td>
                   <td>
-                    <button className="btn btn-danger" onClick={() => handleRemove(item.productId)}>
-                      Xoá
+                    <button className="btn btn-outline-danger d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500 }} onClick={() => handleRemove(item.productId)}>
+                      <FaTrashAlt style={{ color: '#e53935', fontSize: 16 }} /> Xoá
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <div className="d-flex justify-content-between align-items-center">
-            <button className="btn btn-outline-danger" onClick={handleClearCart}>
-              Xoá tất cả
+          <div className="d-flex justify-content-between align-items-center mt-3">
+            <button className="btn btn-outline-danger d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500 }} onClick={handleClearCart}>
+              <FaTrashAlt style={{ color: '#e53935', fontSize: 18 }} /> Xoá tất cả
             </button>
-            <h4>Tổng tiền: {totalPrice.toLocaleString()} đ</h4>
-            <button className="btn btn-success" onClick={handleCheckout}>
-              Thanh toán
+            <h4 className="fw-bold d-flex align-items-center gap-2" style={{ color: '#ff9800' }}>
+              <FaMoneyBillWave style={{ color: '#43a047', fontSize: 22 }} /> Tổng tiền: {totalPrice.toLocaleString()} đ
+            </h4>
+            <button className="btn btn-success d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500, background: '#43a047', color: '#fff', border: 'none' }} onClick={handleCheckout}>
+              <FaCheckCircle style={{ color: '#fbc02d', fontSize: 18 }} /> Thanh toán
             </button>
           </div>
         </>

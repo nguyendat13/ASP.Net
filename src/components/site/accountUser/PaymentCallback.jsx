@@ -25,7 +25,19 @@ const PaymentCallback = () => {
       });
   }, [location.search, navigate]);
 
-  return <div>Đang xử lý thanh toán...</div>;
+  return (
+    <div className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: '60vh', background: '#23272a' }}>
+      <div className="mb-3">
+        <span style={{ fontSize: 48, color: '#ff9800' }}>💳</span>
+      </div>
+      <h3 className="fw-bold mb-2" style={{ color: '#43a047', letterSpacing: 1 }}>
+        Đang xử lý thanh toán...
+      </h3>
+      <div className="spinner-border" style={{ color: '#fbc02d', width: 32, height: 32 }} role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
 };
 
 export default PaymentCallback;
