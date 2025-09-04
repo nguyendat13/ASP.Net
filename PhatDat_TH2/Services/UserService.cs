@@ -1,7 +1,7 @@
 ﻿using PhatDat_TH2.Model;
-using PhatDat_TH2.Services;  // Đảm bảo rằng đây là namespace chứa IUserService
-using PhatDat_TH2.Repositories;  // Đảm bảo rằng đây là namespace chứa IUserRepository
-using PhatDat_TH2.Data;  // Giả sử AppDbContext là nơi bạn lưu trữ dữ liệu
+using PhatDat_TH2.Data;
+using PhatDat_TH2.Services.IServices;
+using PhatDat_TH2.Repository.IRepository;  // Giả sử AppDbContext là nơi bạn lưu trữ dữ liệu
 
 namespace PhatDat_TH2.Services
 {

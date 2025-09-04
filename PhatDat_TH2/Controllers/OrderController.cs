@@ -4,6 +4,7 @@ using PhatDat_TH2.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using PhatDat_TH2.Model.DTO;
+using PhatDat_TH2.Model.Request;
 
 namespace PhatDat_TH2.Controllers
 {
@@ -163,11 +164,13 @@ namespace PhatDat_TH2.Controllers
                 CustomerName = customerFullName,
                 UserId = orderRequest.UserId,
                 Email = customerEmail,
+                Phone = orderRequest.Phone,
+                Address = orderRequest.Address,
                 OrderDate = DateTime.Now,
                 CreatedAt = DateTime.Now,
                 CreatedBy = "System",
                 StatusOrderId = 1, // Trạng thái "Đang xử lý"
-                MethodId=orderRequest.MethodId,
+                MethodId =orderRequest.MethodId,
                 OrderDetails = new List<OrderDetail>()
             };
 

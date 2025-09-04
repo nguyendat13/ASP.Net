@@ -1,15 +1,18 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PhatDat_TH2.Data;
-using System.Text;
 using PhatDat_TH2.Hubs;
-using Microsoft.AspNetCore.SignalR;
+using PhatDat_TH2.Model;
+using PhatDat_TH2.Repository;
+using PhatDat_TH2.Repository.IRepository;
 using PhatDat_TH2.Services;
+using PhatDat_TH2.Services.IServices;
 using System.Security.Claims;
-using PhatDat_TH2.Repositories;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -131,6 +134,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<ChatService>(); // Hoặc AddSingleton<ChatService>(), tùy vào yêu cầu
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 builder.Services.AddControllers(); // Đảm bảo chỉ sử dụng API controller
 builder.Services.AddSignalR(); // Thêm SignalR vào dịch vụ

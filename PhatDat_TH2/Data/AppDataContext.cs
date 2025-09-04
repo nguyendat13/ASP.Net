@@ -86,7 +86,10 @@ namespace PhatDat_TH2.Data
     new StatusOrder { Id = 4, Name = "Đã hủy" },
     new StatusOrder { Id = 5, Name = "Chờ xác nhận" },
     new StatusOrder { Id = 6, Name = "Hoàn trả" },
-    new StatusOrder { Id = 7, Name = "Giao thất bại" }
+    new StatusOrder { Id = 7, Name = "Giao thất bại" },
+        new StatusOrder { Id = 9, Name = "Chờ thanh toán" },
+    new StatusOrder { Id = 10, Name = "Đã thanh toán" }
+
 );
             modelBuilder.Entity<Method>().HasData(
     new Method { Id = 1, Name = "Thanh toán khi nhận hàng" },

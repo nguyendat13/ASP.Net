@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhatDat_TH2.Services;
+using PhatDat_TH2.Services.IServices;
 
 namespace PhatDat_TH2.Controllers
 {

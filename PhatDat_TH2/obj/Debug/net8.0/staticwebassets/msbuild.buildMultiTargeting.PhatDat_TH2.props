@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\PhatDat_TH2.props" />
-</Project>

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PhatDat_TH2.Data;
 using PhatDat_TH2.Model;
+using PhatDat_TH2.Model.Request;
 
 namespace PhatDat_TH2.Controllers
 {
