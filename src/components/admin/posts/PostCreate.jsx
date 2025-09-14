@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+
+
 import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../../../config";
 
 const PostCreate = () => {
   const [title, setTitle] = useState("");
@@ -17,7 +21,7 @@ const PostCreate = () => {
         topicId,
         publishedDate: new Date(),
       };
-      const response = await axios.post(`${API_BASE_URL}/api/Post", newPost);
+      const response = await axios.post(`${API_BASE_URL}/api/Post`, newPost);
       alert("Bài viết đã được tạo!");
       navigate(`/admin/posts`);
     } catch (error) {

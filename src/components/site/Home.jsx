@@ -3,10 +3,14 @@ import { FaTag, FaMoneyBillWave } from "react-icons/fa";
 import { FaFire, FaStar, FaNewspaper } from "react-icons/fa";
 import Slider from "react-slick";
 import { Link,useNavigate } from "react-router-dom";
+
+
 import axios from "axios";
+
 import "../../css/home.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import API_BASE_URL from "../../config";
 
 const Home = () => {
   const [newProducts, setNewProducts] = useState([]);

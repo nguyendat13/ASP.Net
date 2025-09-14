@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "../../css/LoginAdmin.css"
+import API_BASE_URL from '../../config';
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,7 +23,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/User/login',
+        `${API_BASE_URL}/User/login`,
         { email, password },
         {
           headers: { 'Content-Type': 'application/json' }

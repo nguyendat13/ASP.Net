@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaEye, FaEdit, FaTrashAlt } from 'react-icons/fa';
+import API_BASE_URL from '../../../config';
 
 const Menus = () => {
   const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const API_URL = `${API_BASE_URL}/Menu';
+  const API_URL = `${API_BASE_URL}/Menu`;
 
   useEffect(() => {
     fetchMenus();

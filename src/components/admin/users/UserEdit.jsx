@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import BackButton from '../../../Button/BackButton';
+import API_BASE_URL from '../../../config';
 
 const EditUser = () => {
   const { id } = useParams(); // Lấy ID từ URL

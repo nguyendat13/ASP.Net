@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaEye, FaEdit, FaTrashAlt } from 'react-icons/fa';  // Import icon từ react-icons
+import API_BASE_URL from '../../../config';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const API_URL = `${API_BASE_URL}/Category';
+  const API_URL = `${API_BASE_URL}/Category`;
 
   useEffect(() => {
     fetchCategories();

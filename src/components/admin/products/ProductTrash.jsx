@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../../../config';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -8,7 +9,7 @@ const Products = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/Product')
+      .get(`${API_BASE_URL}/Product`)
       .then((response) => {
         setProducts(response.data);
         setLoading(false);

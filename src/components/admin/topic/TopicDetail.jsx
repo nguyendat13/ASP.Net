@@ -1,7 +1,11 @@
 // TopicDetail.jsx
 import React, { useEffect, useState } from "react";
+
+
 import axios from "axios";
+
 import { useParams, Link } from "react-router-dom";
+import API_BASE_URL from "../../../config";
 
 const TopicDetail = () => {
   const { id } = useParams();

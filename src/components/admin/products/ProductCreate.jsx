@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../Button/BackButton';
-import API_BASE_URL from '../../../../config';
+
+import API_BASE_URL from '../../../config';
 const AddProduct = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');

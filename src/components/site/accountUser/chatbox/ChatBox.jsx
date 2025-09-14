@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
+
+
 import axios from "axios";
+
 import { FaPaperPlane } from "react-icons/fa";
+import API_BASE_URL from "../../../../config";
 
 const ChatboxAI = ({ userId }) => {
   const [messages, setMessages] = useState([]);

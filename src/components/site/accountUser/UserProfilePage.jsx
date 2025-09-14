@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+
+
 import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaPhone, FaVenusMars, FaArrowLeft } from "react-icons/fa";
+import API_BASE_URL from "../../../config";
 
 const UserProfilePage = () => {
   const [user, setUser] = useState(null);

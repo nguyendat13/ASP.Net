@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaEye, FaEdit, FaTrashAlt } from 'react-icons/fa';
+import API_BASE_URL from '../../../config';
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const API_URL = `${API_BASE_URL}/Post';
+  const API_URL = `${API_BASE_URL}/Post`;
 
   useEffect(() => {
     axios.get(API_URL)

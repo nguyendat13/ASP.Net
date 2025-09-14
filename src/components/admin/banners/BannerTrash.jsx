@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaUndo } from 'react-icons/fa';
+import API_BASE_URL from '../../../config';
 
 const BannersTrash = () => {
   const [deletedBanners, setDeletedBanners] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/Banner/trash')
+    axios.get(`${API_BASE_URL}/Banner/trash`)
       .then(res => setDeletedBanners(res.data))
       .catch(() => alert('Không thể tải danh sách banner đã xoá.'));
   }, []);

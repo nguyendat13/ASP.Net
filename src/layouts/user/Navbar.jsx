@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FaShoppingCart, FaUser, FaSearch, FaLeaf, FaStore, FaHome } from 'react-icons/fa'; // Thêm icon React
 import "../../css/Navbar.css";
+import API_BASE_URL from '../../config';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,7 +18,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/category');
+        const response = await fetch(`${API_BASE_URL}/category`);
         if (!response.ok) {
           throw new Error('Lỗi khi lấy danh mục');
         }

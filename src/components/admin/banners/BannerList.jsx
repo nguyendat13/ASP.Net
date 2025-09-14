@@ -1,8 +1,12 @@
 
 import React, { useEffect, useState } from "react";
+
+
 import axios from "axios";
+
 import { Link } from "react-router-dom";
 import { FaTrash, FaPlus, FaEye, FaEdit } from "react-icons/fa";
+import API_BASE_URL from "../../../config";
 
 const BannerList = () => {
   const [banners, setBanners] = useState([]);
@@ -15,7 +19,7 @@ const BannerList = () => {
 
   const fetchBanners = () => {
     axios
-      .get`API_BASE_URL}/api/Banner")
+      .get(`${API_BASE_URL}/api/Banner`)
       .then((res) => {
         setBanners(res.data);
         setLoading(false);

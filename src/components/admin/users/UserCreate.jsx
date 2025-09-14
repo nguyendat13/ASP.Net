@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../Button/BackButton';
+import API_BASE_URL from '../../../config';
 
 const CreateUser = () => {
   const [fullname, setFullname] = useState('');
@@ -34,7 +35,7 @@ const CreateUser = () => {
     };
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/User', userData, {
+      const response = await axios.post(`${API_BASE_URL}/User`, userData, {
         headers: {
           Authorization: `Bearer ${token}`, // Gửi token trong header
         },

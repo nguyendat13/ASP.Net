@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../../../css/Giognhau.css';  // Import CSS
 import BackButton from '../../../Button/BackButton';
+import API_BASE_URL from '../../../config';
 
 const CategoryEdit = () => {
   const { id } = useParams();

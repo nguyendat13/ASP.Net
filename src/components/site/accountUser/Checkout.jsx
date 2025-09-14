@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+
+
 import axios from "axios";
+
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaShoppingCart, FaMoneyBillWave, FaCheckCircle } from "react-icons/fa";
+import API_BASE_URL from "../../../config";
 
 const Checkout = () => {
   const [customerName, setCustomerName] = useState("");

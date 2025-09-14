@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google'; // Import GoogleLogin component
 import '../../../css/LoginAdmin.css'; // import file CSS mới
 import { FaGoogle, FaSignInAlt } from 'react-icons/fa';
+import API_BASE_URL from '../../../config';
 const LoginUser = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

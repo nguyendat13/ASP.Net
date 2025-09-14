@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaTags, FaMoneyBillWave, FaPercent } from "react-icons/fa";
+import API_BASE_URL from '../../../config';
 
 const CategoryProductsPage = () => {
   const { categoryId } = useParams();

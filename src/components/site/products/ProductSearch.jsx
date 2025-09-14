@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+
 import axios from "axios";
+
 import { FaTags, FaMoneyBillWave } from "react-icons/fa";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../../css/ProductSearch.css";
+import API_BASE_URL from '../../../config';
 
 const SearchPage = () => {
   const [products, setProducts] = useState([]);

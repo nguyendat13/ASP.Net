@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+
+
 import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaTrashAlt, FaMoneyBillWave, FaCheckCircle } from "react-icons/fa";
+import API_BASE_URL from "../../../config";
 
-const API_BASE_URL = "https://fruit-store-pb5n.onrender.com"; // khai báo API
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);

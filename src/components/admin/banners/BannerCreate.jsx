@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import API_BASE_URL from '../../../config';
 
 const BannersCreate = () => {
   const [imageUrl, setImageUrl] = useState('');
@@ -32,7 +33,7 @@ const BannersCreate = () => {
     formData.append('Link', link);  // Thêm link vào formData
   
     try {
-      await axios.post(`${API_BASE_URL}/Banner', formData, {
+      await axios.post(`${API_BASE_URL}/Banner`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

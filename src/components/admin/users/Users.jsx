@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaEye, FaEdit, FaTrashAlt } from 'react-icons/fa';
+import API_BASE_URL from '../../../config';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -22,7 +23,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/User', {
+      const response = await axios.get(`${API_BASE_URL}/User`, {
         headers: {
           Authorization: `Bearer ${token}`, // Gửi token kèm theo
         },

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import API_BASE_URL from '../../../config';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -12,7 +13,7 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/Dashboard')
+    fetch(`${API_BASE_URL}/Dashboard`)
       .then(res => res.json())
       .then(data => setStats(data))
       .catch(() => alert('Không thể tải dữ liệu thống kê.'));

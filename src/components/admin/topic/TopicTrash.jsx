@@ -1,6 +1,10 @@
 // TopicTrash.jsx
 import React, { useEffect, useState } from "react";
+
+
 import axios from "axios";
+
+import API_BASE_URL from "../../../config";
 
 const TopicTrash = () => {
   const [deletedTopics, setDeletedTopics] = useState([]);

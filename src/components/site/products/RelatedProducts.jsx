@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+
 import axios from "axios";
+
 import { FaTags, FaMoneyBillWave } from "react-icons/fa";
+import API_BASE_URL from "../../../config";
 
 const RelatedProducts = ({ productId }) => {
   const [related, setRelated] = useState([]);

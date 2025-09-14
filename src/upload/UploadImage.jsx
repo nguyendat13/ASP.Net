@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../config';
 
 const UploadImage = () => {
   const [image, setImage] = useState(null);
@@ -15,7 +16,7 @@ const UploadImage = () => {
     formData.append('name', image.name); // Gửi tên ảnh nếu cần
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/Product/upload', formData, {
+      const response = await axios.post(`${API_BASE_URL}/Product/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
