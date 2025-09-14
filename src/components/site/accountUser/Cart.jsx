@@ -122,7 +122,7 @@ const Cart = () => {
                 <tr key={item.productId} style={{ background: '#23272a', color: '#fff' }}>
                   <td>
                     <img
-                      src={`${API_BASE_URL}${item.avatar}`}
+                      src={`${API_BASE_URL}/api/Product/image${item.avatar}`}
                       alt={item.productName}
                       width="80"
                       style={{ borderRadius: 8, border: '2px solid #43a047' }}
