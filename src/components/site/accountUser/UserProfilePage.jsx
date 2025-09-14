@@ -64,7 +64,7 @@ const UserProfilePage = () => {
                   </li>
                   <li className="list-group-item d-flex align-items-center" style={{ background: '#23272b', color: '#FFD700', border: 'none' }}>
                     <FaVenusMars className="me-2" style={{ color: '#FFA500' }} />
-                    <strong style={{ color: '#FFA500' }}>Giới tính:</strong>&nbsp; {user.gender === "Male" ? "Nam" : user.gender === "Female" ? "Nữ" : "Khác"}
+<strong style={{ color: '#FFA500' }}>Giới tính:</strong>&nbsp; {user.gender}
                   </li>
                 </ul>
               ) : (
