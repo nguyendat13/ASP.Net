@@ -83,11 +83,9 @@ public class ExternalLoginController : ControllerBase
     [HttpGet("google")]
     public IActionResult GoogleLogin()
     {
-        // URL callback phải đúng với Google Console
-        var redirectUrl = $"{_config["BackendUrl"]}/api/ExternalLogin/google-callback";
+        var redirectUrl = Url.Action("GoogleCallback", "GoogleLogin");
         var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
         return Challenge(properties, "Google");
     }
-
 
 }
