@@ -6,9 +6,14 @@ EXPOSE 5000
 # Build app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["PhatDat_TH2.csproj", "./"]
-RUN dotnet restore "PhatDat_TH2.csproj"
-COPY . .
+
+# copy file csproj
+COPY backend/PhatDat_TH2/PhatDat_TH2.csproj ./PhatDat_TH2/
+RUN dotnet restore "./PhatDat_TH2/PhatDat_TH2.csproj"
+
+# copy toàn bộ source code
+COPY backend/PhatDat_TH2/. ./PhatDat_TH2/
+WORKDIR /src/PhatDat_TH2
 RUN dotnet build "PhatDat_TH2.csproj" -c Release -o /app/build
 
 FROM build AS publish
