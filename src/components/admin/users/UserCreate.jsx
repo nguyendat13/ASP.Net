@@ -35,7 +35,7 @@ const CreateUser = () => {
     };
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/User`, userData, {
+      const response = await axios.post(`${API_BASE_URL}/api/User`, userData, {
         headers: {
           Authorization: `Bearer ${token}`, // Gửi token trong header
         },

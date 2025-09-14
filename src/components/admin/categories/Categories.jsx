@@ -9,7 +9,7 @@ const Categories = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const API_URL = `${API_BASE_URL}/Category`;
+  const API_URL = `${API_BASE_URL}/api/Category`;
 
   useEffect(() => {
     fetchCategories();

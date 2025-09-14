@@ -9,7 +9,7 @@ const Products = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/Product`)
+      .get(`${API_BASE_URL}/api/Product`)
       .then((response) => {
         setProducts(response.data);
         setLoading(false);

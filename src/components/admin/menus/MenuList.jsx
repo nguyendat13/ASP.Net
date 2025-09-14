@@ -9,7 +9,7 @@ const Menus = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const API_URL = `${API_BASE_URL}/Menu`;
+  const API_URL = `${API_BASE_URL}/api/Menu`;
 
   useEffect(() => {
     fetchMenus();

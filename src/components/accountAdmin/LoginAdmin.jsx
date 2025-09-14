@@ -23,7 +23,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/User/login`,
+        `${API_BASE_URL}/api/User/login`,
         { email, password },
         {
           headers: { 'Content-Type': 'application/json' }

@@ -8,7 +8,7 @@ const BannersTrash = () => {
   const [deletedBanners, setDeletedBanners] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/Banner/trash`)
+    axios.get(`${API_BASE_URL}/api/Banner/trash`)
       .then(res => setDeletedBanners(res.data))
       .catch(() => alert('Không thể tải danh sách banner đã xoá.'));
   }, []);

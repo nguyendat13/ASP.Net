@@ -27,7 +27,7 @@ const RegisterUser = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/User/register`,
+        `${API_BASE_URL}/api/User/register`,
         formData,
         {
           headers: {
