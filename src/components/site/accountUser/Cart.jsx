@@ -114,7 +114,7 @@ const Cart = () => {
                 <th style={{ color: '#fff' }}>Giảm giá</th>
                 <th style={{ color: '#fff' }}>Số lượng</th>
                 <th style={{ color: '#fff' }}>Tổng</th>
-                <th style={{ color: '#fff' }}>Hành động</th>
+                <th style={{ color: '#fff', transition: 'color 0.2s' }} onMouseEnter={(e) => e.target.style.color = '#000'} onMouseLeave={(e) => e.target.style.color = '#fff'}>Hành động</th>
               </tr>
             </thead>
             <tbody>

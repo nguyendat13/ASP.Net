@@ -36,20 +36,20 @@ const Home = () => {
   const renderProducts = (products) => (
     products.map(product => (
       <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={product.id}>
-        <div className="card product-card pro-card h-100" style={{ background: 'var(--card)', color: 'var(--foreground)', border: 'none', boxShadow: '0 6px 24px rgba(0,0,0,0.18)', transition: 'transform 0.2s, box-shadow 0.2s' }}>
-          <div className="pro-img-wrap" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'var(--card)', borderRadius: '12px', overflow: 'hidden', height: '220px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
+        <div className="card product-card pro-card h-100" style={{ background: '#fff', color: '#23272a', border: 'none', boxShadow: '0 6px 24px rgba(0,0,0,0.18)', transition: 'transform 0.2s, box-shadow 0.2s' }}>
+          <div className="pro-img-wrap" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f5f5f5', borderRadius: '12px', overflow: 'hidden', height: '220px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
             <img
               src={`${API_BASE_URL}/api/Product/image/${product.avatar.replace("/images/", "")}`}
               alt={product.name}
-              style={{ maxHeight: '200px', maxWidth: '90%', objectFit: 'cover', borderRadius: '12px', border: '2px solid var(--primary)', background: 'var(--card)', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
+              style={{ maxHeight: '200px', maxWidth: '90%', objectFit: 'cover', borderRadius: '12px', border: '2px solid #43a047', background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
             />
           </div>
           <div className="card-body d-flex flex-column justify-content-between">
-            <h5 className="card-title d-flex align-items-center mb-2" style={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'var(--foreground)' }}>
-              <FaTag style={{ color: 'var(--primary)', marginRight: '8px' }} /> {product.name}
+            <h5 className="card-title d-flex align-items-center mb-2" style={{ fontWeight: 'bold', fontSize: '1.2rem', color: '#23272a' }}>
+              <FaTag style={{ color: '#43a047', marginRight: '8px' }} /> {product.name}
             </h5>
             <div className="d-flex justify-content-between align-items-center mb-2">
-              <span className="badge bg-success" style={{ fontSize: '1rem', fontWeight: 'bold', padding: '8px 14px', borderRadius: '8px', color: '#fff', background: 'var(--primary)' }}>
+              <span className="badge bg-success" style={{ fontSize: '1rem', fontWeight: 'bold', padding: '8px 14px', borderRadius: '8px', color: '#fff', background: '#43a047' }}>
                 <FaMoneyBillWave style={{ color: '#fff', marginRight: '6px' }} /> {product.price.toLocaleString()} ₫
               </span>
               {product.discount > 0 && (
@@ -58,7 +58,7 @@ const Home = () => {
                 </span>
               )}
             </div>
-            <Link to={`/products/${product.id}`} className="btn btn-warning w-100 mt-2" style={{ color: 'var(--card)', fontWeight: 'bold', border: 'none', background: 'var(--primary)', borderRadius: '8px', fontSize: '1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.10)' }}>
+            <Link to={`/products/${product.id}`} className="btn btn-success w-100 mt-2" style={{ color: '#fff', fontWeight: 'bold', border: 'none', background: '#43a047', borderRadius: '8px', fontSize: '1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.10)' }}>
               Xem chi tiết
             </Link>
           </div>
@@ -70,8 +70,8 @@ const Home = () => {
   const renderPosts = (posts) => (
     posts.map(post => (
       <div className="col-md-6 col-lg-4 mb-4" key={post.id}>
-        <div className="card post-card h-100" style={{ background: 'var(--card)', color: 'var(--foreground)', border: 'none', boxShadow: '0 6px 24px rgba(0,0,0,0.18)', borderRadius: '16px', overflow: 'hidden', transition: 'transform 0.2s, box-shadow 0.2s' }}>
-          <div style={{ height: '180px', overflow: 'hidden', borderRadius: '16px 16px 0 0', background: '#181a1b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="card post-card h-100" style={{ background: '#fff', color: '#23272a', border: 'none', boxShadow: '0 6px 24px rgba(0,0,0,0.18)', borderRadius: '16px', overflow: 'hidden', transition: 'transform 0.2s, box-shadow 0.2s' }}>
+          <div style={{ height: '180px', overflow: 'hidden', borderRadius: '16px 16px 0 0', background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <img
               src={post.imageUrl}
               alt={post.title}
@@ -79,9 +79,9 @@ const Home = () => {
             />
           </div>
           <div className="card-body d-flex flex-column justify-content-between">
-            <h5 className="card-title mb-2" style={{ fontWeight: 'bold', fontSize: '1.15rem', color: 'var(--foreground)' }}>{post.title}</h5>
-            <p className="card-text mb-2" style={{ color: 'var(--foreground)', fontSize: '1rem' }}>{post.excerpt}</p>
-            <Link to={`/post/${post.id}`} className="btn btn-outline-primary w-100 mt-auto" style={{ color: 'var(--primary)', fontWeight: 'bold', border: '2px solid var(--primary)', borderRadius: '8px', fontSize: '1rem', background: 'var(--card)' }}>
+            <h5 className="card-title mb-2" style={{ fontWeight: 'bold', fontSize: '1.15rem', color: '#23272a' }}>{post.title}</h5>
+            <p className="card-text mb-2" style={{ color: '#23272a', fontSize: '1rem' }}>{post.excerpt}</p>
+            <Link to={`/post/${post.id}`} className="btn btn-success w-100 mt-auto" style={{ color: '#fff', fontWeight: 'bold', border: 'none', background: '#43a047', borderRadius: '8px', fontSize: '1rem' }}>
               Đọc thêm
             </Link>
           </div>
@@ -120,31 +120,31 @@ const Home = () => {
 
       {/* New Products */}
       <section className="mb-5">
-        <h2 className="section-title" style={{ color: 'var(--foreground)', borderLeft: '6px solid var(--primary)', paddingLeft: '16px', fontWeight: 'bold', fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '8px', textShadow: 'none' }}>
-          <FaStar style={{ color: 'var(--primary)', fontSize: '2rem' }} /> Sản phẩm mới
+        <h2 className="section-title" style={{ color: '#fff', borderLeft: '6px solid #43a047', paddingLeft: '16px', fontWeight: 'bold', fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '8px', textShadow: 'none' }}>
+          <FaStar style={{ color: '#43a047', fontSize: '2rem' }} /> Sản phẩm mới
         </h2>
         <div className="row g-4">
-          {newProducts.length > 0 ? renderProducts(newProducts) : <div className="loading-text" style={{ color: 'var(--foreground)' }}>Đang tải sản phẩm mới...</div>}
+          {newProducts.length > 0 ? renderProducts(newProducts) : <div className="loading-text" style={{ color: '#fff' }}>Đang tải sản phẩm mới...</div>}
         </div>
       </section>
 
       {/* Top Selling */}
       <section className="mb-5">
-        <h2 className="section-title" style={{ color: 'var(--foreground)', borderLeft: '6px solid var(--primary)', paddingLeft: '16px', fontWeight: 'bold', fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '8px', textShadow: 'none' }}>
-          <FaFire style={{ color: 'var(--primary)', fontSize: '2rem' }} /> Sản phẩm bán chạy
+        <h2 className="section-title" style={{ color: '#fff', borderLeft: '6px solid #43a047', paddingLeft: '16px', fontWeight: 'bold', fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '8px', textShadow: 'none' }}>
+          <FaFire style={{ color: '#43a047', fontSize: '2rem' }} /> Sản phẩm bán chạy
         </h2>
         <div className="row g-4">
-          {topSellingProducts.length > 0 ? renderProducts(topSellingProducts) : <div className="loading-text" style={{ color: 'var(--foreground)' }}>Đang tải sản phẩm bán chạy...</div>}
+          {topSellingProducts.length > 0 ? renderProducts(topSellingProducts) : <div className="loading-text" style={{ color: '#fff' }}>Đang tải sản phẩm bán chạy...</div>}
         </div>
       </section>
 
       {/* Latest Posts */}
       <section className="mb-5">
-        <h2 className="section-title" style={{ color: 'var(--foreground)', borderLeft: '6px solid var(--primary)', paddingLeft: '16px', fontWeight: 'bold', fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '8px', textShadow: 'none' }}>
-          <FaNewspaper style={{ color: 'var(--primary)', fontSize: '2rem' }} /> Bài viết mới nhất
+        <h2 className="section-title" style={{ color: '#fff', borderLeft: '6px solid #43a047', paddingLeft: '16px', fontWeight: 'bold', fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '8px', textShadow: 'none' }}>
+          <FaNewspaper style={{ color: '#43a047', fontSize: '2rem' }} /> Bài viết mới nhất
         </h2>
         <div className="row g-4">
-          {latestPosts.length > 0 ? renderPosts(latestPosts) : <div className="loading-text" style={{ color: 'var(--foreground)' }}>Đang tải bài viết mới...</div>}
+          {latestPosts.length > 0 ? renderPosts(latestPosts) : <div className="loading-text" style={{ color: '#fff' }}>Đang tải bài viết mới...</div>}
         </div>
       </section>
     <style>{`
