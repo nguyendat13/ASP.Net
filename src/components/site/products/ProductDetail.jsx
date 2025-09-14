@@ -78,7 +78,7 @@ const ProductDetail = () => {
           <p className="d-flex align-items-center mb-2" style={{ color: 'var(--foreground)', fontWeight: 'bold', textShadow: 'none' }}>
             <FaFolderOpen style={{ color: 'var(--primary)', marginRight: '8px' }} /> Danh mục: {product.categoryName}
           </p>
-          <button className="btn btn-warning mt-3 px-4 py-2 w-100" style={{ color: 'var(--card)', fontWeight: 'bold', fontSize: '1.1rem', border: 'none', background: 'var(--primary)', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.10)' }} onClick={handleAddToCart}>Thêm vào giỏ</button>
+          <button className="btn btn-warning mt-3 px-3 py-2" style={{ color: 'var(--card)', fontWeight: 'bold', fontSize: '1rem', border: 'none', background: 'var(--foreground)', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.10)', width: 'auto' }} onClick={handleAddToCart}>Thêm vào giỏ</button>
         </div>
       </div>
       <RelatedProducts productId={product.id} />
