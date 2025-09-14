@@ -14,7 +14,7 @@ const OrderEdit = () => {
   useEffect(() => {
     const token = localStorage.getItem('jwt-token');
   
-    axios.get(`https://localhost:7177/api/Order/${id}`, {
+    axios.get(`${API_BASE_URL}/api/Order/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(res => {
       setOrder({
@@ -23,7 +23,7 @@ const OrderEdit = () => {
       });
     });
   
-    axios.get(`https://localhost:7177/api/StatusOrder`, {
+    axios.get(`${API_BASE_URL}/api/StatusOrder`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(res => {
       setStatuses(res.data);
@@ -45,7 +45,7 @@ const OrderEdit = () => {
     };
 
     try {
-      await axios.put(`https://localhost:7177/api/Order/${id}`, updateData, {
+      await axios.put(`${API_BASE_URL}/api/Order/${id}`, updateData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('jwt-token')}`,
         },

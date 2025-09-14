@@ -8,7 +8,7 @@ const Topics = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const API_URL = "https://localhost:7177/api/Topic";
+  const API_URL = `${API_BASE_URL}/api/Topic`;
 
   useEffect(() => {
     fetchTopics();

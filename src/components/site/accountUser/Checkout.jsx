@@ -35,7 +35,7 @@ const Checkout = () => {
 
     if (userId && token) {
       axios
-        .get(`https://localhost:7177/api/User/${userId}`, {
+        .get(`${API_BASE_URL}/api/User/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
@@ -53,7 +53,7 @@ const Checkout = () => {
   // Lấy danh sách phương thức thanh toán
   useEffect(() => {
     axios
-      .get("https://localhost:7177/api/Method")
+      .get(`${API_BASE_URL}/api/Method`)
       .then((res) => setMethods(res.data))
       .catch((err) => console.error("Lỗi khi fetch phương thức thanh toán:", err));
   }, []);
@@ -84,7 +84,7 @@ const Checkout = () => {
 
     try {
       const res = await axios.post(
-        "https://localhost:7177/api/Order/create",
+        `${API_BASE_URL}/api/Order/create`,
         orderRequest,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -129,7 +129,7 @@ const Checkout = () => {
       };
 
       const orderRes = await axios.post(
-        "https://localhost:7177/api/Order/create",
+        `${API_BASE_URL}/api/Order/create`,
         orderRequest,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -161,7 +161,7 @@ const paymentRequest = {
 
 
 const paymentRes = await axios.post(
-  "https://localhost:7177/api/Payment/create",
+  `${API_BASE_URL}/api/Payment/create`,
   paymentRequest,
   { headers: { Authorization: `Bearer ${token}` } }
 );

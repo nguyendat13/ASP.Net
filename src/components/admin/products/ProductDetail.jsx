@@ -8,12 +8,12 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    axios.get(`https://localhost:7177/api/Product/${id}`).then((res) => setProduct(res.data));
+    axios.get(`${API_BASE_URL}/api/Product/${id}`).then((res) => setProduct(res.data));
   }, [id]);
   const getImageUrl = (avatarPath) => {
     if (!avatarPath) return null;
     const filename = avatarPath.split('/').pop();
-    return `https://localhost:7177/api/Product/image/${filename}`;
+    return `${API_BASE_URL}/api/Product/image/${filename}`;
   };
   if (!product) return <p>Đang tải dữ liệu...</p>;
 

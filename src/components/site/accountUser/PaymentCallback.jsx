@@ -10,7 +10,7 @@ const PaymentCallback = () => {
     const params = new URLSearchParams(location.search);
 
     axios
-      .get("https://localhost:7177/api/payment/vnpay-return", { params })
+      .get(`${API_BASE_URL}/api/payment/vnpay-return`, { params })
       .then((res) => {
         if (res.data.success) {
           // ✅ Redirect sang trang thành công

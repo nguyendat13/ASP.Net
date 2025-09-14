@@ -17,7 +17,7 @@ const PostCreate = () => {
         topicId,
         publishedDate: new Date(),
       };
-      const response = await axios.post("https://localhost:7177/api/Post", newPost);
+      const response = await axios.post(`${API_BASE_URL}/api/Post", newPost);
       alert("Bài viết đã được tạo!");
       navigate(`/admin/posts`);
     } catch (error) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../Button/BackButton';
-
+import API_BASE_URL from '../../../../config';
 const AddProduct = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -15,7 +15,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         // Fetch danh mục từ API
-        axios.get('https://localhost:7177/api/Category')
+        axios.get(`${API_BASE_URL}/api/Category`)
             .then(response => {
                 setCategories(response.data);
             })
@@ -42,7 +42,7 @@ const AddProduct = () => {
         }
 
         try {
-            await axios.post('https://localhost:7177/api/Product', formData, {
+            await axios.post(`${API_BASE_URL}/Product`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

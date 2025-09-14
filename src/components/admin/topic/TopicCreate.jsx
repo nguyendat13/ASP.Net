@@ -12,7 +12,7 @@ const TopicCreate = () => {
     e.preventDefault();
     try {
       const newTopic = { title, description };
-      await axios.post("https://localhost:7177/api/Topic", newTopic);
+      await axios.post(`${API_BASE_URL}/api/Topic`, newTopic);
       alert("Tạo chủ đề thành công!");
       navigate("/admin/topics");
     } catch (error) {

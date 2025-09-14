@@ -8,7 +8,7 @@ const Products = () => {
 
   useEffect(() => {
     axios
-      .get('https://localhost:7177/api/Product')
+      .get(`${API_BASE_URL}/Product')
       .then((response) => {
         setProducts(response.data);
         setLoading(false);

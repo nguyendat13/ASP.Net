@@ -15,7 +15,7 @@ const UploadImage = () => {
     formData.append('name', image.name); // Gửi tên ảnh nếu cần
 
     try {
-      const response = await axios.post('https://localhost:7177/api/Product/upload', formData, {
+      const response = await axios.post(`${API_BASE_URL}/Product/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

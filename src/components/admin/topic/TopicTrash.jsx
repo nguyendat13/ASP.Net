@@ -6,7 +6,7 @@ const TopicTrash = () => {
   const [deletedTopics, setDeletedTopics] = useState([]);
 
   useEffect(() => {
-    axios.get("https://localhost:7177/api/Topic")
+    axios.get(`${API_BASE_URL}/api/Topic`)
       .then((res) => {
         const deleted = res.data.filter(t => t.isDeleted); // nếu có trường isDeleted
         setDeletedTopics(deleted);

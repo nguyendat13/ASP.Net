@@ -10,7 +10,7 @@ const CategoryDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`https://localhost:7177/api/Category/${id}`)
+    axios.get(`${API_BASE_URL}/api/Category/${id}`)
       .then((res) => {
         setCategory(res.data);
       })

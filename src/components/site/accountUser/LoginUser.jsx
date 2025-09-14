@@ -20,13 +20,13 @@ const LoginUser = ({ onLogin }) => {
     }
   }, []);
 const handleGoogleLogin = () => {
-    window.location.href = "https://localhost:7177/api/ExternalLogin/google";
+    window.location.href = `${API_BASE_URL}/api/ExternalLogin/google`;
   };
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'https://localhost:7177/api/User/login',
+        `${API_BASE_URL}/User/login`,
         { email, password },
         {
           headers: { 'Content-Type': 'application/json' }

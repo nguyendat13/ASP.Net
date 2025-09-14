@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaTrashAlt, FaMoneyBillWave, FaCheckCircle } from "react-icons/fa";
 
+const API_BASE_URL = "https://fruit-store-pb5n.onrender.com"; // khai báo API
+
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ const Cart = () => {
     }
 
     axios
-      .get(`https://localhost:7177/api/Cart/user/${userId}`)
+      .get(`${API_BASE_URL}/api/Cart/user/${userId}`)
       .then((res) => {
         const updatedCartItems = res.data.items.map(item => {
           const discount = item.discount || 0;
@@ -36,7 +38,7 @@ const Cart = () => {
   const handleRemove = (productId) => {
     const userId = localStorage.getItem("userId");
     axios
-      .delete('https://localhost:7177/api/Cart/remove-item', {
+      .delete(`${API_BASE_URL}/api/Cart/remove-item`, { // fix dấu ' và URL
         data: { userId, productId }
       })
       .then(() => {
@@ -51,7 +53,7 @@ const Cart = () => {
     const userId = localStorage.getItem("userId");
     if (newQuantity <= 0) return;
 
-    axios.put('https://localhost:7177/api/Cart/update-item', {
+    axios.put(`${API_BASE_URL}/api/Cart/update-item`, { // fix dấu `)` và URL
       userId,
       productId,
       quantity: newQuantity,
@@ -75,7 +77,7 @@ const Cart = () => {
     if (!userId) return;
 
     if (window.confirm("Bạn có chắc chắn muốn xoá toàn bộ giỏ hàng không?")) {
-      axios.delete(`https://localhost:7177/api/Cart/clear/${userId}`)
+      axios.delete(`${API_BASE_URL}/api/Cart/clear/${userId}`)
         .then(() => setCartItems([]))
         .catch(err => console.error("Lỗi khi xoá toàn bộ giỏ hàng:", err));
     }
@@ -117,7 +119,7 @@ const Cart = () => {
                 <tr key={item.productId} style={{ background: '#23272a', color: '#fff' }}>
                   <td>
                     <img
-                      src={`https://localhost:7177${item.avatar}`}
+                      src={`${API_BASE_URL}${item.avatar}`}
                       alt={item.productName}
                       width="80"
                       style={{ borderRadius: 8, border: '2px solid #43a047' }}

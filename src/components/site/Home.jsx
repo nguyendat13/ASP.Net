@@ -16,15 +16,15 @@ const Home = () => {
   const [showChat, setShowChat] = useState(false); // toggle popup chat
 
   useEffect(() => {
-    axios.get("https://localhost:7177/api/Product/new")
+    axios.get(`${API_BASE_URL}/api/Product/new`)
       .then(res => setNewProducts(res.data))
       .catch(err => console.error("Lỗi khi lấy sản phẩm mới:", err));
 
-    axios.get("https://localhost:7177/api/Product/top-selling")
+    axios.get(`${API_BASE_URL}/api/Product/top-selling`)
       .then(res => setTopSellingProducts(res.data))
       .catch(err => console.error("Lỗi khi lấy sản phẩm bán chạy:", err));
 
-    axios.get("https://localhost:7177/api/Post/latest")
+    axios.get(`${API_BASE_URL}/api/Post/latest`)
       .then(res => setLatestPosts(res.data))
       .catch(err => console.error("Lỗi khi lấy bài viết mới:", err));
   }, []);
@@ -35,7 +35,7 @@ const Home = () => {
         <div className="card product-card" style={{ background: '#23272b', color: '#FFD700', border: '2px solid #FFA500', boxShadow: '0 4px 16px rgba(0,0,0,0.2)' }}>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#23272b', borderRadius: '8px', overflow: 'hidden', height: '220px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
             <img
-              src={`https://localhost:7177${product.avatar}`}
+              src={`${API_BASE_URL}${product.avatar}`}
               alt={product.name}
               style={{ maxHeight: '200px', maxWidth: '90%', objectFit: 'contain', borderRadius: '8px', border: '2px solid #FFA500', background: '#23272b', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
             />

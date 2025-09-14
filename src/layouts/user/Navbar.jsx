@@ -17,7 +17,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('https://localhost:7177/api/category');
+        const response = await fetch(`${API_BASE_URL}/category');
         if (!response.ok) {
           throw new Error('Lỗi khi lấy danh mục');
         }

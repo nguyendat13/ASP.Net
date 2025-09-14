@@ -9,7 +9,7 @@ const BannersEdit = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`https://localhost:7177/api/Banner/${id}`)
+    axios.get(`${API_BASE_URL}/api/Banner/${id}`)
       .then(res => setBanner(res.data))
       .catch(() => alert('Không thể tải thông tin banner.'));
   }, [id]);
@@ -37,7 +37,7 @@ const BannersEdit = () => {
     }
 
     try {
-      await axios.put(`https://localhost:7177/api/Banner/${id}`, formData, {
+      await axios.put(`${API_BASE_URL}/api/Banner/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -21,8 +21,8 @@ const EditProduct = () => {
         const fetchData = async () => {
             try {
                 const [productRes, categoryRes] = await Promise.all([
-                    axios.get(`https://localhost:7177/api/Product/${id}`),
-                    axios.get(`https://localhost:7177/api/Category`)
+                    axios.get(`${API_BASE_URL}/api/Product/${id}`),
+                    axios.get(`${API_BASE_URL}/api/Category`)
                 ]);
 
                 const productData = productRes.data;
@@ -58,7 +58,7 @@ const EditProduct = () => {
         }
 
         try {
-            await axios.put(`https://localhost:7177/api/Product/${id}`, formData, {
+            await axios.put(`${API_BASE_URL}/api/Product/${id}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             alert('Sản phẩm đã được cập nhật!');

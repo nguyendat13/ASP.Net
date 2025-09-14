@@ -9,7 +9,7 @@ const TopicEdit = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`https://localhost:7177/api/Topic/${id}`)
+    axios.get(`${API_BASE_URL}/api/Topic/${id}`)
       .then((res) => setTopic(res.data))
       .catch((err) => {
         console.error("Lỗi khi tải dữ liệu:", err);
@@ -20,7 +20,7 @@ const TopicEdit = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`https://localhost:7177/api/Topic/${id}`, topic);
+      await axios.put(`${API_BASE_URL}/api/Topic/${id}`, topic);
       alert("Cập nhật thành công!");
       navigate("/admin/topics");
     } catch (error) {

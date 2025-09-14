@@ -16,7 +16,7 @@ const UserDetail = () => {
     const token = localStorage.getItem('jwt-token'); // Lấy token từ localStorage
 
     try {
-      const response = await axios.get(`https://localhost:7177/api/User/${userId}`, {
+      const response = await axios.get(`${API_BASE_URL}/api/User/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Gửi token trong header
         },

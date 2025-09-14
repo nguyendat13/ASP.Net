@@ -14,7 +14,7 @@ const OrderDetail = () => {
   const fetchOrderDetail = async () => {
     try {
       const token = localStorage.getItem('jwt-token');
-      const response = await axios.get(`https://localhost:7177/api/Order/${id}`, {
+      const response = await axios.get(`${API_BASE_URL}/api/Order/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

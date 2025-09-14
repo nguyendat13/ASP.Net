@@ -25,7 +25,7 @@ const CategoryCreate = () => {
         description: form.description,
       };
   
-      const response = await axios.post('https://localhost:7177/api/Category', categoryData);
+      const response = await axios.post(`${API_BASE_URL}/Category', categoryData);
       const newCategory = response.data;
       alert('Tạo danh mục thành công!');
       navigate('/admin/categories');

@@ -12,7 +12,7 @@ const PostEdit = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`https://localhost:7177/api/Post/${id}`);
+        const response = await axios.get(`${API_BASE_URL}/api/Post/${id}`);
         setTitle(response.data.title);
         setContent(response.data.content);
         setTopicId(response.data.topicId);
@@ -32,7 +32,7 @@ const PostEdit = () => {
         topicId,
         publishedDate: new Date(),
       };
-      await axios.put(`https://localhost:7177/api/Post/${id}`, updatedPost);
+      await axios.put(`${API_BASE_URL}/api/Post/${id}`, updatedPost);
       alert("Bài viết đã được cập nhật!");
       navigate(`/admin/posts`);
     } catch (error) {

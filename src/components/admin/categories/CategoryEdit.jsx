@@ -10,7 +10,7 @@ const CategoryEdit = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`https://localhost:7177/api/Category/${id}`).then(res => {
+    axios.get(`${API_BASE_URL}/api/Category/${id}`).then(res => {
       setForm(res.data);
     });
   }, [id]);
@@ -21,7 +21,7 @@ const CategoryEdit = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await axios.put(`https://localhost:7177/api/Category/${id}`, form);
+    await axios.put(`${API_BASE_URL}/api/Category/${id}`, form);
     alert('Cập nhật danh mục thành công!');
     navigate('/admin/categories');
   };

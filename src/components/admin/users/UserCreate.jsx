@@ -34,7 +34,7 @@ const CreateUser = () => {
     };
 
     try {
-      const response = await axios.post('https://localhost:7177/api/User', userData, {
+      const response = await axios.post(`${API_BASE_URL}/User', userData, {
         headers: {
           Authorization: `Bearer ${token}`, // Gửi token trong header
         },

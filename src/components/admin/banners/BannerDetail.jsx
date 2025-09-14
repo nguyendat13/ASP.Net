@@ -8,7 +8,7 @@ const BannersDetail = () => {
   const [banner, setBanner] = useState(null);
 
   useEffect(() => {
-    axios.get(`https://localhost:7177/api/Banner/${id}`)
+    axios.get(`${API_BASE_URL}/api/Banner/${id}`)
       .then(res => setBanner(res.data))
       .catch(() => alert('Không thể tải thông tin chi tiết.'));
   }, [id]);

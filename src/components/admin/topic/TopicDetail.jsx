@@ -8,7 +8,7 @@ const TopicDetail = () => {
   const [topic, setTopic] = useState(null);
 
   useEffect(() => {
-    axios.get(`https://localhost:7177/api/Topic/${id}`)
+    axios.get(`${API_BASE_URL}/api/Topic/${id}`)
       .then((res) => setTopic(res.data))
       .catch((err) => {
         console.error("Lỗi khi lấy chủ đề:", err);

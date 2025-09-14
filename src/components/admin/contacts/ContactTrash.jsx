@@ -2,18 +2,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrashRestore } from "react-icons/fa";
+import API_BASE_URL from "../../../config";
 
 const ContactTrash = () => {
   const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
-    axios.get("https://localhost:7177/api/Contact/trash").then((res) => {
+    axios.get(`${API_BASE_URL}/api/Contact/trash`).then((res) => {
       setContacts(res.data);
     });
   }, []);
 
   const restoreContact = (id) => {
-    axios.put(`https://localhost:7177/api/Contact/restore/${id}`).then(() => {
+    axios.put(`${API_BASE_URL}/api/Contact/restore/${id}`).then(() => {
       setContacts(contacts.filter((c) => c.id !== id));
     });
   };

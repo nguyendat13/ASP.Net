@@ -32,7 +32,7 @@ const BannersCreate = () => {
     formData.append('Link', link);  // Thêm link vào formData
   
     try {
-      await axios.post('https://localhost:7177/api/Banner', formData, {
+      await axios.post(`${API_BASE_URL}/Banner', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

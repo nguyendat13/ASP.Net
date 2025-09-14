@@ -7,14 +7,14 @@ const BannersTrash = () => {
   const [deletedBanners, setDeletedBanners] = useState([]);
 
   useEffect(() => {
-    axios.get('https://localhost:7177/api/Banner/trash')
+    axios.get(`${API_BASE_URL}/Banner/trash')
       .then(res => setDeletedBanners(res.data))
       .catch(() => alert('Không thể tải danh sách banner đã xoá.'));
   }, []);
 
   const handleRestore = async (id) => {
     try {
-      await axios.put(`https://localhost:7177/api/Banner/restore/${id}`);
+      await axios.put(`${API_BASE_URL}/api/Banner/restore/${id}`);
       setDeletedBanners(deletedBanners.filter(b => b.id !== id));
     } catch {
       alert('Khôi phục thất bại.');

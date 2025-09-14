@@ -17,7 +17,7 @@ const OrdersProcessing = () => {
       return;
     }
     axios
-      .get(`https://localhost:7177/api/Order/user/${userId}`, {
+      .get(`${API_BASE_URL}/api/Order/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ const OrdersProcessing = () => {
     const token = localStorage.getItem("token-user");
 
     axios
-      .put(`https://localhost:7177/api/Order/cancel/${orderId}`, null, {
+      .put(`${API_BASE_URL}/api/Order/cancel/${orderId}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

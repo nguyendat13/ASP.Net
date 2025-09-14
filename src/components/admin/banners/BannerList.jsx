@@ -15,7 +15,7 @@ const BannerList = () => {
 
   const fetchBanners = () => {
     axios
-      .get("https://localhost:7177/api/Banner")
+      .get`API_BASE_URL}/api/Banner")
       .then((res) => {
         setBanners(res.data);
         setLoading(false);
@@ -29,7 +29,7 @@ const BannerList = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Bạn có chắc muốn xoá banner này?")) {
       try {
-        await axios.delete(`https://localhost:7177/api/Banner/${id}`);
+        await axios.delete(`${API_BASE_URL}/api/Banner/${id}`);
         setBanners(banners.filter((b) => b.id !== id));
       } catch {
         alert("Xoá banner thất bại!");
@@ -66,7 +66,7 @@ const BannerList = () => {
               <td>
                 {banner.imageUrl ? (
                   <img
-                    src={`https://localhost:7177${banner.imageUrl}`}
+                    src={`${API_BASE_URL}${banner.imageUrl}`}
                     alt={`Banner ${banner.id}`}
                     width="100"
                     height="60"

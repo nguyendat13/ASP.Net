@@ -22,7 +22,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'https://localhost:7177/api/User/login',
+        `${API_BASE_URL}/User/login',
         { email, password },
         {
           headers: { 'Content-Type': 'application/json' }

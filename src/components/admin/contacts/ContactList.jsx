@@ -14,7 +14,7 @@ const ContactList = () => {
 
   const fetchContacts = async () => {
     try {
-      const response = await axios.get("https://localhost:7177/api/Contact");
+      const response = await axios.get(`${API_BASE_URL}/api/Contact`);
       setContacts(response.data);
       setLoading(false);
     } catch (error) {
@@ -28,7 +28,7 @@ const ContactList = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Bạn có chắc muốn xoá liên hệ này không?")) {
       try {
-        await axios.delete(`https://localhost:7177/api/Contact/${id}`);
+        await axios.delete(`${API_BASE_URL}/api/Contact/${id}`);
         fetchContacts(); // Reload the contacts list
       } catch (error) {
         console.error("Lỗi khi xoá liên hệ:", error);

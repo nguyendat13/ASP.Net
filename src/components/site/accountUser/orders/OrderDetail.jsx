@@ -13,7 +13,7 @@ const OrderDetails = () => {
 
     // Gửi yêu cầu để lấy chi tiết đơn hàng từ backend
     axios
-      .get(`https://localhost:7177/api/Order/${orderId}`, {
+      .get(`${API_BASE_URL}/api/Order/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Thêm token vào header nếu cần
         },

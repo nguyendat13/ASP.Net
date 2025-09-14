@@ -18,7 +18,7 @@ const CancelledOrders = () => {
       try {
         const token = localStorage.getItem("token-user");
         const response = await axios.get(
-          `https://localhost:7177/api/Order/canceled/${userId}`, // ✅ Gọi API đúng với route
+          `${API_BASE_URL}/api/Order/canceled/${userId}`, // ✅ Gọi API đúng với route
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ const CancelledOrders = () => {
 
     try {
       const token = localStorage.getItem("token-user");
-      await axios.delete(`https://localhost:7177/api/Order/${orderId}`, {
+      await axios.delete(`${API_BASE_URL}/api/Order/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

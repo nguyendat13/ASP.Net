@@ -7,7 +7,7 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get("https://localhost:7177/api/Product") // Đổi port nếu cần
+    axios.get(`${API_BASE_URL}/api/Product`) // Đổi port nếu cần
       .then((res) => {
         setProducts(res.data);
       })
@@ -25,7 +25,7 @@ const ProductList = () => {
             <div className="card h-100 shadow-sm rounded" style={{ background: '#23272b', color: '#FFD700', border: '2px solid #FFA500', boxShadow: '0 4px 16px rgba(0,0,0,0.2)' }}>
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#23272b', borderRadius: '8px', overflow: 'hidden', height: '200px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
                 <img
-                  src={`https://localhost:7177${product.avatar}`}
+                  src={`${API_BASE_URL}${product.avatar}`}
                   alt={product.name}
                   style={{ maxHeight: '180px', maxWidth: '90%', objectFit: 'contain', borderRadius: '8px', border: '2px solid #FFA500', background: '#23272b', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
                 />

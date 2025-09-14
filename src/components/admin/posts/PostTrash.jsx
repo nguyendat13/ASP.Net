@@ -9,7 +9,7 @@ const PostTrash = () => {
 
   const handleTrash = async () => {
     try {
-      await axios.put(`https://localhost:7177/api/Post/Trash/${id}`);
+      await axios.put(`${API_BASE_URL}/api/Post/Trash/${id}`);
       alert("Bài viết đã được đánh dấu là xóa.");
       navigate("/posts");
     } catch (error) {

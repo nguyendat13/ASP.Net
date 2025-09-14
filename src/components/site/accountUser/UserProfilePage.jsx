@@ -19,7 +19,7 @@ const UserProfilePage = () => {
     }
 
     axios
-      .get(`https://localhost:7177/api/User/${userId}`, {
+      .get(`${API_BASE_URL}/api/User/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

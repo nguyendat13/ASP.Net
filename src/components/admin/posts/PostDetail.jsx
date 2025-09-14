@@ -10,7 +10,7 @@ const PostDetail = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`https://localhost:7177/api/Post/${id}`);
+        const response = await axios.get(`${API_BASE_URL}/api/Post/${id}`);
         setPost(response.data);
       } catch (error) {
         console.error("Lỗi khi lấy bài viết:", error);

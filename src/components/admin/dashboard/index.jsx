@@ -12,7 +12,7 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    fetch('https://localhost:7177/api/Dashboard')
+    fetch(`${API_BASE_URL}/Dashboard')
       .then(res => res.json())
       .then(data => setStats(data))
       .catch(() => alert('Không thể tải dữ liệu thống kê.'));

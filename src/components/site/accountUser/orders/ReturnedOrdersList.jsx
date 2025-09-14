@@ -18,7 +18,7 @@ const ReturnedOrdersList = () => {
     }
 
     axios
-      .get(`https://localhost:7177/api/Order/user/${userId}`, {
+      .get(`${API_BASE_URL}/api/Order/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

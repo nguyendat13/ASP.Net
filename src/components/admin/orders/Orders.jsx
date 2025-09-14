@@ -17,7 +17,7 @@ const OrderList = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(`https://localhost:7177/api/Order`, {
+      const response = await axios.get(`${API_BASE_URL}/api/Order`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -33,7 +33,7 @@ const OrderList = () => {
 
   const deleteOrder = async (id) => {
     try {
-      await axios.delete(`https://localhost:7177/api/Order/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/Order/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

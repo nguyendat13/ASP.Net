@@ -22,7 +22,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('https://localhost:7177/api/User', {
+      const response = await axios.get(`${API_BASE_URL}/User', {
         headers: {
           Authorization: `Bearer ${token}`, // Gửi token kèm theo
         },
@@ -37,7 +37,7 @@ const Users = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Bạn có chắc muốn xoá người dùng này không?')) {
       try {
-        await axios.delete(`https://localhost:7177/api/User/${id}`, {
+        await axios.delete(`${API_BASE_URL}/api/User/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

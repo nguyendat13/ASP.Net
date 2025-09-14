@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash, FaEye } from 'react-icons/fa';
+import API_BASE_URL from '../../../config';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -10,7 +11,7 @@ const Products = () => {
 
   useEffect(() => {
     axios
-      .get('https://localhost:7177/api/Product')
+      .get(`${API_BASE_URL}/api/Product`)
       .then((response) => {
         setProducts(response.data);
         setLoading(false);
@@ -24,7 +25,7 @@ const Products = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Bạn có chắc chắn muốn xoá sản phẩm này?')) {
       try {
-        await axios.delete(`https://localhost:7177/api/Product/${id}`);
+        await axios.delete(`${API_BASE_URL}/api/Product/${id}`);
         setProducts(products.filter((p) => p.id !== id));
       } catch (err) {
         alert('Xoá thất bại!');
@@ -35,7 +36,7 @@ const Products = () => {
   const getImageUrl = (avatarPath) => {
     if (!avatarPath) return null;
     const filename = avatarPath.split('/').pop();
-    return `https://localhost:7177/api/Product/image/${filename}`;
+    return `${API_BASE_URL}/api/Product/image/${filename}`;
   };
   
 

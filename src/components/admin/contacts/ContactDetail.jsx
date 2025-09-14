@@ -11,7 +11,7 @@ const ContactDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:7177/api/Contact/${id}`)
+      .get(`${API_BASE_URL}/api/Contact/${id}`)
       .then((res) => {
         setContact(res.data);
         setIsResponded(res.data.isReplied); // Cập nhật trạng thái phản hồi ban đầu
@@ -42,7 +42,7 @@ const ContactDetail = () => {
     };
 
     axios
-      .put(`https://localhost:7177/api/Contact/${id}`, updatedContact)
+      .put(`${API_BASE_URL}/api/Contact/${id}`, updatedContact)
       .then((res) => {
         setContact(res.data);
         setIsResponded(true); // Cập nhật trạng thái đã phản hồi
