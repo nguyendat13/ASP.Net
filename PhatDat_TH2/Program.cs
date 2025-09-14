@@ -17,13 +17,30 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ListenLocalhost(5094); // HTTP
+//    options.ListenLocalhost(7177, listenOptions =>
+//    {
+//        listenOptions.UseHttps();
+//    });
+//});
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenLocalhost(5094); // HTTP
-    options.ListenLocalhost(7177, listenOptions =>
+    if (builder.Environment.IsDevelopment())
     {
-        listenOptions.UseHttps();
-    });
+        // Chạy local
+        options.ListenLocalhost(5094); // HTTP
+        options.ListenLocalhost(7177, listenOptions =>
+        {
+            listenOptions.UseHttps();
+        });
+    }
+    else
+    {
+        // Khi deploy Docker/Render
+        options.ListenAnyIP(5000);
+    }
 });
 
 builder.Services.AddAuthentication(options =>
@@ -118,8 +135,14 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Cấu hình DbContext và Swagger
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 36)) // Railway đang chạy MySQL 8.x
+    )
+);
 
 builder.Services.AddCors(options =>
 {
