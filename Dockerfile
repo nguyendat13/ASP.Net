@@ -24,4 +24,3 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "PhatDat_TH2.dll"]
-0
