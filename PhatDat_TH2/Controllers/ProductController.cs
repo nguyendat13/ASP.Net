@@ -167,7 +167,7 @@ namespace PhatDat_TH2.Controllers
             using var stream = new FileStream(filePath, FileMode.Create);
             await image.CopyToAsync(stream);
 
-            return "/images/" + fileName;
+            return fileName;
         }
 
         [HttpPost("upload")]
@@ -200,6 +200,10 @@ namespace PhatDat_TH2.Controllers
         [HttpGet("image/{filename}")]
         public IActionResult GetImage(string filename)
         {
+            // Loại bỏ /images/ nếu filename từ DB có thêm
+            if (filename.StartsWith("/images/"))
+                filename = filename["/images/".Length..];
+
             var folderPath = Path.Combine(_env.WebRootPath, "images");
             var filePath = Path.Combine(folderPath, filename);
 
@@ -211,6 +215,7 @@ namespace PhatDat_TH2.Controllers
 
             return File(imageBytes, contentType);
         }
+
 
         private string GetContentType(string path)
         {
