@@ -54,7 +54,7 @@ const ProductDetail = () => {
         <div className="col-12 col-md-5 mb-4 d-flex justify-content-center">
           <div style={{ background: '#23272b', borderRadius: '16px', boxShadow: '0 4px 16px rgba(0,0,0,0.2)', padding: '16px' }}>
             <img
-              src={`${API_BASE_URL}/api/Product/image${product.avatar}`}
+              src={`${API_BASE_URL}/api/Product/image/${product.avatar}`}
 
               alt={product.name}
               style={{ maxHeight: '350px', maxWidth: '100%', objectFit: 'contain', borderRadius: '12px', border: '2px solid #FFA500', background: '#23272b', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
