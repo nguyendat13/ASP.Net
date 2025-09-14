@@ -83,9 +83,17 @@ public class ExternalLoginController : ControllerBase
     [HttpGet("google")]
     public IActionResult GoogleLogin()
     {
-        var redirectUrl = Url.Action("GoogleCallback", "GoogleLogin");
+        // Full URL tới callback
+        var redirectUrl = Url.Action(
+            "GoogleCallback",          // action method
+            "ExternalLogin",           // controller name đúng
+            null,                      // route values
+            Request.Scheme             // tạo full URL với http/https
+        );
+
         var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
         return Challenge(properties, "Google");
     }
+
 
 }
