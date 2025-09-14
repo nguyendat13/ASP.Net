@@ -4,14 +4,15 @@
     margin: 50px auto;
     padding: 40px;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    background-color: var(--background);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   .login-container h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #333;
+    color: var(--foreground);
+    text-shadow: none;
   }
   
   .login-container form {
@@ -24,32 +25,35 @@
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border);
     border-radius: 4px;
     font-size: 16px;
-    background-color: #fff;
+    background-color: var(--card);
     transition: border-color 0.3s ease;
+    color: var(--foreground);
+    text-shadow: none;
   }
   
   .login-container input[type="email"]:focus,
   .login-container input[type="password"]:focus {
-    border-color: #007bff;
+    border-color: var(--primary);
     outline: none;
   }
   
   .login-container button {
     padding: 12px;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
     border: none;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-shadow: none;
   }
   
   .login-container button:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary);
   }
   
   .login-container .remember-checkbox {
@@ -67,16 +71,18 @@
     padding: 12px;
     border-radius: 4px;
     font-size: 14px;
+    color: var(--foreground);
+    text-shadow: none;
   }
   
   .login-container .message.success {
-    background-color: #ddffdd;
-    color: #3c763d;
+    background-color: var(--success);
+    color: var(--success-foreground);
   }
   
   .login-container .message.error {
-    background-color: #ffdddd;
-    color: #a94442;
+    background-color: var(--destructive);
+    color: var(--destructive-foreground);
   }
   
   .login-container .token-container {
@@ -88,12 +94,14 @@
     padding: 12px;
     font-family: 'Courier New', monospace;
     font-size: 14px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border);
     border-radius: 4px;
     height: 100px;
-    background-color: #f8f8f8;
+    background-color: var(--muted);
     resize: none;
     word-break: break-all;
+    color: var(--foreground);
+    text-shadow: none;
   }
 /* Style cho Nút Đăng nhập Google */
 .google-login-btn {
@@ -101,8 +109,8 @@
   align-items: center;
   justify-content: center;
   padding: 12px;
-  background-color: #4285F4; /* Màu xanh của Google */
-  color: white;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
   border: none;
   border-radius: 4px;
   font-size: 16px;
@@ -111,11 +119,12 @@
   width: 100%;
   margin-top: 15px;
   transition: background-color 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Thêm shadow cho nút */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-shadow: none;
 }
 
 .google-login-btn:hover {
-  background-color: #357AE8; /* Màu khi hover */
+  background-color: var(--secondary);
 }
 
 .google-login-btn:focus {

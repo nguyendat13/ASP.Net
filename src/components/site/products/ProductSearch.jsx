@@ -64,8 +64,8 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="container-fluid my-5" style={{ background: 'linear-gradient(120deg, #23272b 70%, #4CAF50 100%)', borderRadius: '24px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', padding: '32px 0', minHeight: '80vh' }}>
-      <h2 className="mb-4 text-center" style={{ color: '#FFD700', fontWeight: 'bold', textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>Kết quả tìm kiếm cho: <span style={{ color: '#FFA500' }}>&quot;{query}&quot;</span></h2>
+    <div className="container-fluid my-5" style={{ background: 'var(--background)', borderRadius: '24px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', padding: '32px 0', minHeight: '80vh' }}>
+      <h2 className="mb-4 text-center" style={{ color: 'var(--foreground)', fontWeight: 'bold', textShadow: 'none' }}>Kết quả tìm kiếm cho: <span style={{ color: 'var(--foreground)' }}>&quot;{query}&quot;</span></h2>
 
       {loading && <div className="alert alert-info">Đang tải dữ liệu...</div>}
       {error && <div className="alert alert-danger">Lỗi: {error}</div>}
@@ -74,29 +74,29 @@ const SearchPage = () => {
       <div className="row">
         {products.map((product) => (
           <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={product.id}>
-            <div className="card h-100 shadow-sm rounded" style={{ background: '#23272b', color: '#FFD700', border: '2px solid #FFA500', boxShadow: '0 4px 16px rgba(0,0,0,0.2)' }}>
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#23272b', borderRadius: '8px', overflow: 'hidden', height: '200px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
+            <div className="card h-100 shadow-sm rounded" style={{ background: 'var(--card)', color: 'var(--foreground)', border: '2px solid var(--primary)', boxShadow: '0 4px 16px rgba(0,0,0,0.2)' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'var(--card)', borderRadius: '8px', overflow: 'hidden', height: '200px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
                 <img
                   src={`${API_BASE_URL}/api/Product/image/${product.avatar}`}
                   alt={product.name}
-                  style={{ maxHeight: '180px', maxWidth: '90%', objectFit: 'contain', borderRadius: '8px', border: '2px solid #FFA500', background: '#23272b', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
+                  style={{ maxHeight: '180px', maxWidth: '90%', objectFit: 'contain', borderRadius: '8px', border: '2px solid var(--primary)', background: 'var(--card)', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
                 />
               </div>
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title d-flex align-items-center" style={{ color: '#FFD700', fontWeight: 'bold', fontSize: '1.1rem' }}>
-                  <FaTags style={{ color: '#FFA500', marginRight: '8px' }} /> {product.name}
+                <h5 className="card-title d-flex align-items-center" style={{ color: 'var(--foreground)', fontWeight: 'bold', fontSize: '1.1rem', textShadow: 'none' }}>
+                  <FaTags style={{ color: 'var(--primary)', marginRight: '8px' }} /> {product.name}
                 </h5>
-                <p className="card-text text-truncate" style={{ color: '#FFA500' }}>{product.description}</p>
+                <p className="card-text text-truncate" style={{ color: 'var(--foreground)', textShadow: 'none' }}>{product.description}</p>
                 <div className="mt-auto">
-                  <p className="fw-bold d-flex align-items-center" style={{ color: '#FFD700', fontWeight: 'bold', fontSize: '1.1rem' }}>
-                    <FaMoneyBillWave style={{ color: '#FFA500', marginRight: '8px' }} /> {product.price.toLocaleString()} VND
+                  <p className="fw-bold d-flex align-items-center" style={{ color: 'var(--primary)', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                    <FaMoneyBillWave style={{ color: 'var(--foreground)', marginRight: '8px' }} /> {product.price.toLocaleString()} VND
                   </p>
-                  <Link to={`/products/${product.id}`} className="btn btn-outline-warning mt-3" style={{ color: '#23272b', fontWeight: 'bold', border: '2px solid #FFA500', background: '#FFD700' }}>
+                  <Link to={`/products/${product.id}`} className="btn btn-outline-warning mt-3" style={{ color: 'var(--card)', fontWeight: 'bold', border: '2px solid var(--primary)', background: 'var(--primary)' }}>
                     Xem chi tiết
                   </Link>
                   <button
                     className="btn btn-outline-warning w-100 mt-2"
-                    style={{ color: '#23272b', fontWeight: 'bold', border: '2px solid #FFA500', background: '#FFD700' }}
+                    style={{ color: 'var(--card)', fontWeight: 'bold', border: '2px solid var(--primary)', background: 'var(--primary)' }}
                     onClick={() => handleAddToCart(product.id)}
                   >
                     Thêm vào giỏ hàng

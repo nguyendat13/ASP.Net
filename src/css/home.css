@@ -20,22 +20,24 @@
 .home-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #FFD700;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  color: var(--foreground);
+  text-shadow: none;
 }
 
 .home-subtitle {
   font-size: 1.2rem;
-  color: #FFA500;
+  color: var(--foreground);
+  text-shadow: none;
 }
 
 .section-title {
   font-size: 1.8rem;
   font-weight: 600;
-  border-left: 4px solid #FFA500;
+  border-left: 4px solid var(--primary);
   padding-left: 10px;
   margin-bottom: 20px;
-  color: #FFD700;
+  color: var(--foreground);
+  text-shadow: none;
 }
 
 .product-card, .post-card {

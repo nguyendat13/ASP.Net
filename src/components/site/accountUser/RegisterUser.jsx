@@ -48,13 +48,13 @@ const RegisterUser = () => {
   return (
     <div style={{ minHeight: '100vh', width: '100vw', background: '#181a1b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div className="register-container d-flex flex-column align-items-center justify-content-center" style={{ maxWidth: '450px', width: '100%', background: '#23272a', borderRadius: 16, boxShadow: '0 0 16px #212121', padding: '32px 24px' }}>
-        <h2 className="fw-bold mb-4 d-flex align-items-center gap-2" style={{ color: '#43a047', letterSpacing: 1 }}>
+            <h2 className="fw-bold mb-4 d-flex align-items-center gap-2" style={{ color: '#fff', letterSpacing: 1 }}>
           Đăng Ký Người Dùng
         </h2>
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
           {['fullname', 'username', 'email', 'password', 'phone'].map((field) => (
             <div key={field} className="mb-3">
-              <label className="fw-bold" style={{ color: '#fbc02d' }}>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+                <label className="fw-bold" style={{ color: '#fff' }}>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
               <input
                 type={field === 'password' ? 'password' : 'text'}
                 name={field}
@@ -68,7 +68,7 @@ const RegisterUser = () => {
           ))}
 
           <div className="mb-3">
-            <label className="fw-bold" style={{ color: '#fbc02d' }}>Giới tính:</label>
+              <label className="fw-bold" style={{ color: '#fff' }}>Giới tính:</label>
             <select
               name="gender"
               value={formData.gender}

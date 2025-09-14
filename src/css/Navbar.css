@@ -1,25 +1,26 @@
 /* Navbar */
 
 .custom-navbar {
-  background: linear-gradient(90deg, #23272b 60%, #4CAF50 100%);
+  background: var(--background);
   transition: all 0.3s ease;
   padding-left: 20px;
   padding-right: 20px;
-  border-bottom: 3px solid #FFA500;
+  border-bottom: 3px solid var(--primary);
 }
 
 /* Hiệu ứng hover cho navbar */
 .custom-navbar:hover {
-  background: linear-gradient(90deg, #23272b 40%, #FFA500 100%);
+  background: var(--primary);
 }
 
 /* Logo và tên cửa hàng */
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #FFD700;
+  color: var(--foreground);
   display: flex;
   align-items: center;
+  text-shadow: none;
 }
 
 .navbar-logo {
@@ -28,20 +29,24 @@
   margin-right: 10px;
 }
 
-/* Link menu */
 .nav-link {
-  color: #FFD700 !important;
+  color: #fff !important;
   font-size: 1.25rem;
   transition: color 0.2s ease;
   font-weight: 600;
   padding-left: 18px;
   padding-right: 18px;
+  text-shadow: none;
+}
+.nav-link:hover .navbar-icon {
+  color: #fff !important;
+  transition: color 0.2s;
 }
 
 
 /* Hover cho link menu */
 .nav-link:hover {
-  color: #FFA500 !important;
+  color: var(--foreground) !important;
 }
 
 .nav-item.dropdown:hover .dropdown-menu {
@@ -50,31 +55,32 @@
 
 /* Dropdown menu */
 .dropdown-menu {
-  background-color: #23272b;
-  border: 1px solid #FFA500;
+  background-color: var(--background);
+  border: 1px solid var(--primary);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Dropdown item */
 .dropdown-item {
-  color: #FFD700;
+  color: var(--foreground);
   transition: background-color 0.2s ease;
+  text-shadow: none;
 }
 
 /* Hover cho dropdown item */
 .dropdown-item:hover {
-  background-color: #FFA500;
-  color: #23272b;
+  background-color: var(--primary);
+  color: var(--background);
 }
 
 /* Toggler */
 .navbar-toggler {
-  border-color: #FFA500;
+  border-color: var(--primary);
 }
 
 /* Icon toggler */
 .navbar-toggler-icon {
-  background-color: #FFA500;
+  background-color: var(--primary);
 }
 
 /* Tách icon giỏ hàng và user ra xa nhau */
@@ -95,7 +101,7 @@
 }
 
 .navbar-nav .nav-link.btn {
-  color: #f0ad4e !important;
+  color: var(--secondary) !important;
   text-decoration: none;
 }
 

@@ -53,10 +53,10 @@ const FailedOrdersList = () => {
       <div className="d-flex justify-content-start mb-3">
         <button
           className="btn btn-dark d-flex align-items-center gap-2 shadow-sm"
-          style={{ borderRadius: 8, fontWeight: 500, background: '#23272a', color: '#ff9800', border: 'none' }}
+          style={{ borderRadius: 8, fontWeight: 500, background: '#23272a', color: '#e53935', border: 'none' }}
           onClick={() => navigate("/orders")}
         >
-          <FaArrowLeft style={{ fontSize: '1.3rem', color: '#43a047' }} />
+          <FaArrowLeft style={{ fontSize: '1.3rem', color: '#e53935' }} />
           Quay lại trang chính
         </button>
       </div>

@@ -69,7 +69,7 @@ const messagesStyle = {
             style={{
               alignSelf: msg.sender === "user" ? "flex-end" : "flex-start",
               backgroundColor: msg.sender === "user" ? "#43a047" : "#23272a",
-              color: msg.sender === "user" ? "#fff" : "#ff9800",
+              color: '#fff',
               padding: "10px 14px",
               borderRadius: "18px",
               maxWidth: "75%",
@@ -115,9 +115,18 @@ const messagesStyle = {
             gap: "8px"
           }}
         >
-          <FaPaperPlane style={{ color: '#fbc02d', fontSize: 18 }} /> Gửi
+          <FaPaperPlane style={{ color: 'inherit', fontSize: 18 }} className="navbar-icon" /> Gửi
         </button>
       </div>
+      <style>{`
+        .navbar-icon {
+          color: inherit !important;
+          transition: color 0.2s;
+        }
+        .navbar-icon:hover {
+          color: #fff !important;
+        }
+      `}</style>
     </div>
   );
 };

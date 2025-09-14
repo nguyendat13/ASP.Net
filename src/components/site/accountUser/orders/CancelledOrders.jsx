@@ -58,55 +58,55 @@ const CancelledOrders = () => {
   };
   return (
     <div className="container mt-4">
-      <h2 className="mb-4 text-center fw-bold" style={{ color: '#e53935', letterSpacing: 1 }}>
+      <h2 className="mb-4 text-center fw-bold" style={{ color: '#fff', letterSpacing: 1 }}>
         Đơn hàng đã hủy
       </h2>
       <div className="d-flex justify-content-start mb-3">
         <button
           className="btn btn-dark d-flex align-items-center gap-2 shadow-sm"
-          style={{ borderRadius: 8, fontWeight: 500, background: '#23272a', color: '#ff9800', border: 'none' }}
+          style={{ borderRadius: 8, fontWeight: 500, background: '#23272a', color: '#fff', border: 'none' }}
           onClick={() => navigate("/orders")}
         >
-          <FaArrowLeft style={{ fontSize: '1.3rem', color: '#43a047' }} />
+          <FaArrowLeft style={{ fontSize: '1.3rem', color: 'inherit' }} className="navbar-icon" />
           Quay lại trang chính
         </button>
       </div>
       <div className="card shadow-lg" style={{ background: '#23272a', borderRadius: 16 }}>
         <div className="card-body">
-          <table className="table table-bordered table-striped">
-            <thead className="table-dark">
+          <table className="table table-bordered table-striped" style={{ color: '#fff', background: '#23272a' }}>
+            <thead className="table-dark" style={{ background: '#212121', color: '#fff' }}>
               <tr>
-                <th>STT</th>
-                <th>Mã đơn hàng</th>
-                <th>Ngày hủy</th>
-                <th>Tổng giá trị</th>
-                <th>Trạng thái</th>
-                <th>Thao tác</th> {/* Cột mới */}
-
+                <th style={{ color: '#fff' }}>STT</th>
+                <th style={{ color: '#fff' }}>Mã đơn hàng</th>
+                <th style={{ color: '#fff' }}>Ngày hủy</th>
+                <th style={{ color: '#fff' }}>Tổng giá trị</th>
+                <th style={{ color: '#fff' }}>Trạng thái</th>
+                <th style={{ color: '#fff' }}>Thao tác</th>
               </tr>
             </thead>
             <tbody>
               {cancelledOrders.length > 0 ? (
                 cancelledOrders.map((order, index) => (
-                  <tr key={order.id}>
+                  <tr key={order.id} style={{ color: '#fff', background: '#23272a' }}>
                     <td>{index + 1}</td>
                     <td>{order.id}</td>
                     <td>{new Date(order.orderDate).toLocaleString()}</td>
-                    <td>{order.totalPrice?.toLocaleString()} VNĐ</td>
-                    <td className="text-danger">{order.statusName}</td>
+                    <td style={{ color: '#43a047' }}>{order.totalPrice?.toLocaleString()} VNĐ</td>
+                    <td style={{ color: '#e53935', fontWeight: 600 }}>{order.statusName}</td>
                     <td>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => deleteOrderPermanently(order.id)}
-                  >
-                    Xóa vĩnh viễn
-                  </button>
-                </td>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        style={{ color: '#fff', background: '#e53935', border: 'none', borderRadius: 8, fontWeight: 500 }}
+                        onClick={() => deleteOrderPermanently(order.id)}
+                      >
+                        Xóa vĩnh viễn
+                      </button>
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="5" className="text-center text-muted">
+                  <td colSpan="6" className="text-center text-muted" style={{ color: '#fff' }}>
                     Không có đơn hàng nào bị hủy.
                   </td>
                 </tr>
@@ -115,6 +115,15 @@ const CancelledOrders = () => {
           </table>
         </div>
       </div>
+      <style>{`
+        .navbar-icon {
+          color: inherit !important;
+          transition: color 0.2s;
+        }
+        .navbar-icon:hover {
+          color: #fff !important;
+        }
+      `}</style>
     </div>
   );
 };

@@ -5,6 +5,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* shadcn UI dark color variables */
+  --background: #18181b;
+  --foreground: #f4f4f5;
+  --primary: #1e293b;
+  --primary-foreground: #f4f4f5;
+  --secondary: #334155;
+  --secondary-foreground: #f4f4f5;
+  --border: #27272a;
+  --card: #23272b;
+  --muted: #27272a;
+  --success: #166534;
+  --success-foreground: #d1fadf;
+  --destructive: #991b1b;
+  --destructive-foreground: #fee2e2;
 }
 
 code {

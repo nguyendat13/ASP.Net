@@ -193,25 +193,25 @@ window.location.href = paymentRes.data.paymentUrl;
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4 fw-bold d-flex align-items-center justify-content-center gap-2" style={{ color: '#43a047', letterSpacing: 1 }}>
-        <FaShoppingCart style={{ color: '#ff9800', fontSize: 32 }} /> Xác nhận thanh toán
+      <h2 className="text-center mb-4 fw-bold d-flex align-items-center justify-content-center gap-2" style={{ color: '#fff', letterSpacing: 1 }}>
+        <FaShoppingCart style={{ color: 'inherit', fontSize: 32 }} className="navbar-icon" /> Xác nhận thanh toán
       </h2>
 
       <div className="card shadow-lg" style={{ background: '#23272a', borderRadius: 16 }}>
         <div className="card-body">
           <form>
             <div className="form-group mb-3">
-              <label className="fw-bold" style={{ color: '#fbc02d' }}>Tên khách hàng:</label>
+              <label className="fw-bold" style={{ color: '#fff' }}>Tên khách hàng:</label>
               <input type="text" className="form-control" value={customerName} readOnly style={{ background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }} />
             </div>
 
             <div className="form-group mb-3">
-              <label className="fw-bold" style={{ color: '#fbc02d' }}>Email:</label>
+              <label className="fw-bold" style={{ color: '#fff' }}>Email:</label>
               <input type="email" className="form-control" value={email} readOnly style={{ background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }} />
             </div>
 
             <div className="form-group mb-3">
-              <label className="fw-bold" style={{ color: '#fbc02d' }}>Số điện thoại:</label>
+              <label className="fw-bold" style={{ color: '#fff' }}>Số điện thoại:</label>
               <input
                 type="text"
                 className="form-control"
@@ -223,7 +223,7 @@ window.location.href = paymentRes.data.paymentUrl;
             </div>
 
             <div className="form-group mb-3">
-              <label className="fw-bold" style={{ color: '#fbc02d' }}>Địa chỉ giao hàng:</label>
+              <label className="fw-bold" style={{ color: '#fff' }}>Địa chỉ giao hàng:</label>
               <input
                 type="text"
                 className="form-control"
@@ -234,15 +234,15 @@ window.location.href = paymentRes.data.paymentUrl;
               />
             </div>
 
-            <h4 className="mb-3 fw-bold" style={{ color: '#ff9800' }}>Danh sách sản phẩm:</h4>
+            <h4 className="mb-3 fw-bold" style={{ color: '#fff' }}>Danh sách sản phẩm:</h4>
             <table className="table table-bordered" style={{ background: '#23272a', color: '#fff', borderRadius: 12 }}>
-              <thead className="table-dark" style={{ background: '#212121', color: '#43a047' }}>
+              <thead className="table-dark" style={{ background: '#212121', color: '#fff' }}>
                 <tr>
-                  <th>Sản phẩm</th>
-                  <th>Số lượng</th>
-                  <th>Giá</th>
-                  <th>Giảm giá</th>
-                  <th>Tổng</th>
+                  <th style={{ color: '#fff' }}>Sản phẩm</th>
+                  <th style={{ color: '#fff' }}>Số lượng</th>
+                  <th style={{ color: '#fff' }}>Giá</th>
+                  <th style={{ color: '#fff' }}>Giảm giá</th>
+                  <th style={{ color: '#fff' }}>Tổng</th>
                 </tr>
               </thead>
               <tbody>
@@ -251,7 +251,7 @@ window.location.href = paymentRes.data.paymentUrl;
                     <td>{item.productName}</td>
                     <td>{item.quantity}</td>
                     <td style={{ color: '#e53935', fontWeight: 700 }}>{item.price.toLocaleString()} đ</td>
-                    <td style={{ color: '#fbc02d', fontWeight: 600 }}>{item.discount}%</td>
+                    <td style={{ color: '#43a047', fontWeight: 600 }}>{item.discount}%</td>
                     <td style={{ color: '#43a047', fontWeight: 700 }}>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</td>
                   </tr>
                 ))}
@@ -259,12 +259,12 @@ window.location.href = paymentRes.data.paymentUrl;
             </table>
 
             <div className="d-flex justify-content-between align-items-center mt-3">
-              <h5 className="fw-bold d-flex align-items-center gap-2" style={{ color: '#ff9800' }}>
-                <FaMoneyBillWave style={{ color: '#43a047', fontSize: 22 }} /> Tổng tiền: {totalAmount.toLocaleString()} đ
+              <h5 className="fw-bold d-flex align-items-center gap-2" style={{ color: '#fff' }}>
+                <FaMoneyBillWave style={{ color: 'inherit', fontSize: 22 }} className="navbar-icon" /> Tổng tiền: <span style={{ color: '#43a047' }}>{totalAmount.toLocaleString()} đ</span>
               </h5>
 
               <div className="form-group mb-0">
-                <label className="fw-bold" style={{ color: '#fbc02d' }}>Phương thức thanh toán:</label>
+                <label className="fw-bold" style={{ color: '#fff' }}>Phương thức thanh toán:</label>
                 <select
                   className="form-select"
                   value={methodId}
@@ -283,12 +283,21 @@ window.location.href = paymentRes.data.paymentUrl;
 
             <div className="text-end mt-4">
               <button type="button" className="btn btn-success d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500, background: '#43a047', color: '#fff', border: 'none' }} onClick={handlePayment}>
-                <FaCheckCircle style={{ color: '#fbc02d', fontSize: 18 }} /> Xác nhận thanh toán
+                <FaCheckCircle style={{ color: 'inherit', fontSize: 18 }} className="navbar-icon" /> Xác nhận thanh toán
               </button>
             </div>
           </form>
         </div>
       </div>
+      <style>{`
+        .navbar-icon {
+          color: inherit !important;
+          transition: color 0.2s;
+        }
+        .navbar-icon:hover {
+          color: #fff !important;
+        }
+      `}</style>
     </div>
   );
 };

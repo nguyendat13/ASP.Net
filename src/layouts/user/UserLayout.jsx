@@ -11,13 +11,13 @@ const UserLayout = ({ userId }) => {
     const toggleChat = () => setShowChat(!showChat);
 
     return (
-        <div style={{ background: 'linear-gradient(120deg, #23272b 70%, #4CAF50 100%)', minHeight: '100vh' }}>
+  <div style={{ background: 'var(--background)', minHeight: '100vh' }}>
             <Navbar />
-            <div className="container mt-4" style={{ maxWidth: '1200px', background: 'rgba(34, 39, 43, 0.95)', borderRadius: '16px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', padding: '32px 24px' }}>
+            <div className="container mt-4" style={{ maxWidth: '1200px', background: 'var(--card)', borderRadius: '16px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', padding: '32px 24px' }}>
                 {/* Chat Icon */}
                 {!showChat && (
-                    <div className="chat-icon" onClick={toggleChat} style={{ position: 'fixed', bottom: '32px', right: '32px', zIndex: 1000, background: '#FFA500', borderRadius: '50%', boxShadow: '0 4px 16px rgba(0,0,0,0.2)', padding: '12px', cursor: 'pointer' }}>
-                        <FaComments size={32} color="#23272b" />
+          <div className="chat-icon" onClick={toggleChat} style={{ position: 'fixed', bottom: '32px', right: '32px', zIndex: 1000, background: 'var(--foreground)', borderRadius: '50%', boxShadow: '0 4px 16px rgba(0,0,0,0.2)', padding: '12px', cursor: 'pointer' }}>
+            <FaComments size={32} color="var(--card)" />
                     </div>
                 )}
 
@@ -27,18 +27,18 @@ const UserLayout = ({ userId }) => {
     style={{
       position: "fixed",
       bottom: "24px",
-      right: "16px",          // sát mép nhưng không bị tràn
+      right: "16px",
       zIndex: 1100,
       width: "100%",
-      maxWidth: "360px",      // khống chế không quá to
+      maxWidth: "360px",
       height: "520px",
-      background: "#23272b",
+      background: "var(--card)",
       borderRadius: "16px",
       boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
       display: "flex",
       flexDirection: "column",
       overflow: "hidden",
-      boxSizing: "border-box" // tránh tràn do border/padding
+      boxSizing: "border-box"
     }}
   >
     <div
@@ -47,11 +47,11 @@ const UserLayout = ({ userId }) => {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "12px 16px",
-        borderBottom: "1px solid #FFA500",
-        background: "#23272b"
+        borderBottom: "1px solid var(--foreground)",
+        background: "var(--card)"
       }}
     >
-      <span style={{ fontWeight: "bold", color: "#FFA500" }}>
+      <span style={{ fontWeight: "bold", color: "var(--foreground)" }}>
         <FaComments style={{ marginRight: 8 }} /> Trợ lý ảo
       </span>
       <button
@@ -59,7 +59,7 @@ const UserLayout = ({ userId }) => {
         style={{
           background: "none",
           border: "none",
-          color: "#FFD700",
+          color: "var(--foreground)",
           fontSize: "1.2rem",
           cursor: "pointer"
         }}
