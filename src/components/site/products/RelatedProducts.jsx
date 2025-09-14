@@ -59,7 +59,7 @@ const RelatedProducts = ({ productId }) => {
             <div className="card h-100 shadow-sm rounded" style={{ background: '#23272b', color: '#FFD700', border: '2px solid #FFA500', boxShadow: '0 4px 16px rgba(0,0,0,0.2)' }}>
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#23272b', borderRadius: '8px', overflow: 'hidden', height: '150px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
                 <img
-                  src={`${API_BASE_URL}/api/Product/image${product.avatar}`}
+                  src={`${API_BASE_URL}/api/Product/image/${product.avatar}`}
                   alt={product.name}
                   style={{ maxHeight: '130px', maxWidth: '90%', objectFit: 'contain', borderRadius: '8px', border: '2px solid #FFA500', background: '#23272b', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
                 />
