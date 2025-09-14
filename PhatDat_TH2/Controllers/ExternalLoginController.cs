@@ -83,7 +83,12 @@ public class ExternalLoginController : ControllerBase
     [HttpGet("google")]
     public IActionResult GoogleLogin()
     {
-        var redirectUrl = Url.Action("GoogleCallback", "ExternalLogin");
+        // Lấy domain backend từ appsettings.json hoặc config
+        var backendUrl = _config["BackendUrl"]; // ví dụ "https://fruit-store-pb5n.onrender.com"
+
+        // Full URL tới callback
+        var redirectUrl = $"{backendUrl}/api/ExternalLogin/google-callback";
+
         var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
         return Challenge(properties, "Google");
     }
