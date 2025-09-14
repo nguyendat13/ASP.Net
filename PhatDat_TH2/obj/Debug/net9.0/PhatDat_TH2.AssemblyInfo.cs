@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PhatDat_TH2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5298f22e2e09295a9ade60e3bef432a2f9e54618")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d029668c48977f3f48510325eece9ff284273568")]
 [assembly: System.Reflection.AssemblyProductAttribute("PhatDat_TH2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PhatDat_TH2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

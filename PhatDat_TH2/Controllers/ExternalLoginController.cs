@@ -75,7 +75,8 @@ public class ExternalLoginController : ControllerBase
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
         // 👉 Redirect về frontend và truyền token
-        var redirectUrl = $"http://localhost:3000/google-success?token={tokenString}&userId={user.Id}&email={user.Email}";
+        var frontendUrl = _config["FrontendUrl"]; // ví dụ trong appsettings.json
+        var redirectUrl = $"{frontendUrl}/google-success?token={tokenString}&userId={user.Id}&email={user.Email}";
         return Redirect(redirectUrl);
     }
 
