@@ -3,16 +3,32 @@
   "WorkspaceRootPath": "D:\\asp.net\\PhatDat_TH2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\controllers\\aichatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\controllers\\aichatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\chatmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\chatmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\model\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\model\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,40 +43,92 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Program.cs",
-              "RelativeDocumentMoniker": "PhatDat_TH2\\Program.cs",
-              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Program.cs",
-              "RelativeToolTip": "PhatDat_TH2\\Program.cs",
-              "ViewState": "AgIAAIIAAAAAAAAAAAAiwJEAAAAAAAAAAAAAAA==",
+              "Title": "LoginModel.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\LoginModel.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\LoginModel.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\LoginModel.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\LoginModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-14T03:55:17.539Z",
+              "WhenOpened": "2025-09-14T06:53:56.308Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\appsettings.json",
-              "RelativeDocumentMoniker": "PhatDat_TH2\\appsettings.json",
-              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\appsettings.json",
-              "RelativeToolTip": "PhatDat_TH2\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-04T15:51:19.428Z",
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\ErrorViewModel.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\ErrorViewModel.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T06:53:55.533Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AIChatController.cs",
-              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\AIChatController.cs",
-              "RelativeDocumentMoniker": "PhatDat_TH2\\Controllers\\AIChatController.cs",
-              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\AIChatController.cs",
-              "RelativeToolTip": "PhatDat_TH2\\Controllers\\AIChatController.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAcwC0AAABVAAAAAAAAAA==",
+              "Title": "ChatMessage.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\ChatMessage.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\ChatMessage.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\ChatMessage.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\ChatMessage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T15:22:43.888Z",
+              "WhenOpened": "2025-09-14T06:53:48.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Category.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Category.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\Category.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Category.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T06:53:46.804Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CartItem.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\CartItem.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\CartItem.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\CartItem.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\CartItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T06:53:43.051Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Cart.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Cart.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\Cart.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Cart.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\Cart.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T06:53:38.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Banner.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Banner.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Model\\Banner.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Model\\Banner.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Model\\Banner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T06:52:49.021Z",
               "EditorCaption": ""
             }
           ]

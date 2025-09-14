@@ -28,6 +28,9 @@
     <Content Remove="wwwroot\css\site.css" />
     <Content Include="wwwroot\css\site.css" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
 <PropertyGroup>
   <DisableDuplicateStaticWebAssetsError>true</DisableDuplicateStaticWebAssetsError>
 </PropertyGroup>

@@ -148,8 +148,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:3000") // Chỉ cho phép origin cụ thể
-             .AllowAnyMethod()
+        policy.WithOrigins("http://localhost:3000", "https://beamish-bunny-1b5d79.netlify.app")
+                     .AllowAnyMethod()
              .AllowAnyHeader()
              .AllowCredentials(); // Quan trọng để cho phép cookie và headers đặc biệt
     });
