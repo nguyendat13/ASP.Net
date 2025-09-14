@@ -44,7 +44,7 @@ const SearchPage = () => {
       return;
     }
 
-    axios.post(`${API_BASE_URL}/Cart/add-item', {
+    axios.post(`${API_BASE_URL}/Cart/add-item`, {
       userId: parseInt(userId),
       productId,
       quantity: 1

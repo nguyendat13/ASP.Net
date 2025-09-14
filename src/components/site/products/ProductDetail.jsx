@@ -27,7 +27,7 @@ const ProductDetail = () => {
       return;
     }
 
-    axios.post(`${API_BASE_URL}/Cart/add-item', {
+    axios.post(`${API_BASE_URL}/Cart/add-item`, {
       userId: parseInt(userId),
       productId: product.id,
       quantity: 1
