@@ -302,13 +302,16 @@ namespace PhatDat_TH2.Controllers
             }
         }
 
-        [HttpGet("image/{filename}")]
+        [HttpGet("image/{*filename}")]
         public IActionResult GetImage(string filename)
         {
-            // Loại bỏ /images/ nếu filename từ DB có thêm
-            if (filename.StartsWith("/images/"))
-                filename = filename["/images/".Length..];
+            // Nếu filename đã là 1 URL Cloudinary thì redirect
+            if (filename.StartsWith("http"))
+            {
+                return Redirect(filename);
+            }
 
+            // Nếu vẫn dùng ảnh local thì check như cũ
             var folderPath = Path.Combine(_env.WebRootPath, "images");
             var filePath = Path.Combine(folderPath, filename);
 
