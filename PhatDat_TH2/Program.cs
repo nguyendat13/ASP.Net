@@ -148,7 +148,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policy =>
     {
-        policy.WithOrigins( "https://beamish-bunny-1b5d79.netlify.app")
+        policy.WithOrigins("https://https://phatdatstore.netlify.app")
                      .AllowAnyMethod()
              .AllowAnyHeader()
              .AllowCredentials(); // Quan trọng để cho phép cookie và headers đặc biệt
