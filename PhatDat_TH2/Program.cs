@@ -1,3 +1,4 @@
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
@@ -14,8 +15,19 @@ using PhatDat_TH2.Services;
 using PhatDat_TH2.Services.IServices;
 using System.Security.Claims;
 using System.Text;
+using CloudinaryDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var cloudName = builder.Configuration["Cloudinary:CloudName"];
+var apiKey = builder.Configuration["Cloudinary:ApiKey"];
+var apiSecret = builder.Configuration["Cloudinary:ApiSecret"];
+
+var account = new Account(cloudName, apiKey, apiSecret);
+var cloudinary = new Cloudinary(account);
+
+builder.Services.AddSingleton(cloudinary);
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 
 //builder.WebHost.ConfigureKestrel(options =>
 //{

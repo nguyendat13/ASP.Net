@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PhatDat_TH2.Data;
 using PhatDat_TH2.Model;
 using PhatDat_TH2.Model.Request;
+using PhatDat_TH2.Services.IServices;
 
 namespace PhatDat_TH2.Controllers
 {
@@ -12,11 +13,14 @@ namespace PhatDat_TH2.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
+        private readonly ICloudinaryService _cloudinaryService;
 
-        public ProductController(AppDbContext context, IWebHostEnvironment env)
+        public ProductController(AppDbContext context, IWebHostEnvironment env, ICloudinaryService cloudinaryService)
         {
             _context = context;
             _env = env;
+            _cloudinaryService = cloudinaryService;
+
         }
 
         [HttpGet]
@@ -67,8 +71,84 @@ namespace PhatDat_TH2.Controllers
         }
 
 
+        //[HttpPost]
+        //public async Task<IActionResult> Create([FromForm] ProductRequest request, IFormFile? image)
+        //{
+        //    if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        //    var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId);
+        //    if (category == null)
+        //    {
+        //        return BadRequest("Danh mục không tồn tại.");
+        //    }
+
+        //    string? avatarPath = null;
+        //    if (image != null)
+        //    {
+        //        avatarPath = await SaveImage(image);
+        //    }
+
+        //    var product = new Product
+        //    {
+        //        Name = request.Name,
+        //        Description = request.Description,
+        //        Price = request.Price,
+        //        Discount = request.Discount,
+        //        Avatar = avatarPath,
+        //        CategoryId = request.CategoryId,
+        //        CreatedAt = DateTime.UtcNow,
+        //        CreatedBy = "admin"
+        //    };
+
+        //    _context.Products.Add(product);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
+        //}
+
+
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Update(int id, [FromForm] ProductRequest request, IFormFile? image)
+        //{
+        //    // Tìm sản phẩm theo id
+        //    var existingProduct = await _context.Products.FindAsync(id);
+        //    if (existingProduct == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    // Kiểm tra nếu danh mục tồn tại
+        //    var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId);
+        //    if (category == null)
+        //    {
+        //        return BadRequest("Danh mục không tồn tại.");
+        //    }
+
+        //    // Cập nhật thông tin sản phẩm từ ProductRequest
+        //    existingProduct.Name = request.Name;
+        //    existingProduct.Description = request.Description;
+        //    existingProduct.Price = request.Price;
+        //    existingProduct.Discount = request.Discount;
+        //    existingProduct.CategoryId = request.CategoryId;
+        //    existingProduct.UpdatedAt = DateTime.UtcNow;
+        //    existingProduct.UpdatedBy = "admin";  // Bạn có thể thay đổi theo người dùng thực hiện cập nhật
+
+        //    // Xử lý hình ảnh nếu có
+        //    if (image != null)
+        //    {
+        //        string avatarPath = await SaveImage(image); // Lưu hình ảnh
+        //        existingProduct.Avatar = avatarPath;  // Cập nhật đường dẫn hình ảnh
+        //    }
+
+        //    // Lưu thay đổi vào cơ sở dữ liệu
+        //    await _context.SaveChangesAsync();
+
+        //    // Trả về thông tin sản phẩm đã được cập nhật
+        //    return Ok(existingProduct);
+        //}
+
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] ProductRequest request, IFormFile? image)
+        public async Task<IActionResult> Create([FromForm] ProductRequest request, IFormFile? image, [FromQuery] bool useCloudinary = false)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -81,7 +161,16 @@ namespace PhatDat_TH2.Controllers
             string? avatarPath = null;
             if (image != null)
             {
-                avatarPath = await SaveImage(image);
+                if (useCloudinary)
+                {
+                    // Upload lên Cloudinary
+                    avatarPath = await _cloudinaryService.UploadImageAsync(image);
+                }
+                else
+                {
+                    // Upload local
+                    avatarPath = await SaveImage(image);
+                }
             }
 
             var product = new Product
@@ -104,45 +193,43 @@ namespace PhatDat_TH2.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromForm] ProductRequest request, IFormFile? image)
+        public async Task<IActionResult> Update(int id, [FromForm] ProductRequest request, IFormFile? image, [FromQuery] bool useCloudinary = false)
         {
-            // Tìm sản phẩm theo id
             var existingProduct = await _context.Products.FindAsync(id);
             if (existingProduct == null)
             {
                 return NotFound();
             }
 
-            // Kiểm tra nếu danh mục tồn tại
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId);
             if (category == null)
             {
                 return BadRequest("Danh mục không tồn tại.");
             }
 
-            // Cập nhật thông tin sản phẩm từ ProductRequest
             existingProduct.Name = request.Name;
             existingProduct.Description = request.Description;
             existingProduct.Price = request.Price;
             existingProduct.Discount = request.Discount;
             existingProduct.CategoryId = request.CategoryId;
             existingProduct.UpdatedAt = DateTime.UtcNow;
-            existingProduct.UpdatedBy = "admin";  // Bạn có thể thay đổi theo người dùng thực hiện cập nhật
+            existingProduct.UpdatedBy = "admin";
 
-            // Xử lý hình ảnh nếu có
             if (image != null)
             {
-                string avatarPath = await SaveImage(image); // Lưu hình ảnh
-                existingProduct.Avatar = avatarPath;  // Cập nhật đường dẫn hình ảnh
+                if (useCloudinary)
+                {
+                    existingProduct.Avatar = await _cloudinaryService.UploadImageAsync(image);
+                }
+                else
+                {
+                    existingProduct.Avatar = await SaveImage(image);
+                }
             }
 
-            // Lưu thay đổi vào cơ sở dữ liệu
             await _context.SaveChangesAsync();
-
-            // Trả về thông tin sản phẩm đã được cập nhật
             return Ok(existingProduct);
         }
-
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -195,6 +282,24 @@ namespace PhatDat_TH2.Controllers
 
             // Trả về đường dẫn tương đối để frontend có thể sử dụng
             return Ok(new { url = "/images/" + fileName });
+        }
+        [HttpPost("upload-cloudinary")]
+        public async Task<IActionResult> UploadImageToCloudinary(IFormFile image)
+        {
+            if (image == null || image.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            try
+            {
+                var imageUrl = await _cloudinaryService.UploadImageAsync(image);
+                return Ok(new { url = imageUrl });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Upload failed: {ex.Message}");
+            }
         }
 
         [HttpGet("image/{filename}")]
