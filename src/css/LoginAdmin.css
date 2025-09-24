@@ -7,7 +7,12 @@
     background-color: var(--background);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-  
+.forgot-email-input::placeholder {
+  color: #fff !important;
+  opacity: 0.6 !important;
+}
+
+
   .login-container h2 {
     text-align: center;
     margin-bottom: 20px;

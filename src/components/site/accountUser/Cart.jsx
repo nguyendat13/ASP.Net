@@ -122,8 +122,12 @@ const Cart = () => {
                 <tr key={item.productId} style={{ background: '#23272a', color: '#fff' }}>
                   <td>
                     <img
-                      src={`${API_BASE_URL}/api/Product/image/${item.avatar}`}
-                      alt={item.productName}
+                    src={
+                  item.avatar.startsWith("http")
+                  ? item.avatar
+                  : `${API_BASE_URL}/api/Product/image/${item.avatar.replace("/images/", "")}`
+                    }                                   
+                    alt={item.productName}
                       width="80"
                       style={{ borderRadius: 8, border: '2px solid #43a047' }}
                     />
@@ -143,7 +147,7 @@ const Cart = () => {
                   </td>
                   <td style={{ color: '#43a047', fontWeight: 700 }}>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</td>
                   <td>
-                    <button className="btn btn-outline-danger d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500, color: '#fff', border: '1px solid #e53935' }} onClick={() => handleRemove(item.productId)}>
+                    <button className="btn btn-outline-danger d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500,background:'#212121', color: '#fff', border: '1px solid #e53935' }} onClick={() => handleRemove(item.productId)}>
                       <FaTrashAlt style={{ color: 'inherit', fontSize: 16 }} className="navbar-icon" /> Xoá
                     </button>
                   </td>

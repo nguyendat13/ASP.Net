@@ -56,25 +56,27 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Đăng Nhập</h2>
+    <div className="login-container" style={{ backgroundColor: '#121212', color: '#fff' }}>
+      <h2 style={{ color: '#fff' }}>Đăng Nhập</h2>
       <form onSubmit={handleLogin}>
         <div>
-          <label>Email:</label>
+          <label style={{ color: '#fff' }}>Email:</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="off"
+            style={{ color: '#fff', backgroundColor: '#1e1e1e', borderColor: '#333' }}
           />
         </div>
         <div>
-          <label>Password:</label>
+          <label style={{ color: '#fff' }}>Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="off"
+            style={{ color: '#fff', backgroundColor: '#1e1e1e', borderColor: '#333' }}
           />
         </div>
         <div className="remember-checkbox">
@@ -83,21 +85,21 @@ const Login = ({ onLogin }) => {
             checked={rememberPassword}
             onChange={() => setRememberPassword(!rememberPassword)}
           />
-          <label>Lưu mật khẩu</label>
+          <label style={{ color: '#fff' }}>Lưu mật khẩu</label>
         </div>
-        <button type="submit">Đăng Nhập</button>
+        <button type="submit" style={{ backgroundColor: '#007bff', color: '#fff' }}>Đăng Nhập</button>
       </form>
 
       {message && (
-        <div className={`message ${message.includes('Lỗi') ? 'error' : 'success'}`}>
+        <div className={`message ${message.includes('Lỗi') ? 'error' : 'success'}`} style={{ color: message.includes('Lỗi') ? '#d9534f' : '#5cb85c' }}>
           {message}
         </div>
       )}
 
       {token && (
         <div className="token-container">
-          <h4>JWT Token:</h4>
-          <textarea value={token} readOnly />
+          <h4 style={{ color: '#fff' }}>JWT Token:</h4>
+          <textarea value={token} readOnly style={{ color: '#fff', backgroundColor: '#1e1e1e', borderColor: '#333' }} />
         </div>
       )}
     </div>

@@ -54,7 +54,11 @@ const ProductDetail = () => {
         <div className="col-12 col-md-5 mb-4 d-flex justify-content-center">
           <div className="pro-img-wrap" style={{ background: 'var(--card)', borderRadius: '16px', boxShadow: '0 4px 16px rgba(0,0,0,0.2)', padding: '16px', transition: 'transform 0.2s' }}>
             <img
-              src={`${API_BASE_URL}/api/Product/image/${product.avatar}`}
+            src={
+                product.avatar.startsWith("http")
+                  ? product.avatar
+                  : `${API_BASE_URL}/api/Product/image/${product.avatar.replace("/images/", "")}`
+              }              
               alt={product.name}
               style={{ maxHeight: '350px', maxWidth: '100%', objectFit: 'cover', borderRadius: '12px', border: '2px solid var(--primary)', background: 'var(--card)', boxShadow: '0 2px 8px rgba(0,0,0,0.15)', transition: 'transform 0.2s' }}
             />
