@@ -229,3 +229,4 @@ D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net9.0\PhatDat_TH2.genruntimeconfig
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net9.0\ref\PhatDat_TH2.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\MySqlConnector.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\CloudinaryDotNet.dll

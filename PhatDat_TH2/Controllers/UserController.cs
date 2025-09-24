@@ -5,6 +5,7 @@ using PhatDat_TH2.Data;
 using PhatDat_TH2.Model;
 using PhatDat_TH2.Model.DTO;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace PhatDat_TH2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class UserController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -205,6 +206,120 @@ namespace PhatDat_TH2.Controllers
 
                 return Ok(new { message = "Đăng ký thành công!", userId = user.Id });
             }
-    
+
+
+        // Cập nhật thông tin cá nhân (user tự cập nhật)
+        [Authorize]
+        [HttpPut("update-profile/{id}")]
+        public IActionResult UpdateProfile(int id, [FromBody] UserUpdateDTO dto)
+        {
+            var user = _context.Users.Find(id);
+            if (user == null) return NotFound();
+
+            // Kiểm tra email trùng với user khác
+            if (!string.IsNullOrWhiteSpace(dto.Email) && _context.Users.Any(u => u.Email == dto.Email && u.Id != id))
+                return Conflict(new { message = "Email đã tồn tại." });
+
+            // Kiểm tra username trùng với user khác
+            if (!string.IsNullOrWhiteSpace(dto.Username) && _context.Users.Any(u => u.Username == dto.Username && u.Id != id))
+                return Conflict(new { message = "Username đã tồn tại." });
+
+            // Cập nhật từng trường nếu có dữ liệu mới
+            if (!string.IsNullOrWhiteSpace(dto.Fullname)) user.Fullname = dto.Fullname;
+            if (!string.IsNullOrWhiteSpace(dto.Email)) user.Email = dto.Email;
+            if (!string.IsNullOrWhiteSpace(dto.Phone)) user.Phone = dto.Phone;
+            if (!string.IsNullOrWhiteSpace(dto.Gender)) user.Gender = dto.Gender;
+            if (!string.IsNullOrWhiteSpace(dto.Username)) user.Username = dto.Username;
+
+            user.UpdatedAt = DateTime.Now;
+            user.UpdatedBy = User.Identity?.Name ?? "system";
+
+            _context.SaveChanges();
+            return Ok(user);
+        }
+
+        // Đổi mật khẩu
+        [Authorize]
+        [HttpPut("change-password/{id}")]
+        public IActionResult ChangePassword(int id, [FromBody] ChangePasswordDTO dto)
+        {
+            var user = _context.Users.Find(id);
+            if (user == null) return NotFound(new { message = "Không tìm thấy người dùng" });
+
+            var userIdFromToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userRole = User.FindFirst(ClaimTypes.Role).Value;
+
+            if (userIdFromToken != user.Id && userRole != "admin")
+                return Forbid();
+
+            if (user.Password != dto.OldPassword)
+                return BadRequest(new { message = "Mật khẩu cũ không chính xác." });
+
+            user.Password = dto.NewPassword;
+            user.UpdatedAt = DateTime.Now;
+            user.UpdatedBy = User.Identity.Name ?? "system";
+
+            _context.SaveChanges();
+
+            return Ok(new { message = "Đổi mật khẩu thành công!" });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("forgot-password")]
+        public IActionResult ForgotPassword([FromBody] ForgotPasswordDTO dto)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == dto.Email);
+            if (user == null)
+                return NotFound(new { message = "Email không tồn tại" });
+
+            // Tạo mật khẩu mới tạm thời
+            var tempPassword = Path.GetRandomFileName().Replace(".", "").Substring(0, 8); // 8 ký tự
+            user.Password = tempPassword; // hoặc hash nếu dùng hash
+            user.UpdatedAt = DateTime.Now;
+            user.UpdatedBy = "system";
+
+            _context.SaveChanges();
+
+            // Gửi email
+            try
+            {
+                var emailBody = $@"
+            <p>Xin chào {user.Fullname},</p>
+            <p>Bạn vừa yêu cầu đặt lại mật khẩu cho tài khoản của mình.</p>
+            <p><strong>Mật khẩu tạm thời:</strong> {tempPassword}</p>
+            <p>Vui lòng đăng nhập và đổi mật khẩu ngay lập tức để bảo mật tài khoản của bạn.</p>
+            <p>Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.</p>
+            <p>Trân trọng,<br/>Đội ngũ quản trị</p>
+        ";
+                SendEmail(user.Email, "Yêu cầu đặt lại mật khẩu", emailBody);
+                return Ok(new { message = "Mật khẩu mới đã được gửi vào email của bạn." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Gửi email thất bại", error = ex.Message });
+            }
+        }
+
+        private void SendEmail(string toEmail, string subject, string body)
+        {
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new System.Net.NetworkCredential("dalrest2210@gmail.com", "dusb svrt rvrb ydyj"),
+                EnableSsl = true,
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("dalrest2210@gmail.com", "Phát Đạt Store"),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true, // HTML để format đẹp
+            };
+            mailMessage.To.Add(toEmail);
+
+            smtpClient.Send(mailMessage);
+        }
+
     }
 }

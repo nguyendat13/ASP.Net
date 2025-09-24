@@ -147,20 +147,22 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Cấu hình DbContext và Swagger
-//builder.Services.AddDbContext<AppDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 36)) // Railway đang chạy MySQL 8.x
-    )
-);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//    options.UseMySql(
+//        builder.Configuration.GetConnectionString("DefaultConnection"),
+//        new MySqlServerVersion(new Version(8, 0, 36)) // Railway đang chạy MySQL 8.x
+//    )
+//);
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policy =>
     {
-        policy.WithOrigins("https://fruit-store-omega.vercel.app")
+        policy.WithOrigins("https://fruit-store-omega.vercel.app", "http://localhost:3000")
                      .AllowAnyMethod()
              .AllowAnyHeader()
              .AllowCredentials(); // Quan trọng để cho phép cookie và headers đặc biệt
