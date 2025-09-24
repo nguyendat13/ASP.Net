@@ -160,7 +160,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policy =>
     {
-        policy.WithOrigins("https://phatdatstore.netlify.app")
+        policy.WithOrigins("https://fruit-store-omega.vercel.app")
                      .AllowAnyMethod()
              .AllowAnyHeader()
              .AllowCredentials(); // Quan trọng để cho phép cookie và headers đặc biệt
