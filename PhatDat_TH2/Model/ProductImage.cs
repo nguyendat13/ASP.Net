@@ -1,4 +1,6 @@
-﻿namespace PhatDat_TH2.Model
+﻿using System.Text.Json.Serialization;
+
+namespace PhatDat_TH2.Model
 {
     public class ProductImage :BaseEntity
     {
@@ -7,6 +9,8 @@
 
         // Khóa ngoại
         public int ProductId { get; set; }
-        //public Product Product { get; set; }
+
+        [JsonIgnore]
+        public Product Product { get; set; }
     }
 }

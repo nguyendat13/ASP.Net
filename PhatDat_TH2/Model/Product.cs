@@ -19,17 +19,16 @@ namespace PhatDat_TH2.Model
 
         public string? Avatar { get; set; }
 
-        // Thêm trường Discount
         [Range(0, double.MaxValue)]
         public decimal Discount { get; set; }
 
-        // Mối quan hệ với Category
         public int CategoryId { get; set; }
 
-        [ForeignKey("CategoryId")]  // Chỉ nên thêm nếu thực sự cần
+        [ForeignKey("CategoryId")]
         [JsonIgnore]
         public Category Category { get; set; }
 
-
+        // 👇 thêm collection cho nhiều ảnh
+        public ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
     }
 }

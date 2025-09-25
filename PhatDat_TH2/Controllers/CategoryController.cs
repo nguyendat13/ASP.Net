@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PhatDat_TH2.Data;
-using PhatDat_TH2.Model;
 using PhatDat_TH2.Model.DTO;
+using PhatDat_TH2.Services.Interfaces;
 
 namespace PhatDat_TH2.Controllers
 {
@@ -10,135 +8,55 @@ namespace PhatDat_TH2.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ICategoryService _service;
 
-        public CategoryController(AppDbContext context)
+        public CategoryController(ICategoryService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
-        public IActionResult GetCategories()
-        {
-            var categories = _context.Categories
-                .Select(c => new CategoryListDTO
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Description = c.Description
-                })
-                .ToList();
-
-            return Ok(categories);
-        }
-
+        public IActionResult GetCategories() => Ok(_service.GetAll());
 
         [HttpGet("{id}")]
         public IActionResult GetCategory(int id)
         {
-            var category = _context.Categories
-                .Include(c => c.Products)
-                .Where(c => c.Id == id)
-                .Select(c => new CategoryDetailDTO
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Description = c.Description,
-                    Products = c.Products.Select(p => new ProductListDTO
-                    {
-                        Id = p.Id,
-                        Name = p.Name,
-                        Description = p.Description,
-                        Price = p.Price,
-                        Avatar = p.Avatar,
-                        Discount = p.Discount
-                    }).ToList()
-                })
-                .FirstOrDefault();
-
+            var category = _service.GetById(id);
             if (category == null) return NotFound();
-
             return Ok(category);
         }
 
-
         [HttpPost]
-        public IActionResult Create([FromBody] CategoryDTO categoryDto)
+        public IActionResult Create([FromBody] CategoryDTO dto)
         {
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return BadRequest(errors); // Trả về chi tiết lỗi
-            }
-
-            // Kiểm tra xem tên danh mục đã tồn tại trong cơ sở dữ liệu chưa
-            var existingCategory = _context.Categories.FirstOrDefault(c => c.Name == categoryDto.Name);
-            if (existingCategory != null)
-            {
-                return BadRequest("Danh mục với tên này đã tồn tại.");
-            }
-
-            var newCategory = new Category
-            {
-                Name = categoryDto.Name,
-                Description = categoryDto.Description,
-                CreatedAt = DateTime.Now,
-                CreatedBy = "admin"
-            };
-
-            _context.Categories.Add(newCategory);
-            _context.SaveChanges();
-
-            return CreatedAtAction(nameof(GetCategory), new { id = newCategory.Id }, newCategory);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var created = _service.Create(dto);
+            return CreatedAtAction(nameof(GetCategory), new { id = created.Id }, created);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Edit(int id, [FromBody] CategoryDTO categoryDto)
+        public IActionResult Edit(int id, [FromBody] CategoryDTO dto)
         {
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return BadRequest(errors); // Trả về chi tiết lỗi
-            }
-
-            var existing = _context.Categories.Find(id);
-            if (existing == null) return NotFound();
-
-            // Cập nhật dữ liệu từ DTO vào entity
-            existing.Name = categoryDto.Name;
-            existing.Description = categoryDto.Description;
-
-            _context.SaveChanges();
-
-            return Ok(existing);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var updated = _service.Update(id, dto);
+            if (updated == null) return NotFound();
+            return Ok(updated);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var category = _context.Categories.Find(id);
-            if (category == null) return NotFound();
-
-            _context.Categories.Remove(category);
-            _context.SaveChanges();
-
+            var deleted = _service.Delete(id);
+            if (!deleted) return NotFound();
             return NoContent();
         }
 
-
-        // Lấy sản phẩm theo danh mục
         [HttpGet("products/{categoryId}")]
         public IActionResult GetProductsByCategory(int categoryId)
         {
-            var products = _context.Products
-                .Where(p => p.CategoryId == categoryId)
-                .ToList();
-
-            if (products == null || !products.Any())
-                return NotFound("Không có sản phẩm nào trong danh mục này.");
-
+            var products = _service.GetProductsByCategory(categoryId);
+            if (!products.Any()) return NotFound("Không có sản phẩm nào trong danh mục này.");
             return Ok(products);
         }
     }
 }
-
