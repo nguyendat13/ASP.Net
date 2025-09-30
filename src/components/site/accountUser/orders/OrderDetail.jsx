@@ -32,7 +32,11 @@ const OrderDetails = () => {
         alert("Có lỗi xảy ra khi lấy thông tin đơn hàng.");
       });
   }, [orderId]);
-
+const getImageUrl = (avatarPath) => {
+    if (!avatarPath) return null;
+    const filename = avatarPath.split('/').pop();
+    return `${API_BASE_URL}/api/Product/image/${filename}`;
+  };
   if (loading) {
     return <div>Đang tải dữ liệu...</div>;
   }
@@ -61,13 +65,15 @@ const OrderDetails = () => {
           <h4>Thông tin khách hàng</h4>
           <p><strong>Tên khách hàng:</strong> {orderDetails.customerName}</p>
           <p><strong>Email khách hàng:</strong> {orderDetails.emailCustomer}</p>
+          <p><strong>Địa chỉ:</strong> {orderDetails.address}</p>
           <p><strong>Ngày đặt hàng:</strong> {new Date(orderDetails.orderDate).toLocaleDateString()}</p>
 
           <h4 className="mt-4">Danh sách sản phẩm</h4>
           <table className="table table-striped">
             <thead>
               <tr>
-                <th scope="col">Sản phẩm</th>
+                <th scope="col">Ảnh</th>
+                <th scope="col">Sản phẩm</th>                 
                 <th scope="col">Số lượng</th>
                 <th scope="col">Giá gốc</th>
                 <th scope="col">Giảm giá</th>
@@ -78,7 +84,21 @@ const OrderDetails = () => {
             <tbody>
               {orderDetails.orderDetails.map((item) => (
                 <tr key={item.id}>
+                   <td>
+                {getImageUrl(item.productImage) ? (
+                  <img
+                    src={getImageUrl(item.productImage)}
+                    alt={item.name}
+                    width="60"
+                    height="60"
+                    style={{ objectFit: 'cover' }}
+                  />
+                ) : (
+                  <span>Không có ảnh</span>
+                )}
+              </td>   
                   <td>{item.productName}</td>
+                       
                   <td>{item.quantity}</td>
                   <td>{item.price.toLocaleString()} đ</td>
                   <td>{item.discount}%</td>

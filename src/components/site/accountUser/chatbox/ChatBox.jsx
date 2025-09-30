@@ -9,44 +9,51 @@ const ChatboxAI = ({ userId }) => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
+const [activeQuick, setActiveQuick] = useState(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   useEffect(scrollToBottom, [messages]);
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
+ const sendMessage = async (textToSend) => {
+  const messageText = textToSend ?? input; // nếu có truyền vào thì dùng, nếu không dùng input
+  if (!messageText.trim()) return;
 
-    const userMessage = { sender: "user", text: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setLoading(true);
+  const userMessage = { sender: "user", text: messageText };
+  setMessages((prev) => [...prev, userMessage]);
+  setInput("");
+  setLoading(true);
 
-    try {
-      const res = await axios.post(`${API_BASE_URL}/api/AIChat/ask`, {
-        question: input,
-      });
+  try {
+    const res = await axios.post(`${API_BASE_URL}/api/AIChat/ask`, {
+      question: messageText,
+    });
 
-      const aiMessage = {
-        sender: "ai",
-        text: res.data.answer || res.data.Answer,
-        products: res.data.products || res.data.Products || [],
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-    } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        { sender: "ai", text: "❌ Xin lỗi, đã xảy ra lỗi. Vui lòng thử lại sau." },
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const aiMessage = {
+      sender: "ai",
+      text: res.data.answer || res.data.Answer,
+      products: res.data.products || res.data.Products || [],
+    };
+    setMessages((prev) => [...prev, aiMessage]);
+  } catch (err) {
+    setMessages((prev) => [
+      ...prev,
+      { sender: "ai", text: "❌ Xin lỗi, đã xảy ra lỗi. Vui lòng thử lại sau." },
+    ]);
+  } finally {
+    setLoading(false);
+  }
+};
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") sendMessage();
-  };
+
+ const handleKeyPress = async (e) => {
+  if (e.key === "Enter") {
+    await sendMessage();
+    setActiveQuick(null); // tắt highlight sau khi gửi xong
+  }
+};
+
 
   return (
     <div style={styles.container}>
@@ -128,6 +135,32 @@ const ChatboxAI = ({ userId }) => {
         )}
         <div ref={messagesEndRef} />
       </div>
+{/* Quick action buttons */}
+<div style={styles.quickActions}>
+  {["Xin chào", "Gợi ý sản phẩm trong cửa hàng", "Sản phẩm bán chạy"].map((text, idx) => (
+    <button
+      key={idx}
+      style={{
+        ...styles.quickButton,
+        backgroundColor: activeQuick === idx ? "#43a047" : "transparent",
+        color: activeQuick === idx ? "#fff" : "#43a047",
+      }}
+      onClick={async () => {
+        if (loading) return;
+        setActiveQuick(idx);      // highlight nút
+        await sendMessage(text);  // gửi ngay
+        setActiveQuick(null);     // tắt highlight sau khi gửi
+      }}
+      disabled={loading}
+    >
+      {text}
+    </button>
+  ))}
+</div>
+
+
+
+
 
       {/* Ô nhập liệu */}
       <div style={styles.inputContainer}>
@@ -177,6 +210,26 @@ const styles = {
     wordWrap: "break-word",
     fontSize: "15px",
   },
+ quickActions: {
+  display: "flex",
+  gap: "8px",
+  flexWrap: "wrap",
+  padding: "8px 10px",
+  backgroundColor: "#181a1b",
+  borderBottom: "1px solid #23272a",
+},
+quickButton: {
+  padding: "6px 12px",
+  borderRadius: "16px",
+  border: "1px solid #43a047",
+  backgroundColor: "transparent",
+  color: "#43a047",
+  cursor: "pointer",
+  fontSize: "13px",
+  transition: "all 0.2s ease",
+},
+
+
   inputContainer: {
     display: "flex",
     borderTop: "1px solid #23272a",

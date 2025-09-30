@@ -97,6 +97,7 @@ const App = () => {
         <Route path="carts" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="orders" element={<OrdersProcessing />} />
+        <Route path="orderCancel/:orderId" element={<CancelledOrders />} />
         <Route path="order/:orderId" element={<OrderDetails />} />
         <Route path="cancelledOrders" element={<CancelledOrders />} />  {/* Trang đơn hàng đã hủy */}
         <Route path="shippingOrders" element={<ShippingOrdersList />} />

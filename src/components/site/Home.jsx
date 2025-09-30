@@ -72,15 +72,18 @@ const Home = () => {
       <div className="col-md-6 col-lg-4 mb-4" key={post.id}>
         <div className="card post-card h-100" style={{ background: '#fff', color: '#23272a', border: 'none', boxShadow: '0 6px 24px rgba(0,0,0,0.18)', borderRadius: '16px', overflow: 'hidden', transition: 'transform 0.2s, box-shadow 0.2s' }}>
           <div style={{ height: '180px', overflow: 'hidden', borderRadius: '16px 16px 0 0', background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img
-              src={post.imageUrl}
-              alt={post.title}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px 16px 0 0' }}
-            />
+              {post.imageUrl ? (
+                  <img
+                    src={API_BASE_URL + post.imageUrl}
+                    alt={post.title}
+                    style={{ width: "800px", height: "200px", objectFit: "cover" }}
+                  />
+                ) : (
+                  <span className="text-muted">Không có ảnh</span>
+                )}
           </div>
           <div className="card-body d-flex flex-column justify-content-between">
             <h5 className="card-title mb-2" style={{ fontWeight: 'bold', fontSize: '1.15rem', color: '#23272a' }}>{post.title}</h5>
-            <p className="card-text mb-2" style={{ color: '#23272a', fontSize: '1rem' }}>{post.excerpt}</p>
             <Link to={`/post/${post.id}`} className="btn btn-success w-100 mt-auto" style={{ color: '#fff', fontWeight: 'bold', border: 'none', background: '#43a047', borderRadius: '8px', fontSize: '1rem' }}>
               Đọc thêm
             </Link>

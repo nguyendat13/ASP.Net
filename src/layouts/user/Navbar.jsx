@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaShoppingCart, FaUser, FaSearch, FaLeaf, FaStore, FaHome } from 'react-icons/fa'; // Thêm icon React
 import "../../css/Navbar.css";
 import API_BASE_URL from '../../config';
+import Notification from '../../components/site/noti/Notification';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -113,8 +114,13 @@ const Navbar = () => {
               </li>
             ) : (
               <>
+             
                 <li className="nav-item d-flex align-items-center">
-                  <Link className="nav-link d-flex align-items-center" to="/carts" style={{ fontSize: '1.25rem', paddingRight: '0', color: '#fff' }}>
+          {/* Thông báo */}
+          <li className="nav-item d-flex align-items-center me-1 "> 
+            <Notification /> 
+          </li>            
+                <Link className="nav-link d-flex align-items-center" to="/carts" style={{ fontSize: '1.25rem', paddingRight: '0', color: '#fff' }}>
                     <FaShoppingCart className="navbar-icon" style={{ fontSize: '1.7rem', marginRight: '8px' }} />
                   </Link>
                   {/* Icon User với dropdown */}

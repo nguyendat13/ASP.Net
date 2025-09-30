@@ -49,6 +49,7 @@ const Posts = () => {
         <thead className="table-dark">
           <tr>
             <th>ID</th>
+            <th>Ảnh</th>
             <th>Tiêu đề</th>
             <th>Nội dung</th>
             <th>Chủ đề</th>
@@ -60,6 +61,17 @@ const Posts = () => {
           {posts.map(post => (
             <tr key={post.id}>
               <td>{post.id}</td>
+              <td>
+                {post.imageUrl ? (
+                  <img
+                    src={API_BASE_URL + post.imageUrl}
+                    alt={post.title}
+                    style={{ width: "80px", height: "60px", objectFit: "cover" }}
+                  />
+                ) : (
+                  <span className="text-muted">Không có ảnh</span>
+                )}
+              </td>
               <td>{post.title}</td>
               <td style={{ maxWidth: 200 }}>
                 {post.content.length > 100 ? post.content.slice(0, 100) + '...' : post.content}

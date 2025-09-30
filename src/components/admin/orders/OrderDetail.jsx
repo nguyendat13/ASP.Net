@@ -26,7 +26,12 @@ const OrderDetail = () => {
     }
   };
   
-
+  
+ const getImageUrl = (avatarPath) => {
+    if (!avatarPath) return null;
+    const filename = avatarPath.split('/').pop();
+    return `${API_BASE_URL}/api/Product/image/${filename}`;
+  };
   if (!order) return <div>Đang tải dữ liệu...</div>;
 
   return (
@@ -36,6 +41,8 @@ const OrderDetail = () => {
         <input className="form-input" type="text" value={`Mã đơn hàng: ${order.id}`} readOnly />
         <input className="form-input" type="text" value={`Tên khách hàng: ${order.customerName}`} readOnly />
         <input className="form-input" type="text" value={`Email: ${order.emailCustomer}`} readOnly />
+        <input className="form-input" type="text" value={`Địa chỉ: ${order.address}`} readOnly />
+
         <input className="form-input" type="text" value={`Trạng thái: ${order.statusName}`} readOnly />
         <input className="form-input" type="text" value={`Ngày đặt: ${new Date(order.orderDate).toLocaleDateString()}`} readOnly />
 
@@ -43,6 +50,7 @@ const OrderDetail = () => {
         <table className="order-table">
           <thead>
             <tr>
+              <th>Ảnh</th>
               <th>Sản phẩm</th>
               <th>Số lượng</th>
               <th>Giá gốc</th>
@@ -54,6 +62,19 @@ const OrderDetail = () => {
           <tbody>
             {order.orderDetails.map((item, index) => (
               <tr key={index}>
+                <td>
+                {getImageUrl(item.productImage) ? (
+                  <img
+                    src={getImageUrl(item.productImage)}
+                    alt={item.name}
+                    width="60"
+                    height="60"
+                    style={{ objectFit: 'cover' }}
+                  />
+                ) : (
+                  <span>Không có ảnh</span>
+                )}
+              </td>
                 <td>{item.productName}</td>
                 <td>{item.quantity}</td>
                 <td>{item.price?.toLocaleString()} VNĐ</td>

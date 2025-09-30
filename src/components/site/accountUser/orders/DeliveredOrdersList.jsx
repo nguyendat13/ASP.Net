@@ -74,6 +74,7 @@ const DeliveredOrdersList = () => {
                   <th>Mã đơn</th>
                   <th>Khách hàng</th>
                   <th>Ngày đặt</th>
+                  
                   <th>Trạng thái</th>
                   <th>Thanh toán</th>
                   <th>Tổng tiền</th>
