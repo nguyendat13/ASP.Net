@@ -48,14 +48,15 @@ namespace PhatDat_TH2.Controllers
                                      o.UserId,
                                      CustomerName = o.User.Fullname,
                                      EmailCustomer = o.User.Email,
-
+                                     o.Address,
                                      o.OrderDate,
                                      o.StatusOrderId,
-                                        StatusName = o.StatusOrder.Name, // Lấy tên trạng thái đơn hàng
+                                     StatusName = o.StatusOrder.Name, // Lấy tên trạng thái đơn hàng
                                      o.TotalPrice,
                                      OrderDetails = o.OrderDetails.Select(od => new
                                      {
                                          od.Id,
+                                         ProductImage=od.Product.Avatar,
                                          ProductName = od.Product.Name,
                                          od.Quantity,
                                          od.Price,
@@ -83,7 +84,10 @@ namespace PhatDat_TH2.Controllers
                 .Select(o => new
                 {
                     o.Id,
-                    o.UserId, CustomerName = o.User.Fullname, EmailCustomer = o.User.Email,
+                    o.UserId,
+                    CustomerName = o.User.Fullname,
+                    EmailCustomer = o.User.Email,
+                    o.Address,
                     o.OrderDate,
                     o.StatusOrderId,
                     StatusName = o.StatusOrder.Name,
@@ -91,6 +95,7 @@ namespace PhatDat_TH2.Controllers
                     OrderDetails = o.OrderDetails.Select(od => new
                     {
                         od.Id,
+                        ProductImage = od.Product.Avatar,
                         ProductName = od.Product.Name,
                         od.Quantity,
                         od.Price,
@@ -125,6 +130,7 @@ namespace PhatDat_TH2.Controllers
                     o.UserId,
                     CustomerName = o.User != null ? o.User.Fullname : "Không rõ",
                     EmailCustomer = o.User != null ? o.User.Email : "Không rõ",
+                    o.Address,
                     o.OrderDate,
                     o.StatusOrderId,
                     StatusName = o.StatusOrder != null ? o.StatusOrder.Name : "Không rõ",
@@ -170,7 +176,7 @@ namespace PhatDat_TH2.Controllers
                 CreatedAt = DateTime.Now,
                 CreatedBy = "System",
                 StatusOrderId = 1, // Trạng thái "Đang xử lý"
-                MethodId =orderRequest.MethodId,
+                MethodId = orderRequest.MethodId,
                 OrderDetails = new List<OrderDetail>()
             };
 
@@ -224,6 +230,7 @@ namespace PhatDat_TH2.Controllers
             if (status == null)
                 return BadRequest($"Không tìm thấy trạng thái đơn hàng với id {dto.StatusOrderId}");
 
+            var oldStatusId = order.StatusOrderId; // lưu trạng thái cũ
             order.StatusOrderId = dto.StatusOrderId;
             order.UpdatedAt = DateTime.Now;
             order.UpdatedBy = "admin";
@@ -262,6 +269,12 @@ namespace PhatDat_TH2.Controllers
 
             await _context.SaveChangesAsync();
 
+            // ✅ Tạo thông báo nếu trạng thái thay đổi
+            if (oldStatusId != order.StatusOrderId)
+            {
+                await CreateNotificationAsync(order.UserId, order.Id, $"Đơn hàng #{order.Id} của bạn đã được cập nhật trạng thái: {status.Name}.");
+
+            }
             return Ok(order); // ✅ Đảm bảo return luôn xảy ra
         }
 
@@ -322,6 +335,8 @@ namespace PhatDat_TH2.Controllers
 
             // Lưu thay đổi
             await _context.SaveChangesAsync();
+            await CreateNotificationAsync(order.UserId, order.Id, $"Đơn hàng #{order.Id} của bạn đã bị hủy.");
+
 
             return Ok(new { message = "Đơn hàng đã được hủy thành công." });
         }
@@ -340,6 +355,7 @@ namespace PhatDat_TH2.Controllers
                     o.UserId,
                     CustomerName = o.User.Fullname,
                     EmailCustomer = o.User.Email,
+                    o.Address,
                     o.OrderDate,
                     StatusName = o.StatusOrder.Name,
                     o.TotalPrice,
@@ -352,6 +368,22 @@ namespace PhatDat_TH2.Controllers
             }
 
             return Ok(canceledOrders);
+        }
+        private async Task CreateNotificationAsync(int userId, int orderId, string message)
+        {
+            if (userId <= 0) return;
+
+            var notification = new Notification
+            {
+                UserId = userId,
+                OrderId = orderId,
+                Message = message,
+                IsRead = false,
+                CreatedAt = DateTime.Now
+            };
+
+            await _context.Notifications.AddAsync(notification);
+            await _context.SaveChangesAsync();
         }
 
 

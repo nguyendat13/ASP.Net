@@ -7,6 +7,7 @@
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime PublishedDate { get; set; }
+        public string? ImageUrl { get; set; }
         public int TopicId { get; set; }
         public string TopicName { get; set; }  // Cung cấp tên Topic thay vì chỉ ID
     }

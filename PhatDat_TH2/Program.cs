@@ -10,8 +10,9 @@ using PhatDat_TH2.Data;
 using PhatDat_TH2.Hubs;
 using PhatDat_TH2.Library;
 using PhatDat_TH2.Model;
-using PhatDat_TH2.Repository;
-using PhatDat_TH2.Repository.IRepository;
+//using PhatDat_TH2.Repository;
+//using PhatDat_TH2.Repository.IRepository;
+
 using PhatDat_TH2.Services;
 using PhatDat_TH2.Services.Interfaces;
 using PhatDat_TH2.Services.IServices;
@@ -171,12 +172,13 @@ builder.Services.AddCors(options =>
 });
 // Đảm bảo đăng ký ChatService
 builder.Services.AddScoped<ChatService>(); // Hoặc AddSingleton<ChatService>(), tùy vào yêu cầu
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+//builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 builder.Services.AddControllers(); // Đảm bảo chỉ sử dụng API controller

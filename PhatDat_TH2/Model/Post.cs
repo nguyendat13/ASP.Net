@@ -7,7 +7,7 @@
         public string Content { get; set; }
         public DateTime PublishedDate { get; set; } = DateTime.Now;
         public int TopicId { get; set; }
-
+        public string? ImageUrl { get; set; }
         public Topic Topic { get; set; }
     }
 }

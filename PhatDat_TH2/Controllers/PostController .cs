@@ -17,7 +17,6 @@ namespace PhatDat_TH2.Controllers
             _context = context;
         }
 
-        // Lấy tất cả bài viết sử dụng DTO
         [HttpGet]
         public IActionResult GetPosts()
         {
@@ -30,15 +29,14 @@ namespace PhatDat_TH2.Controllers
                     Content = p.Content,
                     PublishedDate = p.PublishedDate,
                     TopicId = p.TopicId,
-                    TopicName = p.Topic != null ? p.Topic.Title : "Không có chủ đề"
+                    TopicName = p.Topic != null ? p.Topic.Title : "Không có chủ đề",
+                    ImageUrl = p.ImageUrl
                 })
-
                 .ToList();
 
             return Ok(posts);
         }
 
-        // Lấy bài viết theo ID sử dụng DTO
         [HttpGet("{id}")]
         public IActionResult GetPost(int id)
         {
@@ -52,62 +50,125 @@ namespace PhatDat_TH2.Controllers
                     Content = p.Content,
                     PublishedDate = p.PublishedDate,
                     TopicId = p.TopicId,
-                    TopicName = p.Topic.Title  // Ánh xạ tên topic
+                    TopicName = p.Topic.Title,
+                    ImageUrl = p.ImageUrl
                 })
                 .FirstOrDefault();
 
-            if (post == null)
-                return NotFound();
+            if (post == null) return NotFound();
 
             return Ok(post);
         }
 
         [HttpPost]
-        public IActionResult Create(PostDTO postDto)
+        public IActionResult Create([FromForm] PostCreateDTO dto, IFormFile imageFile)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            string imageUrl = null;
+
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                // Thư mục lưu ảnh: wwwroot/images/posts
+                var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "posts");
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+
+                // Đặt tên file duy nhất
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                var filePath = Path.Combine(folderPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    imageFile.CopyTo(stream);
+                }
+
+                // Lưu URL tương đối (để FE dùng hiển thị)
+                imageUrl = "/images/posts/" + fileName;
+            }
+
             var post = new Post
             {
-                Title = postDto.Title,
-                Content = postDto.Content,
-                TopicId = postDto.TopicId,
-                PublishedDate = DateTime.UtcNow // hoặc bạn có thể để null nếu không cần
+                Title = dto.Title,
+                Content = dto.Content,
+                TopicId = dto.TopicId,
+                PublishedDate = dto.PublishedDate,
+                ImageUrl = imageUrl
             };
 
             _context.Posts.Add(post);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetPost), new { id = post.Id }, post);
+            return CreatedAtAction(nameof(GetPost), new { id = post.Id }, new PostDTO
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Content = post.Content,
+                PublishedDate = post.PublishedDate,
+                TopicId = post.TopicId,
+                TopicName = _context.Topics.Find(post.TopicId)?.Title,
+                ImageUrl = post.ImageUrl
+            });
         }
 
+
         [HttpPut("{id}")]
-        public IActionResult Update(int id, PostDTO updatedDto)
+        public IActionResult Update(int id, [FromForm] PostUpdateDTO dto, IFormFile? imageFile)
         {
             var post = _context.Posts.Find(id);
             if (post == null) return NotFound();
 
-            post.Title = updatedDto.Title;
-            post.Content = updatedDto.Content;
-            post.TopicId = updatedDto.TopicId;
+            post.Title = dto.Title;
+            post.Content = dto.Content;
+            post.TopicId = dto.TopicId;
+
+            // Nếu có upload ảnh mới thì lưu lại file
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/posts");
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+
+                var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    imageFile.CopyTo(stream);
+                }
+
+                // Cập nhật đường dẫn ảnh
+                post.ImageUrl = "/images/posts/" + uniqueFileName;
+            }
 
             _context.SaveChanges();
 
-            return Ok(post);
+            return Ok(new PostDTO
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Content = post.Content,
+                PublishedDate = post.PublishedDate,
+                TopicId = post.TopicId,
+                TopicName = _context.Topics.Find(post.TopicId)?.Title,
+                ImageUrl = post.ImageUrl
+            });
         }
-        // Thêm vào PostController.cs
+
         [HttpGet("latest")]
         public IActionResult GetLatestPosts()
         {
             var latestPosts = _context.Posts
                 .Include(p => p.Topic)
                 .OrderByDescending(p => p.PublishedDate)
-                .Take(3) // lấy 3 bài viết mới nhất (có thể điều chỉnh)
+                .Take(3)
                 .Select(p => new
                 {
                     p.Id,
                     p.Title,
                     Excerpt = p.Content.Length > 100 ? p.Content.Substring(0, 100) + "..." : p.Content,
                     p.PublishedDate,
-                    ImageUrl = "/assets/post/default.png" // Hoặc link ảnh thực nếu có
+                    ImageUrl = p.ImageUrl ?? "/assets/post/default.png"
                 })
                 .ToList();
 

@@ -26,6 +26,7 @@ namespace PhatDat_TH2.Data
         public DbSet<Method> Methods { get; set; }
         public DbSet<Payment> Payments { get; set; } // KHÔNG phải Payment (sai cú pháp)
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
