@@ -235,3 +235,5 @@ D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net9.0\compressed\n8oiaquefc-0akb3s
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\BouncyCastle.Cryptography.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\MailKit.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\MimeKit.dll
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net9.0\compressed\vun80rxar7-eazv8mnek7.gz
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net9.0\compressed\f42uyyag4h-mu99ps1q87.gz
