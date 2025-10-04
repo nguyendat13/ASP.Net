@@ -232,6 +232,12 @@ builder.Services.AddControllers()
 
 
 var app = builder.Build();
+// ✅ Chạy migration tự động
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
