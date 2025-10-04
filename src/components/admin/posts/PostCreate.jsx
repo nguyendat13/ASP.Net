@@ -10,6 +10,8 @@ const PostCreate = () => {
   const [topics, setTopics] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [useCloudinary, setUseCloudinary] = useState(true); // ✅ checkbox tương tự Product
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,12 +29,10 @@ const PostCreate = () => {
       formData.append("Content", content);
       formData.append("TopicId", parseInt(topicId, 10));
       formData.append("PublishedDate", new Date().toISOString());
+      if (imageFile) formData.append("ImageFile", imageFile);
 
-      if (imageFile) {
-        formData.append("ImageFile", imageFile); // ✅ trùng với backend DTO
-      }
-
-      await axios.post(`${API_BASE_URL}/api/Post`, formData, {
+      // ✅ Gửi useCloudinary qua query param
+      await axios.post(`${API_BASE_URL}/api/Post?useCloudinary=${useCloudinary}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -60,6 +60,17 @@ const PostCreate = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
+        </div>
+
+        <div className="mb-3">
+          <label>
+            <input
+              type="checkbox"
+              checked={useCloudinary}
+              onChange={(e) => setUseCloudinary(e.target.checked)}
+            />
+            Lưu ảnh lên Cloudinary
+          </label>
         </div>
 
         <div className="mb-3">

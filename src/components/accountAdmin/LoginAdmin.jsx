@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "../../css/LoginAdmin.css"
 import API_BASE_URL from '../../config';
+import { FaArrowLeft } from 'react-icons/fa';
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -89,7 +90,9 @@ const Login = ({ onLogin }) => {
         </div>
         <button type="submit" style={{ backgroundColor: '#007bff', color: '#fff' }}>Đăng Nhập</button>
       </form>
-
+        <button className="btn btn-secondary w-100" onClick={() => navigate("/")}>
+              <FaArrowLeft className="me-2" /> Quay về trang chủ
+            </button>
       {message && (
         <div className={`message ${message.includes('Lỗi') ? 'error' : 'success'}`} style={{ color: message.includes('Lỗi') ? '#d9534f' : '#5cb85c' }}>
           {message}

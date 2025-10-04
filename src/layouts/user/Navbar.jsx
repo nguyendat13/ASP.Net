@@ -139,6 +139,8 @@ const Navbar = () => {
                     <ul className="dropdown-menu" aria-labelledby="userDropdown" style={{ right: '0', left: 'auto', position: 'absolute' }}>
                       <li><Link className="dropdown-item" to="/user-profile">Thông tin người dùng</Link></li>
                       <li><Link className="dropdown-item" to="/orders">Đơn hàng</Link></li>
+                       <li><Link className="dropdown-item" to="/register-admin">Đăng ký tài khoản admin(demo)</Link></li>
+
                       <li><hr className="dropdown-divider" /></li>
                       <li><Link to="/logout-user" className="dropdown-item">Đăng xuất</Link></li>
                     </ul>

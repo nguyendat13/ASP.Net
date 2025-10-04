@@ -12,7 +12,10 @@ const AddProduct = () => {
     const [categoryId, setCategoryId] = useState('');
     const [image, setImage] = useState(null);
     const [categories, setCategories] = useState([]); // Lấy danh sách danh mục
+    const [useCloudinary, setUseCloudinary] = useState(false);
+
     const navigate = useNavigate();
+    const token = localStorage.getItem('jwt-token');
 
     useEffect(() => {
         // Fetch danh mục từ API
@@ -29,32 +32,37 @@ const AddProduct = () => {
         setImage(e.target.files[0]);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+   const handleSubmit = async (e) => {
+  e.preventDefault();
 
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('description', description);
-        formData.append('price', price);
-        formData.append('discount', discount);
-        formData.append('categoryId', categoryId);
-        if (image) {
-            formData.append('image', image);
-        }
+  const formData = new FormData();
+  formData.append('name', name);
+  formData.append('description', description);
+  formData.append('price', price);
+  formData.append('discount', discount);
+  formData.append('categoryId', categoryId);
 
-        try {
-            await axios.post(`${API_BASE_URL}/api/Product`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            alert('Sản phẩm đã được thêm thành công!');
-            navigate('/admin/products');
-        } catch (error) {
-            console.error('Error adding product', error);
-            alert('Có lỗi xảy ra khi thêm sản phẩm!');
-        }
-    };
+  if (image) {
+    formData.append('image', image);
+  }
+
+  try {
+    // ✅ Gửi useCloudinary qua query param
+    await axios.post(`${API_BASE_URL}/api/Product?useCloudinary=${useCloudinary}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    alert('Sản phẩm đã được thêm thành công!');
+    navigate('/admin/products');
+  } catch (error) {
+    console.error('Error adding product', error);
+    alert('Có lỗi xảy ra khi thêm sản phẩm!');
+  }
+};
+
 
     return (
         <div className="form-container">
@@ -104,6 +112,15 @@ const AddProduct = () => {
                         </option>
                     ))}
                 </select>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <input
+                                type="checkbox"
+                                checked={useCloudinary}
+                                onChange={(e) => setUseCloudinary(e.target.checked)}
+                            />
+                            Lưu ảnh lên Cloudinary
+                            </label>
+
                 <input
                     type="file"
                     className="form-input"

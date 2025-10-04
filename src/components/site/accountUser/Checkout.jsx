@@ -133,7 +133,7 @@ const Checkout = () => {
       };
 
       const orderRes = await axios.post(
-        `${API_BASE_URL}/api/Order/create`,
+        `${API_BASE_URL}/api/Order/create-temp`,
         orderRequest,
         {
           headers: { Authorization: `Bearer ${token}` },

@@ -35,7 +35,7 @@ const AdminSidebar = () => {
               <li><Link to="/admin/posts" className="sidebar-link">Bài viết</Link></li> {/* Thêm Post */}
               <li><Link to="/admin/topics" className="sidebar-link">Chủ đề</Link></li> {/* Thêm Topic */}
               <li><Link to="/admin/contacts" className="sidebar-link">Liên hệ</Link></li> {/* Thêm Contact */}
-            
+              <li><Link to="/admin/logs" className="sidebar-link">Logs</Link></li> {/* Thêm Activity Logs */}
             
             </ul>
           </nav>

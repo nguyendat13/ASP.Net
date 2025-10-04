@@ -70,6 +70,8 @@ import PaymentSuccess from './components/site/accountUser/PaymentSuccess.jsx';
 import PaymentFail from './components/site/accountUser/PaymentFail.jsx';
 import PaymentCallback from './components/site/accountUser/PaymentCallback.jsx';
 import ChatboxAI from './components/site/accountUser/chatbox/ChatBox.jsx';
+import RegisterAdmin from './components/accountAdmin/RegisterAdmin.jsx';
+import AdminLogs from './components/admin/logs/AdminLogs.jsx';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');
 
@@ -118,6 +120,7 @@ const App = () => {
           {/* Route cho đăng nhập admin */}
         <Route path="/login" element={<Login onLogin={() => setIsAdmin(true)} />} />
         <Route path="/logout" element={<Logout onLogout={() => setIsAdmin(false)} />} />
+          <Route path="/register-admin" element={<RegisterAdmin />} />
 
         {isAdmin ? (
           <Route path="/admin" element={<AdminDashboard />}>
@@ -166,6 +169,8 @@ const App = () => {
             <Route path="banners/detail/:id" element={<BannersDetail />} />
 
             <Route path="menus" element={<Menus />} />
+            <Route path="logs" element={<AdminLogs />} />
+
 
           </Route>
         ) : (

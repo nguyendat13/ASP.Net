@@ -39,7 +39,7 @@ const Home = () => {
         <div className="card product-card pro-card h-100" style={{ background: '#fff', color: '#23272a', border: 'none', boxShadow: '0 6px 24px rgba(0,0,0,0.18)', transition: 'transform 0.2s, box-shadow 0.2s' }}>
           <div className="pro-img-wrap" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f5f5f5', borderRadius: '12px', overflow: 'hidden', height: '220px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
             <img
-              src={`${API_BASE_URL}/api/Product/image/${product.avatar.replace("/images/", "")}`}
+            src={`${API_BASE_URL}/api/Product/image/${product.avatar ? product.avatar.replace("/images/", "") : "default.jpg"}`}
               alt={product.name}
               style={{ maxHeight: '200px', maxWidth: '90%', objectFit: 'cover', borderRadius: '12px', border: '2px solid #43a047', background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
             />
@@ -67,31 +67,75 @@ const Home = () => {
     ))
   );
 
-  const renderPosts = (posts) => (
-    posts.map(post => (
-      <div className="col-md-6 col-lg-4 mb-4" key={post.id}>
-        <div className="card post-card h-100" style={{ background: '#fff', color: '#23272a', border: 'none', boxShadow: '0 6px 24px rgba(0,0,0,0.18)', borderRadius: '16px', overflow: 'hidden', transition: 'transform 0.2s, box-shadow 0.2s' }}>
-          <div style={{ height: '180px', overflow: 'hidden', borderRadius: '16px 16px 0 0', background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {post.imageUrl ? (
-                  <img
-                    src={API_BASE_URL + post.imageUrl}
-                    alt={post.title}
-                    style={{ width: "800px", height: "200px", objectFit: "cover" }}
-                  />
-                ) : (
-                  <span className="text-muted">Không có ảnh</span>
-                )}
-          </div>
-          <div className="card-body d-flex flex-column justify-content-between">
-            <h5 className="card-title mb-2" style={{ fontWeight: 'bold', fontSize: '1.15rem', color: '#23272a' }}>{post.title}</h5>
-            <Link to={`/post/${post.id}`} className="btn btn-success w-100 mt-auto" style={{ color: '#fff', fontWeight: 'bold', border: 'none', background: '#43a047', borderRadius: '8px', fontSize: '1rem' }}>
-              Đọc thêm
-            </Link>
-          </div>
+ const renderPosts = (posts) => (
+  posts.map(post => (
+    <div className="col-md-6 col-lg-4 mb-4" key={post.id}>
+      <div 
+        className="card post-card h-100"
+        style={{
+          background: '#fff',
+          color: '#23272a',
+          border: 'none',
+          boxShadow: '0 6px 24px rgba(0,0,0,0.18)',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          transition: 'transform 0.2s, box-shadow 0.2s'
+        }}
+      >
+        <div
+          style={{
+            height: '180px',
+            overflow: 'hidden',
+            borderRadius: '16px 16px 0 0',
+            background: '#f5f5f5',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          {post.imageUrl ? (
+            <img
+              src={
+                post.imageUrl.startsWith("http")
+                  ? post.imageUrl
+                  : `${API_BASE_URL}${post.imageUrl}`
+              }
+              alt={post.title}
+              style={{
+                width: "100%",
+                height: "180px",
+                objectFit: "cover"
+              }}
+            />
+          ) : (
+            <span className="text-muted">Không có ảnh</span>
+          )}
+        </div>
+
+        <div className="card-body d-flex flex-column justify-content-between">
+          <h5 className="card-title mb-2" style={{ fontWeight: 'bold', fontSize: '1.15rem', color: '#23272a' }}>
+            {post.title}
+          </h5>
+          <Link
+            to={`/post/${post.id}`}
+            className="btn btn-success w-100 mt-auto"
+            style={{
+              color: '#fff',
+              fontWeight: 'bold',
+              border: 'none',
+              background: '#43a047',
+              borderRadius: '8px',
+              fontSize: '1rem'
+            }}
+          >
+            Đọc thêm
+          </Link>
         </div>
       </div>
-    ))
-  );
+    </div>
+  ))
+);
+
   const toggleChat = () => {
     setShowChat(!showChat);
   };

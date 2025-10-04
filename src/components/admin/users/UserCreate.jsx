@@ -8,6 +8,8 @@ const CreateUser = () => {
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
+    const [phone, setPhone] = useState('');
+
   const [role, setRole] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -31,11 +33,12 @@ const CreateUser = () => {
       email,
       username,
       password,
+      phone,
       role, // Lưu ý: role có thể là một giá trị string hoặc array tùy vào cấu trúc backend
     };
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/User`, userData, {
+      const response = await axios.post(`${API_BASE_URL}/api/User/register-admin`, userData, {
         headers: {
           Authorization: `Bearer ${token}`, // Gửi token trong header
         },
@@ -93,7 +96,17 @@ const CreateUser = () => {
             required
           />
         </div>
-        
+          
+        <div className="mb-3">
+          <label className="form-label">Số điện thoại</label>
+          <input
+            type="text"
+            className="form-control"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+        </div>
         <div className="mb-3">
           <label className="form-label">Mật khẩu</label>
           <input

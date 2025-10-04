@@ -10,6 +10,7 @@ const PostEdit = () => {
   const [topicId, setTopicId] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [useCloudinary, setUseCloudinary] = useState(true); // ✅ checkbox
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +44,8 @@ const PostEdit = () => {
         formData.append("imageFile", imageFile); // key trùng với backend
       }
 
-      await axios.put(`${API_BASE_URL}/api/Post/${id}`, formData, {
+      // gửi useCloudinary qua query param
+      await axios.put(`${API_BASE_URL}/api/Post/${id}?useCloudinary=${useCloudinary}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -69,6 +71,17 @@ const PostEdit = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
+        </div>
+
+        <div className="mb-3">
+          <label>
+            <input
+              type="checkbox"
+              checked={useCloudinary}
+              onChange={(e) => setUseCloudinary(e.target.checked)}
+            />
+            Lưu ảnh lên Cloudinary
+          </label>
         </div>
 
         <div className="mb-3">
