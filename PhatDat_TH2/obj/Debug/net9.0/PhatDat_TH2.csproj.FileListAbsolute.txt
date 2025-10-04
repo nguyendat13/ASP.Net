@@ -231,3 +231,7 @@ D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\MySqlConnector.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\Pomelo.EntityFrameworkCore.MySql.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\CloudinaryDotNet.dll
 D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net9.0\compressed\ort7pnh47d-76t7shh87b.gz
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\obj\Debug\net9.0\compressed\n8oiaquefc-0akb3sz3l1.gz
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\BouncyCastle.Cryptography.dll
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\MailKit.dll
+D:\asp.net\PhatDat_TH2\PhatDat_TH2\bin\Debug\net9.0\MimeKit.dll

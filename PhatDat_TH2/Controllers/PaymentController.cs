@@ -11,12 +11,15 @@ public class PaymentController : Controller
 {
     private readonly IVnPayService _vnPayService;
     private readonly AppDbContext _context;
+    private readonly IEmailService _emailService;
 
-    public PaymentController(IVnPayService vnPayService, AppDbContext context)
-    {
-        _vnPayService = vnPayService;
-        _context = context;
-    }
+   public PaymentController(IVnPayService vnPayService, AppDbContext context, IEmailService emailService)
+{
+    _vnPayService = vnPayService;
+    _context = context;
+    _emailService = emailService;
+}
+
 
     [HttpPost("create")]
     public IActionResult CreatePayment([FromBody] PaymentInformationModel model)
@@ -38,7 +41,7 @@ public class PaymentController : Controller
 
             _context.Payments.Add(payment);
             _context.SaveChanges();
-
+         
             var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
             return Ok(new { paymentUrl = url });
         }
@@ -52,7 +55,7 @@ public class PaymentController : Controller
 
 
     [HttpGet("vnpay-return")]
-    public IActionResult VnPayReturn()
+    public async Task<IActionResult> VnPayReturn()
     {
         var response = _vnPayService.PaymentExecute(Request.Query);
 
@@ -61,7 +64,6 @@ public class PaymentController : Controller
             var payment = _context.Payments.FirstOrDefault(p => p.Id == long.Parse(response.OrderId));
             if (payment != null)
             {
-                // Tạo Order thật sau khi thanh toán thành công
                 var order = new Order
                 {
                     UserId = payment.UserId,
@@ -82,13 +84,18 @@ public class PaymentController : Controller
                 };
 
                 _context.Orders.Add(order);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 // Cập nhật Payment
                 payment.OrderId = order.Id;
                 payment.Status = "Success";
                 payment.TransactionId = response.TransactionId;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == payment.Id);
+                if (user == null) return null;
+                await _emailService.SendOrderConfirmationEmail(user, order);
+
             }
 
             return Ok(new { success = true, message = "Thanh toán thành công" });

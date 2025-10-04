@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PhatDat_TH2.Data;
 using PhatDat_TH2.Model;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 using PhatDat_TH2.Model.DTO;
 using PhatDat_TH2.Model.Request;
+using PhatDat_TH2.Services.IServices;
 
 namespace PhatDat_TH2.Controllers
 {
@@ -15,10 +16,13 @@ namespace PhatDat_TH2.Controllers
     public class OrderController : ControllerBase
     {
         private readonly AppDbContext _context;
-
-        public OrderController(AppDbContext context)
+        private readonly IActivityLogService _logService;
+        private readonly IEmailService _emailService;
+        public OrderController(AppDbContext context, IActivityLogService logService, IEmailService emailService)
         {
             _context = context;
+            _logService = logService;
+            _emailService = emailService;
         }
         public class OrderInputItem
         {
@@ -150,41 +154,36 @@ namespace PhatDat_TH2.Controllers
 
 
         [HttpPost("create")]
-        public IActionResult CreateOrder([FromBody] OrderRequest orderRequest)
+        public async Task<IActionResult> CreateOrder([FromBody] OrderRequest orderRequest)
         {
             if (orderRequest == null || orderRequest.Items == null || !orderRequest.Items.Any())
                 return BadRequest(new { message = "Không có sản phẩm trong đơn hàng." });
 
-            decimal totalPrice = 0;
-
-            // Lấy thông tin người dùng từ UserId
             var user = _context.Users.FirstOrDefault(u => u.Id == orderRequest.UserId);
             if (user == null)
                 return NotFound(new { message = $"Không tìm thấy người dùng với ID {orderRequest.UserId}" });
 
-            string customerFullName = user.Fullname;
-            string customerEmail = user.Email;
-
             var order = new Order
             {
-                CustomerName = customerFullName,
+                CustomerName = user.Fullname,
                 UserId = orderRequest.UserId,
-                Email = customerEmail,
+                Email = user.Email,
                 Phone = orderRequest.Phone,
                 Address = orderRequest.Address,
                 OrderDate = DateTime.Now,
                 CreatedAt = DateTime.Now,
                 CreatedBy = "System",
-                StatusOrderId = 1, // Trạng thái "Đang xử lý"
+                StatusOrderId = 1,
                 MethodId = orderRequest.MethodId,
                 OrderDetails = new List<OrderDetail>()
             };
 
+            decimal totalPrice = 0;
             foreach (var item in orderRequest.Items)
             {
                 var product = _context.Products.Find(item.ProductId);
                 if (product == null)
-                    return NotFound(new { message = $"Sản phẩm với ID {item.ProductId} không tồn tại." });
+                    return NotFound(new { message = $"Sản phẩm {item.ProductId} không tồn tại." });
 
                 var priceSale = product.Price - (product.Price * product.Discount / 100m);
                 var itemTotal = priceSale * item.Quantity;
@@ -198,20 +197,103 @@ namespace PhatDat_TH2.Controllers
                     Discount = product.Discount,
                     PriceSale = priceSale
                 };
-                order.OrderDetails.Add(orderDetail);
 
+                order.OrderDetails.Add(orderDetail);
                 totalPrice += itemTotal;
             }
 
             order.TotalPrice = totalPrice;
-
             _context.Orders.Add(order);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
+            // ✅ Ghi log
+            await _logService.LogAsync(
+                user.Id,
+                "Create",
+                "Order",
+                order.Id,
+                new { order.TotalPrice, Items = orderRequest.Items },
+                HttpContext.Connection.RemoteIpAddress?.ToString(),
+                Request.Headers["User-Agent"].ToString()
+            );
+
+            // 🟢 Gửi email ngay nếu là COD (methodId == 1)
+            if (order.MethodId==1) // 1 = COD
+            {
+                await _emailService.SendOrderConfirmationEmail(order.User, order);
+            }
 
             return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
         }
 
+        [HttpPost("create-temp")]
+        public async Task<IActionResult> CreateTempOrder([FromBody] OrderRequest orderRequest)
+        {
+            if (orderRequest == null || orderRequest.Items == null || !orderRequest.Items.Any())
+                return BadRequest(new { message = "Không có sản phẩm trong đơn hàng." });
 
+            var user = _context.Users.FirstOrDefault(u => u.Id == orderRequest.UserId);
+            if (user == null)
+                return NotFound(new { message = $"Không tìm thấy người dùng với ID {orderRequest.UserId}" });
+
+            // 🔸 Tạo order tạm thời
+            var order = new Order
+            {
+                CustomerName = user.Fullname,
+                UserId = orderRequest.UserId,
+                Email = user.Email,
+                Phone = orderRequest.Phone,
+                Address = orderRequest.Address,
+                OrderDate = DateTime.Now,
+                CreatedAt = DateTime.Now,
+                CreatedBy = "System",
+                StatusOrderId = 1, // 1 = chờ thanh toán
+                MethodId = orderRequest.MethodId,
+                OrderDetails = new List<OrderDetail>()
+            };
+
+            decimal totalPrice = 0;
+            foreach (var item in orderRequest.Items)
+            {
+                var product = _context.Products.Find(item.ProductId);
+                if (product == null)
+                    return NotFound(new { message = $"Sản phẩm {item.ProductId} không tồn tại." });
+
+                var priceSale = product.Price - (product.Price * product.Discount / 100m);
+                var itemTotal = priceSale * item.Quantity;
+
+                var orderDetail = new OrderDetail
+                {
+                    ProductId = product.Id,
+                    ProductName = product.Name,
+                    Quantity = item.Quantity,
+                    Price = product.Price,
+                    Discount = product.Discount,
+                    PriceSale = priceSale
+                };
+
+                order.OrderDetails.Add(orderDetail);
+                totalPrice += itemTotal;
+            }
+
+            order.TotalPrice = totalPrice;
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            // 🔹 Ghi log tạm
+            await _logService.LogAsync(
+                user.Id,
+                "Create",
+                "TempOrder",
+                order.Id,
+                new { order.TotalPrice, Items = orderRequest.Items },
+                HttpContext.Connection.RemoteIpAddress?.ToString(),
+                Request.Headers["User-Agent"].ToString()
+            );
+
+            // ❌ Không gửi email ở đây — vì chưa thanh toán
+            return Ok(new { message = "Đơn hàng tạm tạo thành công", orderId = order.Id, total = totalPrice });
+        }
 
 
         [HttpPut("{id}")]
@@ -268,6 +350,15 @@ namespace PhatDat_TH2.Controllers
             }
 
             await _context.SaveChangesAsync();
+            await _logService.LogAsync(
+                    order.UserId,
+                    "Update",
+                    "Order",
+                    order.Id,
+                    new { OldStatus = oldStatusId, NewStatus = order.StatusOrderId },
+                    HttpContext.Connection.RemoteIpAddress?.ToString(),
+                    Request.Headers["User-Agent"].ToString()
+                );
 
             // ✅ Tạo thông báo nếu trạng thái thay đổi
             if (oldStatusId != order.StatusOrderId)
@@ -275,6 +366,7 @@ namespace PhatDat_TH2.Controllers
                 await CreateNotificationAsync(order.UserId, order.Id, $"Đơn hàng #{order.Id} của bạn đã được cập nhật trạng thái: {status.Name}.");
 
             }
+
             return Ok(order); // ✅ Đảm bảo return luôn xảy ra
         }
 
@@ -336,6 +428,15 @@ namespace PhatDat_TH2.Controllers
             // Lưu thay đổi
             await _context.SaveChangesAsync();
             await CreateNotificationAsync(order.UserId, order.Id, $"Đơn hàng #{order.Id} của bạn đã bị hủy.");
+            await _logService.LogAsync(
+                    order.UserId,
+                    "Cancel",
+                    "Order",
+                    order.Id,
+                    new { Status =order.StatusOrder.Name },
+                    HttpContext.Connection.RemoteIpAddress?.ToString(),
+                    Request.Headers["User-Agent"].ToString()
+                );
 
 
             return Ok(new { message = "Đơn hàng đã được hủy thành công." });

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhatDat_TH2.Model.Request;
 using PhatDat_TH2.Services.IServices;
+using System.Security.Claims;
 
 namespace PhatDat_TH2.Controllers
 {
@@ -9,10 +11,13 @@ namespace PhatDat_TH2.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
+        private readonly IActivityLogService _logService;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IActivityLogService logService)
         {
             _productService = productService;
+            _logService = logService;
+
         }
 
         [HttpGet]
@@ -24,6 +29,8 @@ namespace PhatDat_TH2.Controllers
             var product = _productService.GetById(id);
             return product == null ? NotFound() : Ok(product);
         }
+
+
         [HttpGet("image/{*filename}")]
         public IActionResult GetImage(string filename, [FromServices] IImageService imageService)
         {
@@ -42,10 +49,26 @@ namespace PhatDat_TH2.Controllers
             }
         }
 
+
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] ProductRequest request, IFormFile? image, [FromQuery] bool useCloudinary = false)
         {
             var product = await _productService.CreateAsync(request, image, useCloudinary);
+            // ✅ Ghi log
+            var userId = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            await _logService.LogAsync(
+                string.IsNullOrEmpty(userId) ? null : int.Parse(userId),
+                "Create",
+                "Product",
+                product.Id,
+                new { product.Name, product.Price },
+                HttpContext.Connection.RemoteIpAddress?.ToString(),
+                Request.Headers["User-Agent"].ToString()
+            );
+
             return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
         }
 

@@ -28,5 +28,7 @@ namespace PhatDat_TH2.Model
 
         [NotMapped]
         public decimal TotalPrice => PriceSale * Quantity; // Tổng giá cho sản phẩm này
+
+
     }
 }

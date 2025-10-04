@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PhatDat_TH2.Data;
 using PhatDat_TH2.Model;
 using PhatDat_TH2.Model.DTO;
+using PhatDat_TH2.Services.IServices;
 
 namespace PhatDat_TH2.Controllers
 {
@@ -11,12 +12,17 @@ namespace PhatDat_TH2.Controllers
     public class PostController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ICloudinaryService _cloudinaryService;
+        private readonly IWebHostEnvironment _env;
 
-        public PostController(AppDbContext context)
+        public PostController(AppDbContext context, ICloudinaryService cloudinaryService, IWebHostEnvironment env)
         {
             _context = context;
+            _cloudinaryService = cloudinaryService;
+            _env = env;
         }
 
+        // 🟢 Lấy tất cả bài viết
         [HttpGet]
         public IActionResult GetPosts()
         {
@@ -37,6 +43,7 @@ namespace PhatDat_TH2.Controllers
             return Ok(posts);
         }
 
+        // 🟢 Lấy bài viết theo ID
         [HttpGet("{id}")]
         public IActionResult GetPost(int id)
         {
@@ -60,31 +67,24 @@ namespace PhatDat_TH2.Controllers
             return Ok(post);
         }
 
+        // 🟢 Tạo bài viết mới (có Cloudinary)
         [HttpPost]
-        public IActionResult Create([FromForm] PostCreateDTO dto, IFormFile imageFile)
+        public async Task<IActionResult> Create([FromForm] PostCreateDTO dto, IFormFile? imageFile, [FromQuery] bool useCloudinary = false)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            string imageUrl = null;
+            string? imageUrl = null;
 
-            if (imageFile != null && imageFile.Length > 0)
+            if (imageFile != null)
             {
-                // Thư mục lưu ảnh: wwwroot/images/posts
-                var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "posts");
-                if (!Directory.Exists(folderPath))
-                    Directory.CreateDirectory(folderPath);
-
-                // Đặt tên file duy nhất
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-                var filePath = Path.Combine(folderPath, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                if (useCloudinary)
                 {
-                    imageFile.CopyTo(stream);
+                    imageUrl = await _cloudinaryService.UploadImageAsync(imageFile);
                 }
-
-                // Lưu URL tương đối (để FE dùng hiển thị)
-                imageUrl = "/images/posts/" + fileName;
+                else
+                {
+                    imageUrl = await SaveLocalImage(imageFile);
+                }
             }
 
             var post = new Post
@@ -97,7 +97,9 @@ namespace PhatDat_TH2.Controllers
             };
 
             _context.Posts.Add(post);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
+            var topic = await _context.Topics.FindAsync(post.TopicId);
 
             return CreatedAtAction(nameof(GetPost), new { id = post.Id }, new PostDTO
             {
@@ -106,42 +108,32 @@ namespace PhatDat_TH2.Controllers
                 Content = post.Content,
                 PublishedDate = post.PublishedDate,
                 TopicId = post.TopicId,
-                TopicName = _context.Topics.Find(post.TopicId)?.Title,
+                TopicName = topic?.Title,
                 ImageUrl = post.ImageUrl
             });
         }
 
-
+        // 🟢 Cập nhật bài viết (có Cloudinary)
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromForm] PostUpdateDTO dto, IFormFile? imageFile)
+        public async Task<IActionResult> Update(int id, [FromForm] PostUpdateDTO dto, IFormFile? imageFile, [FromQuery] bool useCloudinary = false)
         {
-            var post = _context.Posts.Find(id);
+            var post = await _context.Posts.FindAsync(id);
             if (post == null) return NotFound();
 
             post.Title = dto.Title;
             post.Content = dto.Content;
             post.TopicId = dto.TopicId;
 
-            // Nếu có upload ảnh mới thì lưu lại file
-            if (imageFile != null && imageFile.Length > 0)
+            if (imageFile != null)
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/posts");
-                if (!Directory.Exists(uploadsFolder))
-                    Directory.CreateDirectory(uploadsFolder);
-
-                var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    imageFile.CopyTo(stream);
-                }
-
-                // Cập nhật đường dẫn ảnh
-                post.ImageUrl = "/images/posts/" + uniqueFileName;
+                post.ImageUrl = useCloudinary
+                    ? await _cloudinaryService.UploadImageAsync(imageFile)
+                    : await SaveLocalImage(imageFile);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
+            var topic = await _context.Topics.FindAsync(post.TopicId);
 
             return Ok(new PostDTO
             {
@@ -150,11 +142,12 @@ namespace PhatDat_TH2.Controllers
                 Content = post.Content,
                 PublishedDate = post.PublishedDate,
                 TopicId = post.TopicId,
-                TopicName = _context.Topics.Find(post.TopicId)?.Title,
+                TopicName = topic?.Title,
                 ImageUrl = post.ImageUrl
             });
         }
 
+        // 🟢 Lấy 3 bài viết mới nhất
         [HttpGet("latest")]
         public IActionResult GetLatestPosts()
         {
@@ -175,16 +168,32 @@ namespace PhatDat_TH2.Controllers
             return Ok(latestPosts);
         }
 
-
+        // 🟢 Xóa bài viết
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var post = _context.Posts.Find(id);
+            var post = await _context.Posts.FindAsync(id);
             if (post == null) return NotFound();
 
             _context.Posts.Remove(post);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return NoContent();
+        }
+
+        // ✅ Hàm lưu ảnh cục bộ
+        private async Task<string> SaveLocalImage(IFormFile imageFile)
+        {
+            var folderPath = Path.Combine(_env.WebRootPath, "images", "posts");
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+            var filePath = Path.Combine(folderPath, fileName);
+
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await imageFile.CopyToAsync(stream);
+
+            return "/images/posts/" + fileName;
         }
     }
 }

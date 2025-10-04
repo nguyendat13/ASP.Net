@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 public class ImageService : IImageService
 {
     private readonly IWebHostEnvironment _env;
+    private readonly string _backendUrl;
 
-    public ImageService(IWebHostEnvironment env)
+    public ImageService(IWebHostEnvironment env, IConfiguration configuration)
     {
         _env = env;
+        _backendUrl = configuration["BackendUrl"] ?? "https://localhost:7177";
     }
+
 
     public FileResult GetImage(string filename)
     {
@@ -32,6 +35,17 @@ public class ImageService : IImageService
         var contentType = GetContentType(filePath);
 
         return new FileContentResult(imageBytes, contentType);
+    }
+    public string GenerateImageUrl(string filename)
+    {
+        if (string.IsNullOrEmpty(filename))
+            return null;
+
+        // Nếu ảnh đã là URL đầy đủ (VD: Cloudinary hoặc CDN)
+        if (filename.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+            return filename;
+
+        return $"{_backendUrl}/api/Product/image/{filename}";
     }
 
     private string GetContentType(string path)

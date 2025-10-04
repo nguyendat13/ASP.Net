@@ -95,15 +95,15 @@ namespace PhatDat_TH2.Controllers
 
 
 
-        // Tạo user mới (cho phép không xác thực để đăng ký)
+        // Tạo usere-admin mới (cho phép không xác thực để đăng ký)
         [AllowAnonymous]
-        [HttpPost]
-        public IActionResult Create([FromBody] User user)
+        [HttpPost("register-admin")]
+        public IActionResult Create([FromBody] RegisterAdminDTO dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            // Kiểm tra cả Username và Email
-            var isUsernameExist = _context.Users.Any(u => u.Username == user.Username);
-            var isEmailExist = _context.Users.Any(u => u.Email == user.Email);
+
+            var isUsernameExist = _context.Users.Any(u => u.Username == dto.Username);
+            var isEmailExist = _context.Users.Any(u => u.Email == dto.Email);
 
             if (isUsernameExist && isEmailExist)
                 return Conflict(new { message = "Username và Email đã tồn tại." });
@@ -114,8 +114,20 @@ namespace PhatDat_TH2.Controllers
             if (isEmailExist)
                 return Conflict(new { message = "Email đã tồn tại." });
 
-            user.CreatedAt = DateTime.Now;
-            user.CreatedBy = "admin"; // bạn có thể sửa lại từ token nếu cần
+            var user = new User
+            {
+                Fullname = dto.Fullname,
+                Username = dto.Username,
+                Email = dto.Email,
+                Password = dto.Password, // TODO: nên hash
+                Phone = dto.Phone,
+                Gender = dto.Gender,
+                Role = "admin",
+                Status = true,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = "system"
+            };
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -123,7 +135,8 @@ namespace PhatDat_TH2.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
-       
+
+
         // Cập nhật user (yêu cầu role admin) 
         [Authorize(Roles = "admin")]
         [HttpPut("{id}")]

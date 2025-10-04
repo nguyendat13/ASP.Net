@@ -24,9 +24,10 @@ namespace PhatDat_TH2.Data
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Method> Methods { get; set; }
-        public DbSet<Payment> Payments { get; set; } // KHÔNG phải Payment (sai cú pháp)
+        public DbSet<Payment> Payments { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<ActivityLog> ActivityLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

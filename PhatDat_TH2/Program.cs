@@ -18,6 +18,7 @@ using PhatDat_TH2.Services.Interfaces;
 using PhatDat_TH2.Services.IServices;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -150,15 +151,15 @@ builder.Services.AddAuthentication(options =>
 
 // Cấu hình DbContext và Swagger
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 //builder.Services.AddDbContext<AppDbContext>(options =>
-//    options.UseMySql(
-//        builder.Configuration.GetConnectionString("DefaultConnection"),
-//        new MySqlServerVersion(new Version(8, 0, 36)) // Railway đang chạy MySQL 8.x
-//    )
-//);
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 36)) 
+    )
+);
 
 builder.Services.AddCors(options =>
 {
@@ -175,11 +176,15 @@ builder.Services.AddScoped<ChatService>(); // Hoặc AddSingleton<ChatService>()
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IImageService, ImageService>();
-//builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IActivityLogService, ActivityLogService>();
+builder.Services.AddHostedService<NotificationCleanupService>();
 
 builder.Services.AddScoped<IVnPayService, VnPayService>();
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<IEmailService, EmailService>();
+//builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddControllers(); // Đảm bảo chỉ sử dụng API controller
 builder.Services.AddSignalR(); // Thêm SignalR vào dịch vụ
@@ -216,6 +221,14 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
 
 
 var app = builder.Build();
