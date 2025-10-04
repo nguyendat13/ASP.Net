@@ -54,7 +54,8 @@ builder.WebHost.ConfigureKestrel(options =>
     else
     {
         // Khi deploy Docker/Render
-        options.ListenAnyIP(5000);
+        var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+        options.ListenAnyIP(int.Parse(port)); // Chỉ HTTP
     }
 });
 

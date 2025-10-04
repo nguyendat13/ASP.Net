@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\asp.net\\PhatDat_TH2\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\migrations\\20251004185608_inittables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\migrations\\20251004185608_inittables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|d:\\asp.net\\phatdat_th2\\phatdat_th2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{368EC39C-D25C-4D64-9BCD-9BD9B7A84F01}|PhatDat_TH2\\PhatDat_TH2.csproj|solutionrelative:phatdat_th2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -38,11 +42,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "20251004185608_InitTables.cs",
+              "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Migrations\\20251004185608_InitTables.cs",
+              "RelativeDocumentMoniker": "PhatDat_TH2\\Migrations\\20251004185608_InitTables.cs",
+              "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Migrations\\20251004185608_InitTables.cs",
+              "RelativeToolTip": "PhatDat_TH2\\Migrations\\20251004185608_InitTables.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-04T18:56:13.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\appsettings.json",
               "RelativeDocumentMoniker": "PhatDat_TH2\\appsettings.json",
@@ -50,25 +67,24 @@
               "RelativeToolTip": "PhatDat_TH2\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-04T17:31:11.049Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-04T17:31:11.049Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Program.cs",
               "RelativeDocumentMoniker": "PhatDat_TH2\\Program.cs",
               "ToolTip": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Program.cs",
               "RelativeToolTip": "PhatDat_TH2\\Program.cs",
-              "ViewState": "AgIAAI0AAAAAAAAAAAAAAJ8AAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAI8AAAAAAAAAAAAAAJ8AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-04T17:30:51.944Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "NotificationCleanupService.cs",
               "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Services\\NotificationCleanupService.cs",
               "RelativeDocumentMoniker": "PhatDat_TH2\\Services\\NotificationCleanupService.cs",
@@ -80,7 +96,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "NotificationService.cs",
               "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Services\\NotificationService.cs",
               "RelativeDocumentMoniker": "PhatDat_TH2\\Services\\NotificationService.cs",
@@ -92,7 +108,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ProductService.cs",
               "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Services\\ProductService.cs",
               "RelativeDocumentMoniker": "PhatDat_TH2\\Services\\ProductService.cs",
@@ -104,7 +120,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "ProductController.cs",
               "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\ProductController.cs",
               "RelativeDocumentMoniker": "PhatDat_TH2\\Controllers\\ProductController.cs",
@@ -116,7 +132,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "PostController .cs",
               "DocumentMoniker": "D:\\asp.net\\PhatDat_TH2\\PhatDat_TH2\\Controllers\\PostController .cs",
               "RelativeDocumentMoniker": "PhatDat_TH2\\Controllers\\PostController .cs",
