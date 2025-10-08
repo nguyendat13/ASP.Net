@@ -381,12 +381,17 @@ namespace PhatDat_TH2.Controllers
             if (order == null)
                 return NotFound(new { message = "Không tìm thấy đơn hàng." });
 
-            // Chỉ cho phép xóa nếu đơn hàng đã bị hủy (StatusOrderId = 4)
-            if (order.StatusOrderId != 4)
-                return BadRequest(new { message = "Chỉ có thể xóa vĩnh viễn các đơn hàng đã bị hủy." });
+            // ❌ Nếu bạn vẫn muốn chỉ cho phép xóa đơn hàng bị hủy, giữ lại đoạn này
+            // if (order.StatusOrderId != 4)
+            //     return BadRequest(new { message = "Chỉ có thể xóa vĩnh viễn các đơn hàng đã bị hủy." });
 
-            // Xóa chi tiết đơn hàng trước
-            _context.OrderDetails.RemoveRange(order.OrderDetails);
+            // ✅ Xóa chi tiết đơn hàng trước
+            if (order.OrderDetails != null && order.OrderDetails.Any())
+            {
+                _context.OrderDetails.RemoveRange(order.OrderDetails);
+            }
+
+
 
             // Sau đó xóa đơn hàng
             _context.Orders.Remove(order);
@@ -395,6 +400,38 @@ namespace PhatDat_TH2.Controllers
             return Ok(new { message = "Đã xóa vĩnh viễn đơn hàng bị hủy." });
         }
 
+        [HttpPost("delete-multiple")]
+        public IActionResult DeleteMultiple([FromBody] List<int> orderIds)
+        {
+            if (orderIds == null || !orderIds.Any())
+                return BadRequest(new { message = "Không có đơn hàng nào được chọn để xóa." });
+
+            // Lấy danh sách đơn hàng theo id
+            var orders = _context.Orders
+                .Include(o => o.OrderDetails)
+                .Where(o => orderIds.Contains(o.Id))
+                .ToList();
+
+            if (!orders.Any())
+                return NotFound(new { message = "Không tìm thấy đơn hàng nào." });
+
+            foreach (var order in orders)
+            {
+                // Chỉ xóa đơn hàng đã hủy (nếu bạn muốn giữ logic cũ)
+                // if (order.StatusOrderId != 4) continue;
+
+                if (order.OrderDetails != null && order.OrderDetails.Any())
+                {
+                    _context.OrderDetails.RemoveRange(order.OrderDetails);
+                }
+
+                _context.Orders.Remove(order);
+            }
+
+            _context.SaveChanges();
+
+            return Ok(new { message = $"Đã xóa {orders.Count} đơn hàng thành công." });
+        }
 
         [HttpPut("cancel/{id}")]
         public async Task<IActionResult> CancelOrder(int id)

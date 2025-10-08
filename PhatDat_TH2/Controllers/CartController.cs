@@ -211,5 +211,29 @@ namespace PhatDat_TH2.Controllers
 
             return Ok(new { message = "🧹 Giỏ hàng đã được làm trống" });
         }
+        // ❌ Xóa nhiều sản phẩm khỏi giỏ
+        [HttpDelete("remove-multiple")]
+        public async Task<IActionResult> RemoveMultipleItems([FromBody] RemoveMultipleCartItemsRequest request)
+        {
+            var cart = await _context.Carts
+                .Include(c => c.CartItems)
+                .FirstOrDefaultAsync(c => c.UserId == request.UserId);
+
+            if (cart == null)
+                return NotFound("❌ Giỏ hàng không tồn tại");
+
+            var itemsToRemove = cart.CartItems
+                .Where(ci => request.ProductIds.Contains(ci.ProductId))
+                .ToList();
+
+            if (!itemsToRemove.Any())
+                return BadRequest("⚠️ Không tìm thấy sản phẩm nào hợp lệ để xóa.");
+
+            _context.CartItems.RemoveRange(itemsToRemove);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = $"✅ Đã xóa {itemsToRemove.Count} sản phẩm khỏi giỏ hàng." });
+        }
+
     }
 }

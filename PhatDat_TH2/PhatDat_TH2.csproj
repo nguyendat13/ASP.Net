@@ -31,7 +31,6 @@
     <Content Include="wwwroot\css\site.css" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\images\posts\" />
   </ItemGroup>
 <PropertyGroup>
