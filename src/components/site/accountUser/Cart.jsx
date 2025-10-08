@@ -11,6 +11,51 @@ import API_BASE_URL from "../../../config";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
+const [selectedItems, setSelectedItems] = useState([]);
+const [selectAll, setSelectAll] = useState(false);
+
+// ✅ Xử lý chọn 1 sản phẩm
+const handleSelectItem = (productId) => {
+  setSelectedItems((prev) =>
+    prev.includes(productId)
+      ? prev.filter((id) => id !== productId)
+      : [...prev, productId]
+  );
+};
+
+// ✅ Xử lý chọn tất cả
+const handleSelectAll = () => {
+  if (selectAll) {
+    setSelectedItems([]);
+  } else {
+    setSelectedItems(cartItems.map((item) => item.productId));
+  }
+  setSelectAll(!selectAll);
+};
+
+// ✅ Xóa nhiều sản phẩm đã chọn
+const handleRemoveSelected = () => {
+  const userId = localStorage.getItem("userId");
+  if (selectedItems.length === 0) {
+    alert("Vui lòng chọn ít nhất 1 sản phẩm để xóa.");
+    return;
+  }
+
+  if (window.confirm(`Xóa ${selectedItems.length} sản phẩm đã chọn?`)) {
+    axios
+      .delete(`${API_BASE_URL}/api/Cart/remove-multiple`, {
+        data: { userId, productIds: selectedItems },
+      })
+      .then(() => {
+        setCartItems((prev) =>
+          prev.filter((item) => !selectedItems.includes(item.productId))
+        );
+        setSelectedItems([]);
+        setSelectAll(false);
+      })
+      .catch((err) => console.error("Lỗi khi xóa nhiều sản phẩm:", err));
+  }
+};
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -108,6 +153,13 @@ const Cart = () => {
           <table className="table table-bordered mt-3" style={{ background: '#23272a', color: '#fff', borderRadius: 12 }}>
             <thead className="table-dark" style={{ background: '#212121', color: '#fff' }}>
               <tr>
+                 <th>
+                    <input
+                      type="checkbox"
+                      checked={selectAll}
+                      onChange={handleSelectAll}
+                    />
+                  </th>
                 <th style={{ color: '#fff' }}>Ảnh</th>
                 <th style={{ color: '#fff' }}>Tên sản phẩm</th>
                 <th style={{ color: '#fff' }}>Giá</th>
@@ -120,6 +172,13 @@ const Cart = () => {
             <tbody>
               {cartItems.map((item) => (
                 <tr key={item.productId} style={{ background: '#23272a', color: '#fff' }}>
+                    <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedItems.includes(item.productId)}
+                      onChange={() => handleSelectItem(item.productId)}
+                    />
+                  </td>
                   <td>
                     <img
                     src={
@@ -156,6 +215,14 @@ const Cart = () => {
             </tbody>
           </table>
           <div className="d-flex justify-content-between align-items-center mt-3">
+            <button
+          className="btn btn-outline-warning d-flex align-items-center gap-1"
+          style={{ borderRadius: 8, fontWeight: 500, color: '#fff', border: '1px solid #ff9800' }}
+          onClick={handleRemoveSelected}
+        >
+          <FaTrashAlt /> Xóa sản phẩm đã chọn
+        </button>
+
             <button className="btn btn-outline-danger d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500, color: '#fff', border: '1px solid #e53935' }} onClick={handleClearCart}>
               <FaTrashAlt style={{ color: 'inherit', fontSize: 18 }} className="navbar-icon" /> Xoá tất cả
             </button>
