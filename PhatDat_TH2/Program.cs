@@ -166,7 +166,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policy =>
     {
-        policy.WithOrigins("https://fruit-store-omega.vercel.app", "http://localhost:3000")
+        policy.WithOrigins("https://fruit-store-omega.vercel.app", "http://localhost:3000", "https://www.phatdatstore.com", "https://phatdatstore.com")
                      .AllowAnyMethod()
              .AllowAnyHeader()
              .AllowCredentials(); // Quan trọng để cho phép cookie và headers đặc biệt
