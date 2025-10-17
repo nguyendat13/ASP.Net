@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { FaShoppingCart, FaUser, FaSearch, FaLeaf, FaStore, FaHome } from 'react-icons/fa'; // Thêm icon React
+import { FaShoppingCart, FaUser, FaSearch, FaLeaf, FaStore, FaHome, FaPager } from 'react-icons/fa'; // Thêm icon React
 import "../../css/Navbar.css";
 import API_BASE_URL from '../../config';
 import Notification from '../../components/site/noti/Notification';
@@ -88,6 +88,11 @@ const Navbar = () => {
           <li className="nav-item">
             <Link className="nav-link d-flex align-items-center" to="/products" style={{ color: '#fff' }}>
               <FaLeaf className="navbar-icon" style={{ marginRight: '5px' }} /> Sản phẩm
+            </Link>
+          </li>
+            <li className="nav-item">
+            <Link className="nav-link d-flex align-items-center" to="/products" style={{ color: '#fff' }}>
+              <FaPager className="navbar-icon" style={{ marginRight: '5px' }} /> Bài viết
             </Link>
           </li>
           </ul>

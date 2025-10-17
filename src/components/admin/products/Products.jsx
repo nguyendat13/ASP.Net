@@ -70,7 +70,7 @@ const Products = () => {
             <tr key={p.id}>
               <td>{p.id}</td>
               <td>{p.name}</td>
-              <td>{p.description || 'Không có'}</td>
+        <td dangerouslySetInnerHTML={{ __html: p.description || 'Không có mô tả' }}></td>
               <td>{p.price.toLocaleString()} đ</td>
               <td>{p.discount}%</td>
               <td>

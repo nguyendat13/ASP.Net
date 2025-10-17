@@ -1,0 +1,28 @@
+/* Bố cục tổng của admin */
+.admin-layout {
+  display: flex;
+  height: 100vh; /* Full chiều cao màn hình */
+  overflow: hidden; /* Ngăn tràn */
+}
+
+/* Khu vực bên phải (navbar + content) */
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  height: 100vh;
+}
+
+/* Navbar nằm trên cùng */
+.admin-main > *:first-child {
+  flex-shrink: 0;
+}
+
+/* Vùng nội dung bên dưới có scroll riêng */
+.admin-content {
+  flex: 1;
+  overflow-y: auto; /* Scroll riêng nội dung */
+  padding: 20px;
+  box-sizing: border-box;
+}

@@ -68,8 +68,10 @@ const ProductDetail = () => {
           <h3 className="d-flex align-items-center mb-2" style={{ color: 'var(--foreground)', fontWeight: 'bold', fontSize: '2rem', textShadow: 'none' }}>
             <FaTags style={{ color: 'var(--primary)', marginRight: '10px' }} /> {product.name}
           </h3>
-          <p style={{ color: 'var(--foreground)', fontSize: '1.1rem', textShadow: 'none' }}>{product.description}</p>
-          <div className="d-flex align-items-center mb-2" style={{ gap: '16px' }}>
+<div
+  style={{ color: 'var(--foreground)', fontSize: '1.1rem', textShadow: 'none' }}
+  dangerouslySetInnerHTML={{ __html: product.description }}
+/>          <div className="d-flex align-items-center mb-2" style={{ gap: '16px' }}>
             <span className="badge bg-success" style={{ fontSize: '1.15rem', fontWeight: 'bold', padding: '10px 18px', borderRadius: '8px', color: '#fff', background: 'var(--primary)' }}>
               <FaMoneyBillWave style={{ color: '#fff', marginRight: '8px' }} /> {product.price.toLocaleString()} đ
             </span>

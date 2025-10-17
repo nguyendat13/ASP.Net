@@ -34,7 +34,8 @@ const ProductDetail = () => {
           <strong>Tên:</strong> {product.name}
         </li>
         <li className="list-group-item">
-          <strong>Mô tả:</strong> {product.description}
+          <strong>Mô tả:</strong>   <div dangerouslySetInnerHTML={{ __html: product.description }}></div>
+
         </li>
         <li className="list-group-item">
           <strong>Giá:</strong> {product.price.toLocaleString()} đ

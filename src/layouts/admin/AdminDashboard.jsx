@@ -1,18 +1,15 @@
 import AdminSidebar from './AdminSidebar';
 import AdminNavbar from './AdminNavbar';
 import { Outlet } from 'react-router-dom';
-import { useState } from 'react';
-import { FaComments } from 'react-icons/fa';
+import '../../css/AdminLayout.css'; // 👈 thêm file CSS riêng cho layout
 
 const AdminDashboard = () => {
- 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="admin-layout">
       <AdminSidebar />
-      <div style={{ flex: 1 }}>
+      <div className="admin-main">
         <AdminNavbar />
-        <div id="admin-content" style={{ padding: '20px' }}>
-    
+        <div className="admin-content">
           <Outlet />
         </div>
       </div>

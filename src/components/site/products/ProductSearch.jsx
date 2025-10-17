@@ -100,7 +100,7 @@ const SearchPage = () => {
                 <h5 className="card-title d-flex align-items-center mb-2" style={{ color: '#23272a', fontWeight: 'bold', fontSize: '1.1rem', textShadow: 'none' }}>
                   <FaTags style={{ color: '#43a047', marginRight: '8px' }} /> {product.name}
                 </h5>
-                <p className="card-text mb-2 text-truncate" style={{ color: '#23272a', textShadow: 'none', fontSize: '0.98rem' }}>{product.description}</p>
+                <p className="card-text mb-2 text-truncate" style={{ color: '#23272a', textShadow: 'none', fontSize: '0.98rem' }}dangerouslySetInnerHTML={{ __html: product.description }}/>
                 <div className="mt-auto d-flex justify-content-between align-items-center mb-2">
                   <span className="badge bg-success" style={{ fontSize: '1rem', fontWeight: 'bold', padding: '8px 14px', borderRadius: '8px', color: '#fff', background: '#43a047' }}>
                     <FaMoneyBillWave style={{ color: '#fff', marginRight: '6px' }} /> {product.price.toLocaleString()} VND

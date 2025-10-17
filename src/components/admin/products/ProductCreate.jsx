@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../Button/BackButton';
 
+import { Editor } from '@tinymce/tinymce-react';
+
 import API_BASE_URL from '../../../config';
 const AddProduct = () => {
     const [name, setName] = useState('');
@@ -76,13 +78,34 @@ const AddProduct = () => {
                     onChange={(e) => setName(e.target.value)}
                     required
                 />
-                <textarea
-                    className="form-input"
-                    placeholder="Mô tả"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                />
+              {/* 🆕 TinyMCE Editor cho mô tả */}
+        <label style={{ fontWeight: 'bold', marginBottom: '8px', display: 'block' }}>
+          Mô tả sản phẩm
+        </label>
+        <Editor
+          apiKey="3os1l1w4sbm08aeobf8xh3yyavjus283isn3sizk9tmkbiqd"
+          value={description}
+          onEditorChange={(content) => setDescription(content)}
+          init={{
+            height: 400,
+            menubar: true,
+            plugins: [
+              'advlist autolink lists link image charmap preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table help wordcount',
+            ],
+            toolbar:
+              'undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify | ' +
+              'bullist numlist outdent indent | fontfamily fontsize forecolor backcolor | ' +
+              'table image link | removeformat | help',
+            font_family_formats:
+              'Arial=arial,helvetica,sans-serif; Courier New=courier new,courier,monospace; Times New Roman=times new roman,times;',
+            fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+            content_style:
+              'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+          }}
+        />
+        <br />
                 <input
                     type="number"
                     className="form-input"
