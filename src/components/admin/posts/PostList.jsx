@@ -61,17 +61,22 @@ const Posts = () => {
           {posts.map(post => (
             <tr key={post.id}>
               <td>{post.id}</td>
-              <td>
-                {post.imageUrl ? (
-                  <img
-                    src={API_BASE_URL + post.imageUrl}
-                    alt={post.title}
-                    style={{ width: "80px", height: "60px", objectFit: "cover" }}
-                  />
-                ) : (
-                  <span className="text-muted">Không có ảnh</span>
-                )}
-              </td>
+             <td>
+          {post.imageUrl ? (
+            <img
+              src={
+                post.imageUrl.startsWith("http")
+                  ? post.imageUrl
+                  : `${API_BASE_URL}${post.imageUrl}`
+              }
+              alt={post.title}
+              style={{ width: "80px", height: "60px", objectFit: "cover" }}
+            />
+          ) : (
+            <span className="text-muted">Không có ảnh</span>
+          )}
+        </td>
+
               <td>{post.title}</td>
     <td style={{ 
   maxWidth: 200, 
