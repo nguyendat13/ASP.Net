@@ -11,11 +11,23 @@ const ProductDetail = () => {
   useEffect(() => {
     axios.get(`${API_BASE_URL}/api/Product/${id}`).then((res) => setProduct(res.data));
   }, [id]);
+  // const getImageUrl = (avatarPath) => {
+  //   if (!avatarPath) return null;
+  //   const filename = avatarPath.split('/').pop();
+  //   return `${API_BASE_URL}/api/Product/image/${filename}`;
+  // };
   const getImageUrl = (avatarPath) => {
-    if (!avatarPath) return null;
-    const filename = avatarPath.split('/').pop();
-    return `${API_BASE_URL}/api/Product/image/${filename}`;
-  };
+  if (!avatarPath) return "https://via.placeholder.com/200x200?text=No+Image";
+
+  // Nếu là link đầy đủ (bắt đầu bằng http hoặc https)
+  if (avatarPath.startsWith("http")) {
+    return avatarPath;
+  }
+
+  // Nếu là đường dẫn tương đối, xử lý để gọi API backend
+  const filename = avatarPath.replace("/images/", "").split("/").pop();
+  return `${API_BASE_URL}/api/Product/image/${filename}`;
+};
   if (!product) return <p>Đang tải dữ liệu...</p>;
 
   return (
