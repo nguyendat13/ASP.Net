@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PhatDat_TH2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ad2ed507446974fa481ca028d7a7c7e3b4d7beb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62efd531b54566e49b846426846618b9c160b52e")]
 [assembly: System.Reflection.AssemblyProductAttribute("PhatDat_TH2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PhatDat_TH2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

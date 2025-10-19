@@ -105,5 +105,20 @@ namespace PhatDat_TH2.Controllers
             var related = await _productService.GetRelatedProducts(productId);
             return Ok(related);
         }
+
+        [HttpGet("filter")]
+        public IActionResult GetFilteredProducts([FromQuery] ProductFilterRequest filter)
+        {
+            try
+            {
+                var products = _productService.GetFilteredProducts(filter);
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }

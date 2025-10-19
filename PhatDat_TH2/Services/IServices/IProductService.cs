@@ -15,5 +15,7 @@ namespace PhatDat_TH2.Services.IServices
         IEnumerable<TopSellingProductDTO> GetTopSellingProducts();
         IEnumerable<ProductListDTO> SearchProducts(string query);
         Task<IEnumerable<ProductListDTO>> GetRelatedProducts(int productId);
+
+        IEnumerable<ProductListDTO> GetFilteredProducts(ProductFilterRequest filter);
     }
 }

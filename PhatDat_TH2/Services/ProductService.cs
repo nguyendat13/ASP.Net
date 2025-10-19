@@ -31,7 +31,8 @@ namespace PhatDat_TH2.Services
                     Description = p.Description,
                     Price = p.Price,
                     Avatar = p.Avatar,
-                    Discount = p.Discount
+                    Discount = p.Discount,
+                    CategoryName=p.Category.Name
                 })
                 .ToList();
         }
@@ -59,50 +60,71 @@ namespace PhatDat_TH2.Services
 
         public async Task<ProductDetailDTO> CreateAsync(ProductRequest request, IFormFile? image, bool useCloudinary)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId);
-            if (category == null) throw new Exception("Danh mục không tồn tại.");
-
-            string? avatarPath = null;
-            if (image != null)
+            try
             {
-                avatarPath = useCloudinary
-                    ? await _cloudinaryService.UploadImageAsync(image)
-                    : await SaveImage(image);
+                // ✅ Kiểm tra danh mục tồn tại
+                var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId);
+                if (category == null)
+                    throw new Exception("Danh mục không tồn tại.");
+
+                // ✅ Kiểm tra trùng tên sản phẩm (không phân biệt hoa/thường)
+                var isDuplicate = await _context.Products
+                    .AnyAsync(p => p.Name.ToLower().Trim() == request.Name.ToLower().Trim());
+                if (isDuplicate)
+                    throw new Exception("Tên sản phẩm đã tồn tại! Vui lòng thử tên khác...");
+
+                // ✅ Upload ảnh (nếu có)
+                string? avatarPath = null;
+                if (image != null)
+                {
+                    avatarPath = useCloudinary
+                        ? await _cloudinaryService.UploadImageAsync(image)
+                        : await SaveImage(image);
+                }
+
+                // ✅ Tạo sản phẩm mới
+                var product = new Product
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    Price = request.Price,
+                    Discount = request.Discount,
+                    Avatar = avatarPath,
+                    CategoryId = request.CategoryId,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "admin"
+                };
+
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+
+                // ✅ Trả DTO sau khi tạo
+                return new ProductDetailDTO
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    Avatar = product.Avatar,
+                    Discount = product.Discount,
+                    CategoryId = product.CategoryId,
+                    CategoryName = category.Name
+                };
             }
-
-            var product = new Product
+            catch (Exception ex)
             {
-                Name = request.Name,
-                Description = request.Description,
-                Price = request.Price,
-                Discount = request.Discount,
-                Avatar = avatarPath,
-                CategoryId = request.CategoryId,
-                CreatedAt = DateTime.UtcNow,
-                CreatedBy = "admin"
-            };
-
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-
-            return new ProductDetailDTO
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                Avatar = product.Avatar,
-                Discount = product.Discount,
-                CategoryId = product.CategoryId,
-                CategoryName = category.Name
-            };
+                // ✅ Ném lại exception có message gốc để controller bắt và trả BadRequest
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<ProductDetailDTO?> UpdateAsync(int id, ProductRequest request, IFormFile? image, bool useCloudinary)
         {
+            try { 
             var product = await _context.Products.FindAsync(id);
             if (product == null) return null;
-
+            var proName = await _context.Products.AnyAsync(p => p.Name.ToLower() == request.Name.ToLower() && p.Id != id);
+            if (proName) throw new Exception("Tên sản phẩm đã tồn tại! Vui lòng thử tên khác...");
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId);
             if (category == null) throw new Exception("Danh mục không tồn tại.");
 
@@ -134,6 +156,12 @@ namespace PhatDat_TH2.Services
                 CategoryId = product.CategoryId,
                 CategoryName = category.Name
             };
+            }
+            catch (Exception ex)
+            {
+                // ✅ Ném lại exception có message gốc để controller bắt và trả BadRequest
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -238,5 +266,68 @@ namespace PhatDat_TH2.Services
 
             return fileName;
         }
+
+        public IEnumerable<ProductListDTO> GetFilteredProducts(ProductFilterRequest filter)
+        {
+            var query = _context.Products
+                .Include(p => p.Category)
+                .AsQueryable();
+
+            // 🔍 Lọc theo danh mục
+            if (filter.CategoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == filter.CategoryId);
+            }
+
+            // 💰 Lọc theo khoảng giá
+            if (filter.MinPrice.HasValue)
+            {
+                query = query.Where(p => p.Price >= filter.MinPrice.Value);
+            }
+            if (filter.MaxPrice.HasValue)
+            {
+                query = query.Where(p => p.Price <= filter.MaxPrice.Value);
+            }
+
+            // 🔎 Tìm kiếm theo tên hoặc mô tả
+            if (!string.IsNullOrEmpty(filter.Search))
+            {
+                query = query.Where(p =>
+                    p.Name.ToLower().Contains(filter.Search.ToLower()) ||
+                    (p.Description != null && p.Description.ToLower().Contains(filter.Search.ToLower()))
+                );
+            }
+
+            // 📊 Sắp xếp
+            switch (filter.SortBy?.ToLower())
+            {
+                case "price_asc":
+                    query = query.OrderBy(p => p.Price);
+                    break;
+                case "price_desc":
+                    query = query.OrderByDescending(p => p.Price);
+                    break;
+                case "name_asc":
+                    query = query.OrderBy(p => p.Name);
+                    break;
+                case "name_desc":
+                    query = query.OrderByDescending(p => p.Name);
+                    break;
+                default:
+                    query = query.OrderByDescending(p => p.CreatedAt); // mặc định mới nhất
+                    break;
+            }
+
+            return query.Select(p => new ProductListDTO
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Price = p.Price,
+                Avatar = p.Avatar,
+                Discount = p.Discount
+            }).ToList();
+        }
+
     }
 }

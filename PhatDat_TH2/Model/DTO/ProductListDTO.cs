@@ -8,6 +8,8 @@
         public decimal Price { get; set; }
         public string? Avatar { get; set; }
         public decimal Discount { get; set; }
+
+        public string? CategoryName { get; set; }
     }
 
 }

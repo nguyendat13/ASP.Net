@@ -159,7 +159,7 @@ namespace PhatDat_TH2.Controllers
                 {
                     p.Id,
                     p.Title,
-                    Excerpt = p.Content.Length > 100 ? p.Content.Substring(0, 100) + "..." : p.Content,
+                    Excerpt = p.Content.Length > 10 ? p.Content.Substring(0, 10) + "..." : p.Content,
                     p.PublishedDate,
                     ImageUrl = p.ImageUrl ?? "/assets/post/default.png"
                 })
