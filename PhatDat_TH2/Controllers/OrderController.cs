@@ -221,27 +221,36 @@ namespace PhatDat_TH2.Controllers
             {
                 try
                 {
-                    // Đảm bảo đã load user
                     if (order.User == null)
                     {
                         order.User = await _context.Users.FindAsync(order.UserId);
                     }
 
-                    await _emailService.SendOrderConfirmationEmail(order.User, order);
+                    // ✅ Gửi email ở background — không chặn phản hồi HTTP
+                    _ = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await _emailService.SendOrderConfirmationEmail(order.User, order);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"[Email Error] {ex.Message}");
+                            await _logService.LogAsync(
+                                order.UserId,
+                                "EmailError",
+                                "OrderConfirmation",
+                                order.Id,
+                                new { Exception = ex.Message },
+                                HttpContext.Connection.RemoteIpAddress?.ToString(),
+                                Request.Headers["User-Agent"].ToString()
+                            );
+                        }
+                    });
                 }
                 catch (Exception ex)
                 {
-                    // Log lỗi vào database hoặc console
-                    Console.WriteLine($"[Email Error] {ex.Message}");
-                    await _logService.LogAsync(
-                        order.UserId,
-                        "EmailError",
-                        "OrderConfirmation",
-                        order.Id,
-                        new { Exception = ex.Message },
-                        HttpContext.Connection.RemoteIpAddress?.ToString(),
-                        Request.Headers["User-Agent"].ToString()
-                    );
+                    Console.WriteLine($"[Email Task Error] {ex.Message}");
                 }
             }
 
