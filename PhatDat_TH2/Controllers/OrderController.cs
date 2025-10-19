@@ -217,11 +217,34 @@ namespace PhatDat_TH2.Controllers
                 Request.Headers["User-Agent"].ToString()
             );
 
-            // 🟢 Gửi email ngay nếu là COD (methodId == 1)
-            if (order.MethodId==1) // 1 = COD
+            if (order.MethodId == 1) // COD
             {
-                await _emailService.SendOrderConfirmationEmail(order.User, order);
+                try
+                {
+                    // Đảm bảo đã load user
+                    if (order.User == null)
+                    {
+                        order.User = await _context.Users.FindAsync(order.UserId);
+                    }
+
+                    await _emailService.SendOrderConfirmationEmail(order.User, order);
+                }
+                catch (Exception ex)
+                {
+                    // Log lỗi vào database hoặc console
+                    Console.WriteLine($"[Email Error] {ex.Message}");
+                    await _logService.LogAsync(
+                        order.UserId,
+                        "EmailError",
+                        "OrderConfirmation",
+                        order.Id,
+                        new { Exception = ex.Message },
+                        HttpContext.Connection.RemoteIpAddress?.ToString(),
+                        Request.Headers["User-Agent"].ToString()
+                    );
+                }
             }
+
 
             return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
         }
