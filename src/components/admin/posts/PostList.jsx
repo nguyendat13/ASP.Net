@@ -89,9 +89,6 @@ const Posts = () => {
   />
 </td>
 
-
-
-
               <td>{post.topicName || 'Không có'}</td>
               <td>{new Date(post.publishedDate).toLocaleDateString()}</td>
               <td className="text-center">

@@ -77,7 +77,11 @@ const Products = () => {
             <tr key={p.id}>
               <td>{p.id}</td>
               <td>{p.name}</td>
-        <td dangerouslySetInnerHTML={{ __html: p.description || 'Không có mô tả' }}></td>
+        <td dangerouslySetInnerHTML={{ __html: 
+          p.description && p.description.length >10
+           ?  p.description.substring(0, 10) + "..."
+          : p.description || "Không có mô tả",
+           }}></td>
               <td>{p.price.toLocaleString()} đ</td>
               <td>{p.discount}%</td>
              <td>
