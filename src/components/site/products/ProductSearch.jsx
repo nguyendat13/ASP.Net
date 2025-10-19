@@ -78,9 +78,11 @@ const SearchPage = () => {
               <div className="pro-img-wrap" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f5f5f5', borderRadius: '12px', overflow: 'hidden', height: '200px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
                <img
   src={
-    product.avatar.startsWith("http")
+    product.avatar
+    ? product.avatar.startsWith("http")
       ? product.avatar
       : `${API_BASE_URL}/api/Product/image/${product.avatar.replace("/images/", "")}`
+      : "https://via.placeholder.com/200x200?text=No+Image"
   }
   alt={product.name}
   style={{

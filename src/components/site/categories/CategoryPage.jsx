@@ -42,23 +42,26 @@ const CategoryProductsPage = () => {
             <div className="card h-100 shadow-sm pro-card" style={{ background: '#fff', color: '#23272a', border: 'none', boxShadow: '0 6px 24px rgba(0,0,0,0.18)', borderRadius: '16px', transition: 'transform 0.2s, box-shadow 0.2s' }}>
               <div className="pro-img-wrap" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f5f5f5', borderRadius: '12px', overflow: 'hidden', height: '200px', marginBottom: '8px', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>
               <img
-  src={
-    product.avatar.startsWith("http")
-      ? product.avatar
-      : `${API_BASE_URL}/api/Product/image/${product.avatar.replace("/images/", "")}`
-  }
-  alt={product.name}
-  style={{
-    maxHeight: "180px",
-    maxWidth: "90%",
-    objectFit: "cover",
-    borderRadius: "12px",
-    border: "2px solid #43a047",
-    background: "#fff",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-    transition: "transform 0.2s"
-  }}
-/>
+                    src={
+                      product.avatar
+                        ? product.avatar.startsWith("http")
+                          ? product.avatar
+                          : `${API_BASE_URL}/api/Product/image/${product.avatar.replace("/images/", "")}`
+                        : "https://via.placeholder.com/200x200?text=No+Image"
+                    }
+                    alt={product.name}
+                    style={{
+                      maxHeight: "180px",
+                      maxWidth: "90%",
+                      objectFit: "cover",
+                      borderRadius: "12px",
+                      border: "2px solid #43a047",
+                      background: "#fff",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                      transition: "transform 0.2s"
+                    }}
+                  />
+
 
                 
               </div>
@@ -66,7 +69,6 @@ const CategoryProductsPage = () => {
                 <h5 className="card-title d-flex align-items-center mb-2" style={{ color: '#23272a', fontWeight: 'bold', fontSize: '1.1rem', textShadow: 'none' }}>
                   <FaTags style={{ color: '#43a047', marginRight: '8px' }} /> {product.name}
                 </h5>
-                <p className="card-text mb-2" style={{ color: '#23272a', textShadow: 'none', fontSize: '0.98rem' }}>{product.description}</p>
                 <div className="d-flex justify-content-between align-items-center mb-2">
                   <span className="badge bg-success" style={{ fontSize: '1rem', fontWeight: 'bold', padding: '8px 14px', borderRadius: '8px', color: '#fff', background: '#43a047' }}>
                     <FaMoneyBillWave style={{ color: '#fff', marginRight: '6px' }} />

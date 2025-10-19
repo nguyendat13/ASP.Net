@@ -60,9 +60,30 @@ const AddProduct = () => {
     alert('Sản phẩm đã được thêm thành công!');
     navigate('/admin/products');
   } catch (error) {
-    console.error('Error adding product', error);
-    alert('Có lỗi xảy ra khi thêm sản phẩm!');
+  console.error('Error adding product:', error);
+
+  // ✅ Nếu backend có trả message cụ thể
+  if (error.response) {
+    const message =
+      error.response.data?.message ||
+      error.response.data?.title || // Nếu backend trả theo dạng ProblemDetails
+      error.response.data ||
+      'Có lỗi xảy ra khi thêm sản phẩm!';
+
+    // Nếu message là object hoặc HTML => tránh alert quá dài
+    if (typeof message === 'string' && message.length < 200) {
+      alert(`❌ ${message}`);
+    } else {
+      alert('❌ Lỗi không xác định từ máy chủ.');
+    }
+  } else if (error.request) {
+    // ✅ Khi không kết nối được đến server
+    alert('❌ Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối mạng.');
+  } else {
+    // ✅ Các lỗi khác (ví dụ code logic frontend)
+    alert(`❌ Lỗi không mong đợi: ${error.message}`);
   }
+}
 };
 
 

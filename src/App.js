@@ -72,6 +72,8 @@ import PaymentCallback from './components/site/accountUser/PaymentCallback.jsx';
 import ChatboxAI from './components/site/accountUser/chatbox/ChatBox.jsx';
 import RegisterAdmin from './components/accountAdmin/RegisterAdmin.jsx';
 import AdminLogs from './components/admin/logs/AdminLogs.jsx';
+import PostsUser from './components/site/posts/PostsUser.jsx';
+import PostDetailUser from './components/site/posts/PostDetailUser.jsx';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');
 
@@ -110,6 +112,10 @@ const App = () => {
         <Route path="products" element={<ProductListUI />} />
         <Route path="products/:id" element={<ProductDetailUI />} />
         <Route path="categories/:categoryId" element={<CategoryProductsPage />} />
+
+        <Route path="/posts" element={<PostsUser />} />
+        <Route path="/posts/:id" element={<PostDetailUser />} />  
+
           <Route path="/payment-callback" element={<PaymentCallback />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/payment-fail" element={<PaymentFail />} />

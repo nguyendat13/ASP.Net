@@ -39,7 +39,10 @@ const Navbar = () => {
       navigate(`/search?q=${searchTerm}`); // Điều hướng đến trang tìm kiếm với query
     }
   };
-
+  const naviAdmin=(e) => {
+    e.preventDefault();
+    navigate(`/register-admin`); // Điều hướng đến trang tìm kiếm với query
+  }
   return (
     <nav className="navbar navbar-expand-lg custom-navbar px-4 shadow-sm">
       <div className="container-fluid">
@@ -68,7 +71,7 @@ const Navbar = () => {
               <FaHome className="navbar-icon" style={{ marginRight: '5px' }} /> Trang chủ
             </Link>
           </li>
-          <li className="nav-item dropdown">
+          {/* <li className="nav-item dropdown">
             <a href="#" className="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Danh mục
             </a>
@@ -83,7 +86,7 @@ const Navbar = () => {
                 <li><span className="dropdown-item">Không có danh mục</span></li>
               )}
             </ul>
-          </li>
+          </li> */}
 
           <li className="nav-item">
             <Link className="nav-link d-flex align-items-center" to="/products" style={{ color: '#fff' }}>
@@ -91,7 +94,7 @@ const Navbar = () => {
             </Link>
           </li>
             <li className="nav-item">
-            <Link className="nav-link d-flex align-items-center" to="/products" style={{ color: '#fff' }}>
+            <Link className="nav-link d-flex align-items-center" to="/posts" style={{ color: '#fff' }}>
               <FaPager className="navbar-icon" style={{ marginRight: '5px' }} /> Bài viết
             </Link>
           </li>
@@ -144,7 +147,7 @@ const Navbar = () => {
                     <ul className="dropdown-menu" aria-labelledby="userDropdown" style={{ right: '0', left: 'auto', position: 'absolute' }}>
                       <li><Link className="dropdown-item" to="/user-profile">Thông tin người dùng</Link></li>
                       <li><Link className="dropdown-item" to="/orders">Đơn hàng</Link></li>
-                       <li><Link className="dropdown-item" to="/register-admin">Đăng ký tài khoản admin(demo)</Link></li>
+                       <li onClick={naviAdmin}><Link className="dropdown-item" >Đăng ký tài khoản admin(demo)</Link></li>
 
                       <li><hr className="dropdown-divider" /></li>
                       <li><Link to="/logout-user" className="dropdown-item">Đăng xuất</Link></li>

@@ -96,9 +96,11 @@ const Home = () => {
           {post.imageUrl ? (
             <img
               src={
-                post.imageUrl.startsWith("http")
+                post.imageUrl
+                ? post.imageUrl.startsWith("http")
                   ? post.imageUrl
                   : `${API_BASE_URL}${post.imageUrl}`
+                  : "https://via.placeholder.com/200x200?text=No+Image" 
               }
               alt={post.title}
               style={{
@@ -116,8 +118,24 @@ const Home = () => {
           <h5 className="card-title mb-2" style={{ fontWeight: 'bold', fontSize: '1.15rem', color: '#23272a' }}>
             {post.title}
           </h5>
+               {/* Mô tả rút gọn */}
+          <p 
+            className="card-text mb-3"
+            style={{
+              fontSize: '0.95rem',
+              color: '#555',
+              minHeight: '60px',
+              overflow: 'hidden'
+            }}
+            dangerouslySetInnerHTML={{
+              __html:
+                post.excerpt
+                ? post.excerpt
+                  : "Không có mô tả"
+            }}
+          ></p>
           <Link
-            to={`/post/${post.id}`}
+            to={`/posts/${post.id}`}
             className="btn btn-success w-100 mt-auto"
             style={{
               color: '#fff',

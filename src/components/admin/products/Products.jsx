@@ -33,11 +33,18 @@ const Products = () => {
     }
   };
 
-  const getImageUrl = (avatarPath) => {
-    if (!avatarPath) return null;
-    const filename = avatarPath.split('/').pop();
-    return `${API_BASE_URL}/api/Product/image/${filename}`;
-  };
+ const getImageUrl = (avatar) => {
+  if (!avatar) return null;
+
+  // Nếu là link đầy đủ (ảnh online)
+  if (avatar.startsWith("http")) {
+    return avatar;
+  }
+
+  // Nếu chỉ là tên file thì lấy từ API
+  return `${API_BASE_URL}/api/Product/image/${avatar.replace("/images/", "")}`;
+};
+
   
 
 
@@ -73,19 +80,26 @@ const Products = () => {
         <td dangerouslySetInnerHTML={{ __html: p.description || 'Không có mô tả' }}></td>
               <td>{p.price.toLocaleString()} đ</td>
               <td>{p.discount}%</td>
-              <td>
+             <td>
                 {getImageUrl(p.avatar) ? (
                   <img
                     src={getImageUrl(p.avatar)}
                     alt={p.name}
                     width="60"
                     height="60"
-                    style={{ objectFit: 'cover' }}
+                    style={{
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                      border: "2px solid #43a047",
+                      background: "#fff",
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                    }}
                   />
                 ) : (
                   <span>Không có ảnh</span>
                 )}
               </td>
+
               <td>{p.categoryName}</td>
               <td className="d-flex gap-2">
                 <Link to={`/admin/products/detail/${p.id}`} className="btn btn-info btn-sm">

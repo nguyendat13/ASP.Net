@@ -73,9 +73,25 @@ const Posts = () => {
                 )}
               </td>
               <td>{post.title}</td>
-              <td style={{ maxWidth: 200 }}>
-                {post.content.length > 100 ? post.content.slice(0, 100) + '...' : post.content}
-              </td>
+    <td style={{ 
+  maxWidth: 200, 
+  overflow: "hidden", 
+  textOverflow: "ellipsis", 
+  whiteSpace: "nowrap" 
+}}>
+  <div
+    dangerouslySetInnerHTML={{
+      __html:
+        post.content && post.content.length > 50
+          ? post.content.substring(0, 10) + "..."
+          : post.content || "Không có mô tả",
+    }}
+  />
+</td>
+
+
+
+
               <td>{post.topicName || 'Không có'}</td>
               <td>{new Date(post.publishedDate).toLocaleDateString()}</td>
               <td className="text-center">

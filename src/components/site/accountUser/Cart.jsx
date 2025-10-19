@@ -182,9 +182,11 @@ const handleRemoveSelected = () => {
                   <td>
                     <img
                     src={
-                  item.avatar.startsWith("http")
+                  item.avatar
+                  ? item.avatar.startsWith("http")
                   ? item.avatar
                   : `${API_BASE_URL}/api/Product/image/${item.avatar.replace("/images/", "")}`
+                  : "https://via.placeholder.com/200x200?text=No+Image"
                     }                                   
                     alt={item.productName}
                       width="80"

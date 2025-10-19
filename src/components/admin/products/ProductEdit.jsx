@@ -79,6 +79,7 @@ const EditProduct = () => {
     } catch (err) {
       console.error('Lỗi khi cập nhật', err);
       alert('❌ Cập nhật sản phẩm thất bại!');
+      navigate('/admin/products');
     }
   };
 
