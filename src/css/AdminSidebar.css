@@ -1,68 +1,218 @@
 /* AdminSidebar.css */
-.admin-sidebar {
-    transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    background-color: #343a40;
+/* Mobile toggle button - luôn hiển thị trên mobile */
+.mobile-toggle-btn {
+    display: none; /* Ẩn mặc định trên desktop */
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1002;
+    background-color: #43a047;
     color: white;
-    min-height: 100%; /* Chiều dài tối thiểu của sidebar bằng chiều dài của content */
-    height:100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 30px 20px;
-    width: 250px; /* Sidebar mặc định rộng */
-  }
-  
-  .admin-sidebar.closed {
-    width: 60px; /* Khi đóng sidebar, chiều rộng chỉ còn 60px */
-    opacity: 0.5; /* Giảm độ mờ của sidebar khi đóng */
-  }
-  
-  .admin-sidebar.closed .sidebar-title,
-  .admin-sidebar.closed .sidebar-nav {
-    display: none; /* Ẩn tiêu đề và các liên kết khi sidebar đóng */
-  }
-  
-  .toggle-btn {
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Desktop toggle button */
+.desktop-toggle-btn {
     background-color: transparent;
-    color: white;
+    color: #43a047;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
     margin-bottom: 20px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.admin-sidebar {
+    transition: all 0.3s ease-in-out;
+    background-color: #1a1c1e;
+    color: #e0e0e0;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px 15px;
+    width: 280px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+    .admin-sidebar.closed {
+        width: 70px;
+        padding: 20px 10px;
+    }
+
+    .admin-sidebar.closed .sidebar-title {
+        display: none;
+    }
+
+    .admin-sidebar.closed .sidebar-nav {
+        display: block;
+    }
+
+    .admin-sidebar.closed .sidebar-link {
+        justify-content: center;
+        padding: 12px;
+    }
+
+    .admin-sidebar.closed .sidebar-link span {
+        display: none;
+    }
+}
+  
+  .toggle-btn {
+    background-color: transparent;
+    color: #43a047;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
   }
   
   .toggle-btn:hover {
-    background-color: #0056b3;
+    background-color: rgba(67, 160, 71, 0.1);
   }
   
   .sidebar-title {
-    color: #f8f9fa;
+    color: #43a047;
     font-size: 1.5rem;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-weight: bold;
+    text-align: center;
   }
   
   .sidebar-nav {
     list-style-type: none;
     padding-left: 0;
+    margin: 0;
+    flex: 1;
   }
   
   .sidebar-link {
-    display: block;
-    color: white;
+    display: flex;
+    align-items: center;
+    color: #a0a0a0;
     text-decoration: none;
-    padding: 10px 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    transition: background-color 0.3s;
+    padding: 12px 15px;
+    margin: 5px 0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .sidebar-link:hover {
-    background-color: #007bff;
+    background-color: rgba(67, 160, 71, 0.1);
+    color: #43a047;
+  }
+
+  .sidebar-link.active {
+    background-color: #43a047;
     color: white;
+  }
+
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    /* Hiển thị nút toggle mobile */
+    .mobile-toggle-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Ẩn nút toggle desktop */
+    .desktop-toggle-btn {
+        display: none;
+    }
+
+    .admin-sidebar {
+        width: 280px;
+        height: 100vh;
+        position: fixed;
+        transform: translateX(-100%);
+        z-index: 1001;
+    }
+
+    .admin-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .admin-sidebar.closed {
+        transform: translateX(-100%);
+    }
+
+    /* Overlay khi sidebar mở */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: none;
+    }
+
+    .admin-sidebar.open + .sidebar-overlay {
+        display: block;
+    }
+
+    .sidebar-nav {
+        margin-top: 20px;
+    }
+
+    .sidebar-link {
+        padding: 16px;
+        margin: 8px 0;
+        font-size: 1.1rem;
+    }
+
+    .sidebar-link .me-3 {
+        font-size: 1.2rem;
+        min-width: 24px;
+    }
+
+    /* Cải thiện khả năng touch */
+    .sidebar-link, 
+    .mobile-toggle-btn {
+        -webkit-tap-highlight-color: transparent;
+    }
+  }
+
+  /* Animation for menu items when sidebar is closed */
+  .admin-sidebar.closed .sidebar-link {
+    padding: 12px;
+    justify-content: center;
+  }
+
+  .admin-sidebar.closed .sidebar-link span {
+    display: none;
   }
   

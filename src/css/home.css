@@ -145,3 +145,180 @@
     opacity: 1;
   }
 }
+/* 🟩 Responsive cho phần hiển thị sản phẩm */
+@media (max-width: 991px) {
+  /* Tablet: 2 sản phẩm / hàng */
+  .product-card {
+    margin: 0 auto;
+    max-width: 90%;
+  }
+
+  .row.g-4 > .col-md-4,
+  .row.g-4 > .col-lg-3 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .pro-img-wrap {
+    height: 180px !important;
+  }
+
+  .pro-img-wrap img {
+    max-height: 160px !important;
+  }
+
+  .card-title {
+    font-size: 1rem !important;
+  }
+
+  .badge {
+    font-size: 0.85rem !important;
+    padding: 6px 10px !important;
+  }
+
+  .btn {
+    font-size: 0.95rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Mobile: 1 sản phẩm / hàng */
+  .row.g-4 > .col-md-4,
+  .row.g-4 > .col-lg-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .product-card {
+    width: 95%;
+    margin: 0 auto 20px auto;
+  }
+
+  .pro-img-wrap {
+    height: 160px !important;
+  }
+
+  .pro-img-wrap img {
+    max-height: 140px !important;
+  }
+
+  .card-title {
+    font-size: 0.95rem !important;
+  }
+
+  .badge {
+    font-size: 0.8rem !important;
+    padding: 5px 8px !important;
+  }
+
+  .btn {
+    font-size: 0.9rem !important;
+    padding: 8px !important;
+  }
+
+  /* Giảm hiệu ứng hover cho mobile */
+  .pro-card:hover {
+    transform: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+  .slick-slide {
+  padding: 10px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #43a047;
+  font-size: 28px;
+}
+
+@media (max-width: 768px) {
+  .slick-slide {
+    padding: 5px;
+  }
+
+  .product-card {
+    max-width: 95%;
+    margin: 0 auto;
+  }
+}
+/* ✅ Trượt ngang cho sản phẩm */
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 16px;
+  padding: 10px;
+  scroll-behavior: smooth;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background-color: #43a047;
+  border-radius: 10px;
+}
+
+.horizontal-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 250px;
+}
+
+/* ✅ Mobile tối ưu hiển thị ngang */
+@media (max-width: 768px) {
+  .horizontal-scroll {
+    gap: 12px;
+    padding: 8px;
+  }
+
+  .horizontal-item {
+    width: 200px;
+  }
+
+  .product-card {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+
+  /* Ẩn scrollbar trên mobile để giao diện sạch */
+  .horizontal-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}
+/* ✅ Style riêng cho bài viết */
+.article-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-4px);
+}
+
+.article-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.article-content {
+  padding: 12px;
+}
+
+.article-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.article-desc {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.3;
+}

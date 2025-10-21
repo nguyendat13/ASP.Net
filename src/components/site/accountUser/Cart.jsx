@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaTrashAlt, FaMoneyBillWave, FaCheckCircle } from "react-icons/fa";
 import API_BASE_URL from "../../../config";
+import "../../../css/cart-responsive.css";
 
 
 const Cart = () => {
@@ -150,7 +151,69 @@ const handleRemoveSelected = () => {
         </div>
       ) : (
         <>
-          <table className="table table-bordered mt-3" style={{ background: '#23272a', color: '#fff', borderRadius: 12 }}>
+          {/* Mobile View */}
+          <div className="d-md-none">
+            {cartItems.map((item) => (
+              <div key={item.productId} className="cart-card">
+                <div className="d-flex justify-content-between align-items-start mb-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedItems.includes(item.productId)}
+                    onChange={() => handleSelectItem(item.productId)}
+                  />
+                  <img
+                    src={
+                      item.avatar
+                        ? item.avatar.startsWith("http")
+                          ? item.avatar
+                          : `${API_BASE_URL}/api/Product/image/${item.avatar.replace("/images/", "")}`
+                        : "https://via.placeholder.com/200x200?text=No+Image"
+                    }
+                    alt={item.productName}
+                    style={{ width: "120px", height: "120px", objectFit: "cover" }}
+                  />
+                </div>
+                <div className="info">
+                  <h5>{item.productName}</h5>
+                  <div className="d-flex justify-content-between">
+                    <span>Giá:</span>
+                    <span style={{ color: '#e53935', fontWeight: 700 }}>{item.price.toLocaleString()} đ</span>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <span>Giảm giá:</span>
+                    <span style={{ color: '#43a047', fontWeight: 600 }}>{item.discount}%</span>
+                  </div>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <span>Số lượng:</span>
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      min="1"
+                      onChange={(e) => handleQuantityChange(item.productId, parseInt(e.target.value))}
+                      className="form-control"
+                      style={{ width: "80px", background: '#212121', color: '#fff', border: '1px solid #43a047' }}
+                    />
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <span>Tổng:</span>
+                    <span style={{ color: '#43a047', fontWeight: 700 }}>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</span>
+                  </div>
+                </div>
+                <div className="actions">
+                  <button 
+                    className="btn btn-outline-danger"
+                    onClick={() => handleRemove(item.productId)}
+                    style={{ background:'#212121', border: '1px solid #e53935' }}
+                  >
+                    <FaTrashAlt /> Xóa
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop View */}
+          <table className="table table-bordered mt-3 d-none d-md-table" style={{ background: '#23272a', color: '#fff', borderRadius: 12 }}>
             <thead className="table-dark" style={{ background: '#212121', color: '#fff' }}>
               <tr>
                  <th>
@@ -179,7 +242,7 @@ const handleRemoveSelected = () => {
                       onChange={() => handleSelectItem(item.productId)}
                     />
                   </td>
-                  <td>
+                  <td data-label="Ảnh">
                     <img
                     src={
                   item.avatar
@@ -193,10 +256,10 @@ const handleRemoveSelected = () => {
                       style={{ borderRadius: 8, border: '2px solid #43a047' }}
                     />
                   </td>
-                  <td>{item.productName}</td>
-                  <td style={{ color: '#e53935', fontWeight: 700 }}>{item.price.toLocaleString()} đ</td>
-                  <td style={{ color: '#43a047', fontWeight: 600 }}>{item.discount}%</td>
-                  <td>
+                  <td data-label="Tên sản phẩm">{item.productName}</td>
+                  <td data-label="Giá" style={{ color: '#e53935', fontWeight: 700 }}>{item.price.toLocaleString()} đ</td>
+                  <td data-label="Giảm giá" style={{ color: '#43a047', fontWeight: 600 }}>{item.discount}%</td>
+                  <td data-label="Số lượng">
                     <input
                       type="number"
                       value={item.quantity}
@@ -206,8 +269,8 @@ const handleRemoveSelected = () => {
                       style={{ width: "80px", background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }}
                     />
                   </td>
-                  <td style={{ color: '#43a047', fontWeight: 700 }}>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</td>
-                  <td>
+                  <td data-label="Tổng" style={{ color: '#43a047', fontWeight: 700 }}>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</td>
+                  <td data-label="Hành động">
                     <button className="btn btn-outline-danger d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500,background:'#212121', color: '#fff', border: '1px solid #e53935' }} onClick={() => handleRemove(item.productId)}>
                       <FaTrashAlt style={{ color: 'inherit', fontSize: 16 }} className="navbar-icon" /> Xoá
                     </button>
@@ -216,24 +279,37 @@ const handleRemoveSelected = () => {
               ))}
             </tbody>
           </table>
-          <div className="d-flex justify-content-between align-items-center mt-3">
-            <button
-          className="btn btn-outline-warning d-flex align-items-center gap-1"
-          style={{ borderRadius: 8, fontWeight: 500, color: '#fff', border: '1px solid #ff9800' }}
-          onClick={handleRemoveSelected}
-        >
-          <FaTrashAlt /> Xóa sản phẩm đã chọn
-        </button>
+          <div className="cart-summary mt-3">
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+              <button
+                className="btn btn-outline-warning d-flex align-items-center justify-content-center gap-1 w-100 w-md-auto"
+                style={{ borderRadius: 8, fontWeight: 500, color: '#fff', border: '1px solid #ff9800' }}
+                onClick={handleRemoveSelected}
+              >
+                <FaTrashAlt /> Xóa sản phẩm đã chọn
+              </button>
 
-            <button className="btn btn-outline-danger d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500, color: '#fff', border: '1px solid #e53935' }} onClick={handleClearCart}>
-              <FaTrashAlt style={{ color: 'inherit', fontSize: 18 }} className="navbar-icon" /> Xoá tất cả
-            </button>
-            <h4 className="fw-bold d-flex align-items-center gap-2" style={{ color: '#fff' }}>
-              <FaMoneyBillWave style={{ color: 'inherit', fontSize: 22 }} className="navbar-icon" /> Tổng tiền: <span style={{ color: '#43a047' }}>{totalPrice.toLocaleString()} đ</span>
-            </h4>
-            <button className="btn btn-success d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500, background: '#43a047', color: '#fff', border: 'none' }} onClick={handleCheckout}>
-              <FaCheckCircle style={{ color: 'inherit', fontSize: 18 }} className="navbar-icon" /> Thanh toán
-            </button>
+              <button 
+                className="btn btn-outline-danger d-flex align-items-center justify-content-center gap-1 w-100 w-md-auto" 
+                style={{ borderRadius: 8, fontWeight: 500, color: '#fff', border: '1px solid #e53935' }} 
+                onClick={handleClearCart}
+              >
+                <FaTrashAlt style={{ color: 'inherit', fontSize: 18 }} className="navbar-icon" /> Xoá tất cả
+              </button>
+              
+              <h4 className="fw-bold d-flex align-items-center justify-content-center gap-2 m-0" style={{ color: '#fff' }}>
+                <FaMoneyBillWave style={{ color: 'inherit', fontSize: 22 }} className="navbar-icon" /> Tổng tiền: 
+                <span style={{ color: '#43a047' }}>{totalPrice.toLocaleString()} đ</span>
+              </h4>
+              
+              <button 
+                className="btn btn-success d-flex align-items-center justify-content-center gap-1 w-100 w-md-auto" 
+                style={{ borderRadius: 8, fontWeight: 500, background: '#43a047', color: '#fff', border: 'none' }} 
+                onClick={handleCheckout}
+              >
+                <FaCheckCircle style={{ color: 'inherit', fontSize: 18 }} className="navbar-icon" /> Thanh toán
+              </button>
+            </div>
           </div>
         </>
       )}

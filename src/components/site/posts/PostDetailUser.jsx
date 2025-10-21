@@ -32,7 +32,7 @@ maxWidth: "900px",
 >
 {/* Nút quay lại */} <div className="d-flex justify-content-start mb-4">
 <Link
-to="/posts"
+to="/"
 className="btn btn-success border d-flex align-items-center gap-2"
 style={{
 borderRadius: "8px",

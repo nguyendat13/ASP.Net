@@ -64,7 +64,7 @@ const Users = () => {
         </Link>
       )}
 
-      <table className="table table-bordered">
+      <table className="table table-striped">
         <thead className="table-dark">
           <tr>
             <th>ID</th>
@@ -87,7 +87,7 @@ const Users = () => {
                 {/* Admin có thể thao tác với tất cả người dùng, hoặc nếu email trùng với người dùng trong bảng */}
                 {(role === u.role && email !== u.email) ? (
                   <>
-                    <span className="text-muted">Bạn không có quyền truy cập</span>
+                    <span className="text-white">Bạn không có quyền truy cập</span>
                   </>
                 ) : (
                   <>

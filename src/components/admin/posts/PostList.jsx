@@ -45,7 +45,7 @@ const Posts = () => {
         <h4>Quản lý Bài viết</h4>
         <Link to="/admin/posts/create" className="btn btn-primary">Thêm bài viết</Link>
       </div>
-      <table className="table table-bordered table-hover">
+      <table className="table table-striped table-hover">
         <thead className="table-dark">
           <tr>
             <th>ID</th>

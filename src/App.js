@@ -1,5 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import PageTransition from './components/transitions/PageTransition';
+import './css/animations.css';
 
 import AdminDashboard from './layouts/admin/AdminDashboard.jsx';
 import Orders from './components/admin/orders/Orders.jsx';
@@ -87,20 +90,33 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Routes>
-      <Route path="/register-user" element={<RegisterUser />} />
-      <Route path="/login-user" element={<LoginUser />} />
-      <Route path="/logout-user" element={<LogoutUser />} />  {/* ✅ Route logout user */}
+      <AnimatePresence mode='wait'>
+        <Routes>
+          <Route path="/register-user" element={
+            <PageTransition>
+              <RegisterUser />
+            </PageTransition>
+          } />
+      <Route path="/login-user" element={
+        <PageTransition>
+          <LoginUser />
+        </PageTransition>
+      } />
+      <Route path="/logout-user" element={
+        <PageTransition>
+          <LogoutUser />
+        </PageTransition>
+      } />
       <Route path="/google-success" element={<GoogleSuccess />} />
 
-      {/* Route người dùng */}
-      <Route path="/" element={<UserLayout />}>
-        <Route index element={<Home />} />
-        <Route path="chat" element={<ChatboxAI />} />
-        <Route path="user-profile" element={<UserProfilePage />} />
-        <Route path="carts" element={<Cart />} />
-        <Route path="checkout" element={<Checkout />} />
-        <Route path="orders" element={<OrdersProcessing />} />
+          {/* Route người dùng */}
+          <Route path="/" element={<UserLayout />}>
+            <Route index element={<div className="scale-in"><Home /></div>} />
+            <Route path="chat" element={<div className="fade-in"><ChatboxAI /></div>} />
+            <Route path="user-profile" element={<div className="slide-in-right"><UserProfilePage /></div>} />
+            <Route path="carts" element={<div className="fade-in"><Cart /></div>} />
+            <Route path="checkout" element={<div className="slide-in-right"><Checkout /></div>} />
+            <Route path="orders" element={<div className="fade-in"><OrdersProcessing /></div>} />
         <Route path="orderCancel/:orderId" element={<CancelledOrders />} />
         <Route path="order/:orderId" element={<OrderDetails />} />
         <Route path="cancelledOrders" element={<CancelledOrders />} />  {/* Trang đơn hàng đã hủy */}
@@ -184,6 +200,7 @@ const App = () => {
         )}
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
+      </AnimatePresence>
     </BrowserRouter>
   );
 };

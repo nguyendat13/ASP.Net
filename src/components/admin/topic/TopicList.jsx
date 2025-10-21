@@ -46,7 +46,7 @@ const Topics = () => {
       <Link to="/admin/topics/create" className="btn btn-primary mb-3">
         Thêm Chủ đề
       </Link>
-      <table className="table table-bordered table-hover mt-3">
+      <table className="table table-striped table-hover mt-3">
         <thead className="table-dark">
           <tr>
             <th>ID</th>

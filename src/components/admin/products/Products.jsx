@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash, FaEye } from 'react-icons/fa';
 import API_BASE_URL from '../../../config';
-
+import '../../../css/table.css';
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,7 +59,8 @@ const Products = () => {
           Thêm sản phẩm
         </Link>
       </div>
-      <table className="table table-bordered table-hover mt-3">
+        <div className="table-responsive">
+      <table className="table table-striped table-hover mt-3">
         <thead className="table-dark">
           <tr>
             <th>ID</th>
@@ -120,6 +121,8 @@ const Products = () => {
           ))}
         </tbody>
       </table>
+            </div>
+
     </div>
   );
 };

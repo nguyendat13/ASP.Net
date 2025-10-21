@@ -110,35 +110,236 @@
 }
 
 /* Tối ưu hóa hiển thị trên màn hình nhỏ */
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   .navbar {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  /* Nút 3 gạch */
+  .navbar-toggler {
+    border: none;
+    outline: none;
+  }
+
+  .navbar-toggler-icon {
+    filter: invert(1);
+    background-image: none;
+    position: relative;
+  }
+
+  /* Khi menu mở ra */
+  .navbar-collapse {
+    background-color: var(--background);
+    padding: 15px 0;
+    border-top: 2px solid var(--primary);
+  }
+
+  /* Menu chính */
+  .navbar-nav {
+    text-align: center;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 8px 0;
+  }
+
+  .navbar-nav .nav-link {
+    display: block;
+    padding: 10px 0;
+    font-size: 1.1rem;
+    border-radius: 8px;
+  }
+
+  /* 🛠 Căn 3 icon Notification, Cart, User nằm ngang giữa màn hình */
+  .navbar-nav.ms-auto {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 20px;
+    margin-top: 10px;
+  }
+
+  .navbar-nav.ms-auto .nav-item,
+  .navbar-nav.ms-auto .user-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Dropdown user */
+  .user-nav-item {
+    position: static;
+  }
+
+  .user-nav-item .dropdown-menu {
+    position: absolute !important;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border: 1px solid var(--primary);
+    background-color: var(--foreground);
+    text-align: left;
+    animation: slideDown 0.3s ease;
+  }
+
+  /* Dropdown notification */
+  .notification-nav-item {
+    position: static;
+  }
+
+  .notification-nav-item .dropdown-menu {
+    position: absolute !important;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border: 1px solid var(--primary);
+    background-color: var(--foreground);
+    text-align: left;
+    animation: slideDown 0.3s ease;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Ô tìm kiếm */
+  form.d-flex {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  form.d-flex input,
+  form.d-flex button {
+    width: 90%;
+    margin-bottom: 8px;
+  }
+
+  /* Logo */
+  .navbar-brand span {
+    font-size: 1.3rem;
+  }
+
+  /* Icon trong mobile */
+  .navbar-nav.ms-auto .nav-item .navbar-icon {
+    font-size: 1.6rem;
+  }
+}
+
+/* Adjust responsive styles for better usability */
+@media (max-width: 768px) {
+  .navbar {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .navbar-toggler {
+    border: none;
+    outline: none;
+  }
+
+  .navbar-toggler-icon {
+    filter: invert(1);
+    background-image: none;
+    position: relative;
+  }
+
+  .navbar-collapse {
+    background-color: var(--background);
+    padding: 10px 0;
+    border-top: 2px solid var(--primary);
   }
 
   .navbar-nav {
     text-align: center;
+    width: 100%;
   }
 
-  .nav-item {
-    margin: 10px 0;
+  .navbar-nav .nav-item {
+    margin: 6px 0;
   }
 
   .navbar-nav .nav-link {
+    display: block;
+    padding: 8px 0;
+    font-size: 1rem;
+    border-radius: 6px;
+  }
+
+  .navbar-nav.ms-auto {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .navbar-nav.ms-auto .nav-item,
+  .navbar-nav.ms-auto .user-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .user-nav-item {
+    position: static;
+  }
+
+  .user-nav-item .dropdown-menu {
+    position: relative !important;
+    top: 100%;
+    left: 5%;
+    width: 250px;
+    border: 1px solid var(--primary);
+    background-color: var(--foreground);
+    text-align: left;
+  }
+
+  .notification-nav-item {
+    position: static;
+  }
+
+  .notification-nav-item .dropdown-menu {
+    position: relative !important;
+    top: 100%;
+    left: 5%;
+    width: 250px;
+    border: 1px solid var(--primary);
+    background-color: var(--foreground);
+    text-align: left;
+  }
+
+  form.d-flex {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  form.d-flex input,
+  form.d-flex button {
+    width: 85%;
+    margin-bottom: 6px;
+  }
+
+  .navbar-brand span {
     font-size: 1.2rem;
   }
 
-  /* Điều chỉnh vị trí dropdown */
-  .user-nav-item .dropdown-menu {
-    top: 100%; /* Đảm bảo dropdown xuất hiện ngay dưới item */
-    right: 0;  /* Căn chỉnh dropdown vào bên phải */
-    left: auto; /* Hủy bỏ left nếu có */
-    max-width: 200px; /* Giới hạn chiều rộng dropdown */
-    width: auto; /* Đảm bảo chiều rộng phù hợp */
-    z-index: 1000; /* Đảm bảo menu luôn hiển thị trên các phần tử khác */
-  }
-  .user-nav-item{
-    position: relative;
-    right: 100px; 
+  .navbar-nav.ms-auto .nav-item .navbar-icon {
+    font-size: 1.4rem;
   }
 }
+

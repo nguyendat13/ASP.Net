@@ -1,0 +1,84 @@
+/* ✅ Tổng thể */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 16px;
+}
+
+/* ✅ Ẩn table trên mobile, dùng card layout */
+@media (max-width: 768px) {
+  table {
+    display: none;
+  }
+
+  /* Dạng card cho từng sản phẩm */
+  .cart-card {
+    background: #23272a;
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cart-card img {
+    width: 100%;
+    max-height: 180px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #43a047;
+  }
+
+  .cart-card .info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cart-card .info h5 {
+    font-weight: bold;
+    color: #43a047;
+  }
+
+  .cart-card .actions {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .cart-card button {
+    flex: 1;
+  }
+
+  .cart-card input[type="number"] {
+    width: 80px;
+    background: #212121;
+    color: #fff;
+    border: 1px solid #43a047;
+    border-radius: 8px;
+    text-align: center;
+  }
+}
+
+/* ✅ Nút dưới cùng (tổng tiền + thanh toán) reponsive */
+@media (max-width: 768px) {
+  .cart-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .cart-summary h4 {
+    font-size: 1.1rem;
+  }
+
+  .cart-summary button {
+    width: 100%;
+  }
+}
