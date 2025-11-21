@@ -1,357 +1,589 @@
 import React, { useEffect, useState } from "react";
-import { FaTag, FaMoneyBillWave, FaFire, FaStar, FaNewspaper } from "react-icons/fa";
-import ScrollReveal from "../../components/transitions/ScrollReveal";
-import Slider from "react-slick";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Sparkles, Flame, Newspaper, ShoppingCart } from "lucide-react";
 import "../../css/home.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import API_BASE_URL from "../../config";
+import Slider from "react-slick";
 
 const Home = () => {
-const [newProducts, setNewProducts] = useState([]);
-const [topSellingProducts, setTopSellingProducts] = useState([]);
-const [latestPosts, setLatestPosts] = useState([]);
-const navigate = useNavigate();
-const [showChat, setShowChat] = useState(false);
+  const [newProducts, setNewProducts] = useState([]);
+  const [topSellingProducts, setTopSellingProducts] = useState([]);
+  const [latestPosts, setLatestPosts] = useState([]);
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-useEffect(() => {
-axios.get(`${API_BASE_URL}/api/Product/new`)
-.then(res => setNewProducts(res.data))
-.catch(err => console.error("Lỗi khi lấy sản phẩm mới:", err));
+  const navigate = useNavigate();
 
-axios.get(`${API_BASE_URL}/api/Product/top-selling`)
-  .then(res => setTopSellingProducts(res.data))
-  .catch(err => console.error("Lỗi khi lấy sản phẩm bán chạy:", err));
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-axios.get(`${API_BASE_URL}/api/Post/latest`)
-  .then(res => setLatestPosts(res.data))
-  .catch(err => console.error("Lỗi khi lấy bài viết mới:", err));
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/api/Product/new`)
+      .then((res) => setNewProducts(res.data))
+      .catch((err) => console.error("Lỗi khi lấy sản phẩm mới:", err));
 
-}, []);
+    axios
+      .get(`${API_BASE_URL}/api/Product/top-selling`)
+      .then((res) => setTopSellingProducts(res.data))
+      .catch((err) => console.error("Lỗi khi lấy sản phẩm bán chạy:", err));
 
-// ✅ Cấu hình slider dùng chung
-const sliderSettings = {
-dots: false,
-infinite: true,
-speed: 500,
-slidesToShow: 4,
-slidesToScroll: 1,
-autoplay: true,
-autoplaySpeed: 3500,
-responsive: [
-{ breakpoint: 1024, settings: { slidesToShow: 3 } },
-{ breakpoint: 768, settings: { slidesToShow: 2 } },
-{ breakpoint: 576, settings: { slidesToShow: 1 } }
-]
-};
+    axios
+      .get(`${API_BASE_URL}/api/Post/latest`)
+      .then((res) => setLatestPosts(res.data))
+      .catch((err) => console.error("Lỗi khi lấy bài viết mới:", err));
+  }, []);
 
-// ✅ Render sản phẩm
-const renderProductCard = (product) => ( <div key={product.id} className="p-2">
-<div
-className="card product-card pro-card h-100"
-style={{
-background: "#fff",
-color: "#23272a",
-border: "none",
-boxShadow: "0 6px 24px rgba(0,0,0,0.18)",
-transition: "transform 0.2s, box-shadow 0.2s"
-}}
->
-<div
-className="pro-img-wrap"
-style={{
-display: "flex",
-justifyContent: "center",
-alignItems: "center",
-background: "#f5f5f5",
-borderRadius: "12px",
-overflow: "hidden",
-height: "220px",
-marginBottom: "8px",
-boxShadow: "0 2px 12px rgba(0,0,0,0.2)"
-}}
->
-<img
-src={`${API_BASE_URL}/api/Product/image/${
-              product.avatar ? product.avatar.replace("/images/", "") : "default.jpg"
-            }`}
-alt={product.name}
-style={{
-maxHeight: "200px",
-maxWidth: "90%",
-objectFit: "cover",
-borderRadius: "12px",
-border: "2px solid #43a047",
-background: "#fff",
-boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
-}}
-/> </div> <div className="card-body d-flex flex-column justify-content-between">
-<h5
-className="card-title d-flex align-items-center mb-2"
-style={{ fontWeight: "bold", fontSize: "1.2rem", color: "#23272a" }}
->
-<FaTag style={{ color: "#43a047", marginRight: "8px" }} /> {product.name} </h5> <div className="d-flex justify-content-between align-items-center mb-2">
-<span
-className="badge bg-success"
-style={{
-fontSize: "1rem",
-fontWeight: "bold",
-padding: "8px 14px",
-borderRadius: "8px",
-color: "#fff",
-background: "#43a047"
-}}
->
-<FaMoneyBillWave style={{ color: "#fff", marginRight: "6px" }} />{" "}
-{product.price.toLocaleString()} ₫ </span>
-{product.discount > 0 && (
-<span
-className="badge bg-danger"
-style={{
-fontSize: "0.95rem",
-fontWeight: "bold",
-padding: "8px 12px",
-borderRadius: "8px",
-color: "#fff",
-background: "#e53935"
-}}
->
--{product.discount}% </span>
-)} </div>
-<Link
-to={`/products/${product.id}`}
-className="btn btn-success w-100 mt-2"
-style={{
-color: "#fff",
-fontWeight: "bold",
-border: "none",
-background: "#43a047",
-borderRadius: "8px",
-fontSize: "1rem",
-boxShadow: "0 2px 8px rgba(0,0,0,0.10)"
-}}
->
-Xem chi tiết </Link> </div> </div> </div>
-);
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3500,
+  };
 
-// ✅ Render bài viết (đồng bộ giao diện với sản phẩm)
-const renderPosts = (posts) =>
-  posts.map((post) => (
+  const renderProductCard = (product) => (
     <div
-      key={post.id}
-      className="card post-card h-100"
+      key={product.id}
+      onMouseEnter={() => setHoveredCard(product.id)}
+      onMouseLeave={() => setHoveredCard(null)}
       style={{
-        background: "#fff",
-        color: "#23272a",
-        border: "none",
-        boxShadow: "0 6px 24px rgba(0,0,0,0.18)",
+        background: "#23272a",
         borderRadius: "16px",
         overflow: "hidden",
-        transition: "transform 0.2s, box-shadow 0.2s",
+        boxShadow: hoveredCard === product.id
+          ? "0 20px 40px rgba(67, 160, 71, 0.15)"
+          : "0 8px 24px rgba(0,0,0,0.3)",
+        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+        transform: hoveredCard === product.id ? "translateY(-8px) scale(1.02)" : "translateY(0)",
+        border: "1px solid rgba(67, 160, 71, 0.15)",
+        cursor: "pointer",
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          height: "240px",
+          background: "linear-gradient(135deg, #2a2f33 0%, #1e1e1e 100%)",
+          overflow: "hidden",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <img
+          src={`${API_BASE_URL}/api/Product/image/${
+            product.avatar ? product.avatar.replace("/images/", "") : "default.jpg"
+          }`}
+          alt={product.name}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            transition: "transform 0.4s ease",
+            transform: hoveredCard === product.id ? "scale(1.1)" : "scale(1)",
+          }}
+        />
+
+        {product.discount > 0 && (
+          <div
+            style={{
+              position: "absolute",
+              top: "12px",
+              right: "12px",
+              background: "linear-gradient(135deg, #e53935 0%, #d32f2f 100%)",
+              color: "#fff",
+              padding: "8px 12px",
+              borderRadius: "12px",
+              fontSize: "0.85rem",
+              fontWeight: "bold",
+              boxShadow: "0 4px 12px rgba(229, 57, 53, 0.3)",
+              zIndex: 10,
+            }}
+          >
+            -{product.discount}%
+          </div>
+        )}
+      </div>
+
+      <div style={{ padding: "20px" }}>
+        <h5
+          style={{
+            fontSize: "1.1rem",
+            fontWeight: "600",
+            color: "#fff",
+            marginBottom: "12px",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {product.name}
+        </h5>
+
+        <div style={{ marginBottom: "16px" }}>
+          <div
+            style={{
+              fontSize: "1.3rem",
+              fontWeight: "700",
+              color: "#43a047",
+              letterSpacing: "-0.5px",
+            }}
+          >
+            {product.price?.toLocaleString()} ₫
+          </div>
+        </div>
+
+        <Link
+          to={`/products/${product.id}`}
+          style={{
+            display: "block",
+            width: "100%",
+            padding: "12px",
+            background: "linear-gradient(135deg, #43a047 0%, #2e7d32 100%)",
+            color: "#fff",
+            border: "none",
+            borderRadius: "12px",
+            fontSize: "0.95rem",
+            fontWeight: "600",
+            textDecoration: "none",
+            textAlign: "center",
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            boxShadow: hoveredCard === product.id
+              ? "0 8px 20px rgba(67, 160, 71, 0.3)"
+              : "0 4px 12px rgba(67, 160, 71, 0.15)",
+            transform: hoveredCard === product.id ? "translateX(2px)" : "translateX(0)",
+          }}
+        >
+          Xem chi tiết →
+        </Link>
+      </div>
+    </div>
+  );
+
+  const renderPost = (post) => (
+    <div
+      key={post.id}
+      onMouseEnter={() => setHoveredCard(`post-${post.id}`)}
+      onMouseLeave={() => setHoveredCard(null)}
+      onClick={() => navigate(`/posts/${post.id}`)}
+      style={{
+        background: "#23272a",
+        borderRadius: "16px",
+        overflow: "hidden",
+        boxShadow: hoveredCard === `post-${post.id}`
+          ? "0 20px 40px rgba(67, 160, 71, 0.15)"
+          : "0 8px 24px rgba(0,0,0,0.3)",
+        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+        transform: hoveredCard === `post-${post.id}` ? "translateY(-8px)" : "translateY(0)",
+        border: "1px solid rgba(67, 160, 71, 0.15)",
+        cursor: "pointer",
+        display: "flex",
+        flexDirection: "column",
         height: "100%",
       }}
     >
       <div
-        className="post-img-wrap"
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "#f5f5f5",
-          borderRadius: "16px 16px 0 0",
+          height: "200px",
+          background: post.imageUrl
+            ? `url(${
+                post.imageUrl.startsWith("http")
+                  ? post.imageUrl
+                  : `${API_BASE_URL}${post.imageUrl}`
+              }) center/cover`
+            : "linear-gradient(135deg, #43a047 0%, #2e7d32 100%)",
+          position: "relative",
           overflow: "hidden",
-          height: "220px",
-          marginBottom: "8px",
-          boxShadow: "0 2px 12px rgba(0,0,0,0.2)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        {post.imageUrl ? (
-          <img
-            src={
-              post.imageUrl.startsWith("http")
-                ? post.imageUrl
-                : `${API_BASE_URL}${post.imageUrl}`
-            }
-            alt={post.title}
-            style={{
-              maxHeight: "220px",
-              width: "100%",
-              objectFit: "cover",
-              borderRadius: "16px 16px 0 0",
-              border: "2px solid #43a047",
-              background: "#fff",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-            }}
-          />
-        ) : (
-          <span className="text-muted">Không có ảnh</span>
-        )}
+        {!post.imageUrl && <Newspaper size={48} color="#fff" opacity={0.3} />}
       </div>
 
-      <div className="card-body d-flex flex-column justify-content-between">
+      <div style={{ padding: "20px", flex: 1, display: "flex", flexDirection: "column" }}>
         <h5
-          className="card-title mb-2"
           style={{
-            fontWeight: "bold",
-            fontSize: "1.2rem",
-            color: "#23272a",
+            fontSize: "1.1rem",
+            fontWeight: "600",
+            color: "#fff",
+            marginBottom: "12px",
+            lineHeight: "1.4",
           }}
         >
           {post.title}
         </h5>
+
         <p
-          className="card-text mb-3"
           style={{
-            fontSize: "0.95rem",
-            color: "#555",
-            minHeight: "60px",
+            fontSize: "0.9rem",
+            color: "#aaa",
+            lineHeight: "1.6",
+            marginBottom: "16px",
+            flex: 1,
             overflow: "hidden",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
           }}
           dangerouslySetInnerHTML={{
-            __html: post.excerpt ? post.excerpt : "Không có mô tả",
+            __html: post.excerpt || "Không có mô tả",
           }}
-        ></p>
-        <Link
-          to={`/posts/${post.id}`}
-          className="btn btn-success w-100 mt-auto"
+        />
+
+        <div
           style={{
-            color: "#fff",
-            fontWeight: "bold",
-            border: "none",
-            background: "#43a047",
-            borderRadius: "8px",
-            fontSize: "1rem",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
+            display: "flex",
+            alignItems: "center",
+            color: "#43a047",
+            fontWeight: "600",
+            fontSize: "0.95rem",
+            gap: "6px",
           }}
         >
-          Đọc thêm
-        </Link>
+          Đọc thêm →
+        </div>
       </div>
     </div>
-  ));
+  );
 
+  return (
+    <div
+      style={{
+        background: "#1a1a1a",
+        minHeight: "100vh",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      }}
+    >
+      {/* Hero Banner */}
+      <div
+        style={{
+          background: "linear-gradient(135deg, #43a047 0%, #2e7d32 100%)",
+          color: "#fff",
+          padding: isMobile ? "50px 20px" : "100px 20px",
+          textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            opacity: 0.1,
+            background: "radial-gradient(circle at 20% 50%, #fff 0%, transparent 50%)",
+          }}
+        />
 
+        <div style={{ position: "relative", zIndex: 1, maxWidth: "800px", margin: "0 auto" }}>
+          <h1
+            style={{
+              fontSize: isMobile ? "2rem" : "3.5rem",
+              fontWeight: "800",
+              marginBottom: "16px",
+              letterSpacing: "-1px",
+            }}
+          >
+            Chào mừng bạn
+          </h1>
+          <p
+            style={{
+              fontSize: isMobile ? "1rem" : "1.3rem",
+              opacity: 0.95,
+              lineHeight: "1.6",
+            }}
+          >
+            Khám phá bộ sưu tập sản phẩm chất lượng cao và những bài viết hữu ích nhất
+          </p>
 
-return (
-<div
-className="container-fluid mt-5 home-container"
-style={{
-background: "var(--background)",
-borderRadius: "24px",
-boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
-padding: "16px 0",
-minHeight: "100vh"
-}}
->
-{/* Banner Slider */}
-<div className="banner mb-5" style={{ maxWidth: "900px", margin: "0 auto" }}> <Slider dots infinite speed={500} slidesToShow={1} slidesToScroll={1} autoplay autoplaySpeed={3500}> <div>
-<img
-src="/assets/banner/hero-img-2.jpg"
-alt="Banner 1"
-style={{
-width: "100%",
-maxHeight: "400px",
-objectFit: "cover",
-borderRadius: "16px",
-boxShadow: "0 4px 16px rgba(0,0,0,0.2)"
-}}
-/> </div> <div>
-<img
-src="/assets/banner/hero-img-1.png"
-alt="Banner 2"
-style={{
-width: "100%",
-maxHeight: "400px",
-objectFit: "cover",
-borderRadius: "16px",
-boxShadow: "0 4px 16px rgba(0,0,0,0.2)"
-}}
-/> </div> </Slider> <div className="text-center mt-4">
-<h1
-className="home-title"
-style={{
-color: "var(--foreground)",
-fontWeight: "bold",
-textShadow: "none"
-}}
->
-Chào mừng đến với cửa hàng của chúng tôi! </h1>
-<p
-className="home-subtitle"
-style={{
-color: "var(--foreground)",
-fontSize: "1.3rem",
-textShadow: "none"
-}}
->
-Khám phá các sản phẩm tuyệt vời và bài viết mới nhất </p> </div> </div>
-
- <section className="mb-5">
-  <h2 className="section-title">
-    <FaStar style={{ color: "#43a047", fontSize: "2rem" }} /> Sản phẩm mới
-  </h2>
-  <div className="horizontal-scroll">
-    {newProducts.map((product) => (
-      <div key={product.id} className="horizontal-item">
-        {renderProductCard(product)}
+          <div
+            style={{
+              display: "flex",
+              gap: "12px",
+              justifyContent: "center",
+              marginTop: "30px",
+              flexWrap: "wrap",
+            }}
+          >
+            <Link
+              to="/products"
+              style={{
+                display: "inline-block",
+                padding: "14px 40px",
+                background: "#fff",
+                color: "#43a047",
+                textDecoration: "none",
+                borderRadius: "12px",
+                fontWeight: "700",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "translateY(-4px)";
+                e.target.style.boxShadow = "0 12px 24px rgba(0,0,0,0.2)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "none";
+              }}
+            >
+              Khám phá ngay →
+            </Link>
+            <Link
+              to="/posts"
+              style={{
+                display: "inline-block",
+                padding: "14px 40px",
+                background: "rgba(255,255,255,0.2)",
+                color: "#fff",
+                textDecoration: "none",
+                borderRadius: "12px",
+                fontWeight: "700",
+                border: "2px solid #fff",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = "rgba(255,255,255,0.3)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = "rgba(255,255,255,0.2)";
+              }}
+            >
+              Bài viết mới
+            </Link>
+          </div>
+        </div>
       </div>
-    ))}
-  </div>
-</section>
 
-<section className="mb-5">
-  <h2 className="section-title">
-    <FaFire style={{ color: "#43a047", fontSize: "2rem" }} /> Sản phẩm bán chạy
-  </h2>
-  <div className="horizontal-scroll">
-    {topSellingProducts.map((product) => (
-      <div key={product.id} className="horizontal-item">
-        {renderProductCard(product)}
+      {/* Main Content */}
+      <div style={{ maxWidth: "1400px", margin: "0 auto", padding: isMobile ? "40px 15px" : "60px 20px" }}>
+        {/* New Products */}
+        {newProducts.length > 0 && (
+          <section style={{ marginBottom: "80px" }}>
+            <div style={{ marginBottom: "40px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                <Sparkles size={32} color="#43a047" />
+                <h2
+                  style={{
+                    fontSize: isMobile ? "1.5rem" : "2rem",
+                    fontWeight: "700",
+                    color: "#fff",
+                    margin: 0,
+                  }}
+                >
+                  Sản phẩm mới
+                </h2>
+              </div>
+              <div
+                style={{
+                  height: "4px",
+                  width: "60px",
+                  background: "linear-gradient(90deg, #43a047 0%, #81c784 100%)",
+                  borderRadius: "2px",
+                }}
+              />
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: `repeat(auto-fill, minmax(${isMobile ? "150px" : "220px"}, 1fr))`,
+                gap: "24px",
+              }}
+            >
+              {newProducts.map((product) => renderProductCard(product))}
+            </div>
+          </section>
+        )}
+
+        {/* Top Selling */}
+        {topSellingProducts.length > 0 && (
+          <section style={{ marginBottom: "80px" }}>
+            <div style={{ marginBottom: "40px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                <Flame size={32} color="#e53935" />
+                <h2
+                  style={{
+                    fontSize: isMobile ? "1.5rem" : "2rem",
+                    fontWeight: "700",
+                    color: "#fff",
+                    margin: 0,
+                  }}
+                >
+                  Sản phẩm bán chạy
+                </h2>
+              </div>
+              <div
+                style={{
+                  height: "4px",
+                  width: "60px",
+                  background: "linear-gradient(90deg, #e53935 0%, #ef5350 100%)",
+                  borderRadius: "2px",
+                }}
+              />
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: `repeat(auto-fill, minmax(${isMobile ? "150px" : "220px"}, 1fr))`,
+                gap: "24px",
+              }}
+            >
+              {topSellingProducts.map((product) => renderProductCard(product))}
+            </div>
+          </section>
+        )}
+
+        {/* Latest Posts */}
+        {latestPosts.length > 0 && (
+          <section>
+            <div style={{ marginBottom: "40px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                <Newspaper size={32} color="#43a047" />
+                <h2
+                  style={{
+                    fontSize: isMobile ? "1.5rem" : "2rem",
+                    fontWeight: "700",
+                    color: "#fff",
+                    margin: 0,
+                  }}
+                >
+                  Bài viết mới
+                </h2>
+              </div>
+              <div
+                style={{
+                  height: "4px",
+                  width: "60px",
+                  background: "linear-gradient(90deg, #43a047 0%, #81c784 100%)",
+                  borderRadius: "2px",
+                }}
+              />
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: `repeat(auto-fill, minmax(${isMobile ? "150px" : "280px"}, 1fr))`,
+                gap: "24px",
+              }}
+            >
+              {latestPosts.map((post) => renderPost(post))}
+            </div>
+          </section>
+        )}
+
+                {/* ===== THÊM SLIDER POSTER ĐẸP Ở ĐÂY ===== */}
+        <div style={{ maxWidth: "1000px", margin: "40px auto 0", padding: "0 15px" }}>
+          <Slider
+            dots={true}
+            infinite={true}
+            speed={800}
+            slidesToShow={1}
+            slidesToScroll={1}
+            autoplay={true}
+            autoplaySpeed={4000}
+            arrows={false}
+            pauseOnHover={true}
+            className="hero-slider"
+            dotsClass="slick-dots custom-dots"
+          >
+            <div>
+              <img
+                src="../../assets/banner/hero-img-1.png"
+                alt="Khuyến mãi lớn"
+                style={{
+                  width: "100%",
+                  height: isMobile ? "180px" : "380px",
+                  objectFit: "cover",
+                  borderRadius: "20px",
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+                  border: "4px solid rgba(67,160,71,0.3)",
+                }}
+              />
+            </div>
+            <div>
+              <img
+                src="../../assets/banner/hero-img-2.jpg"
+                alt="Sản phẩm hot"
+                style={{
+                  width: "100%",
+                  height: isMobile ? "180px" : "380px",
+                  objectFit: "cover",
+                  borderRadius: "20px",
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+                  border: "4px solid rgba(229,57,53,0.3)",
+                }}
+              />
+            </div>
+          </Slider>
+        </div>
+        {/* ===== HẾT SLIDER POSTER ===== */}
       </div>
-    ))}
-  </div>
-</section>
 
+      <style>{`
+        * {
+          box-sizing: border-box;
+        }
 
- {/* ✅ Bài viết mới */}
-<section className="mb-5">
-  <h2 className="section-title">
-    <FaNewspaper style={{ color: "#43a047", fontSize: "2rem" }} /> Bài viết mới
-  </h2>
-  <div className="horizontal-scroll">
-    {latestPosts.map((post) => (
-      <div key={post.id} className="horizontal-item">
-        {renderPosts([post])}
-      </div>
-    ))}
-  </div>
-</section>
+        .slick-slide {
+          padding: 10px;
+        }
 
+        .slick-prev:before,
+        .slick-next:before {
+          color: #43a047;
+          font-size: 28px;
+        }
 
+        @media (max-width: 768px) {
+          h1 {
+            font-size: 1.8rem !important;
+          }
 
-  <style>{`
-    .pro-card:hover, .post-card:hover {
-      transform: translateY(-6px) scale(1.03);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.28);
-    }
-    .pro-img-wrap img {
-      transition: transform 0.2s;
-    }
-    .pro-card:hover .pro-img-wrap img {
-      transform: scale(1.08);
-    }
-    .slick-slide { padding: 10px; }
-    .slick-prev:before, .slick-next:before {
-      color: #43a047;
-      font-size: 28px;
-    }
-  `}</style>
-</div>
+          h2 {
+            font-size: 1.3rem !important;
+          }
 
+          p {
+            font-size: 0.95rem !important;
+          }
+        }
 
-);
+        ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: #2a2f33;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: #43a047;
+          border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: #2e7d32;
+        }
+      `}</style>
+    </div>
+  );
 };
 
 export default Home;

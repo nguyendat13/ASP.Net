@@ -322,3 +322,25 @@
   color: #555;
   line-height: 1.3;
 }
+        /* ===== CUSTOM SLIDER DOTS ĐẸP ===== */
+        .custom-dots li button:before {
+          color: #43a047 !important;
+          font-size: 12px !important;
+          opacity: 0.5;
+        }
+        .custom-dots li.slick-active button:before {
+          opacity: 1 !important;
+          transform: scale(1.4);
+        }
+        .custom-dots {
+          bottom: -40px !important;
+        }
+
+        /* Hover nhẹ cho ảnh */
+        .hero-slider img {
+          transition: all 0.5s ease !important;
+        }
+        .hero-slider img:hover {
+          transform: scale(1.03);
+          box-shadow: 0 25px 50px rgba(0,0,0,0.6) !important;
+        }

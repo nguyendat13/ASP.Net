@@ -152,7 +152,7 @@ const handleRemoveSelected = () => {
       ) : (
         <>
           {/* Mobile View */}
-          <div className="d-md-none">
+          <div className="d-md-none" >
             {cartItems.map((item) => (
               <div key={item.productId} className="cart-card">
                 <div className="d-flex justify-content-between align-items-start mb-2">
@@ -213,72 +213,106 @@ const handleRemoveSelected = () => {
           </div>
 
           {/* Desktop View */}
-          <table className="table table-bordered mt-3 d-none d-md-table" style={{ background: '#23272a', color: '#fff', borderRadius: 12 }}>
-            <thead className="table-dark" style={{ background: '#212121', color: '#fff' }}>
-              <tr>
-                 <th>
-                    <input
-                      type="checkbox"
-                      checked={selectAll}
-                      onChange={handleSelectAll}
-                    />
-                  </th>
-                <th style={{ color: '#fff' }}>Ảnh</th>
-                <th style={{ color: '#fff' }}>Tên sản phẩm</th>
-                <th style={{ color: '#fff' }}>Giá</th>
-                <th style={{ color: '#fff' }}>Giảm giá</th>
-                <th style={{ color: '#fff' }}>Số lượng</th>
-                <th style={{ color: '#fff' }}>Tổng</th>
-                <th style={{ color: '#fff', transition: 'color 0.2s' }} onMouseEnter={(e) => e.target.style.color = '#000'} onMouseLeave={(e) => e.target.style.color = '#fff'}>Hành động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cartItems.map((item) => (
-                <tr key={item.productId} style={{ background: '#23272a', color: '#fff' }}>
-                    <td>
-                    <input
-                      type="checkbox"
-                      checked={selectedItems.includes(item.productId)}
-                      onChange={() => handleSelectItem(item.productId)}
-                    />
-                  </td>
-                  <td data-label="Ảnh">
-                    <img
-                    src={
-                  item.avatar
-                  ? item.avatar.startsWith("http")
+  <table
+    className="table table-bordered mt-3 d-none d-md-table cart-table"
+
+  style={{
+    background: "#212121", // giống mobile view
+    color: "#fff",
+    borderRadius: 12,
+    overflow: "hidden",
+    border: "1px solid #333",
+  }}
+>
+  <thead style={{ background: "#212121", color: "#fff" }}>
+    <tr>
+      <th>
+        <input
+          type="checkbox"
+          checked={selectAll}
+          onChange={handleSelectAll}
+          style={{ accentColor: "#43a047" }}
+        />
+      </th>
+      <th>Ảnh</th>
+      <th>Tên sản phẩm</th>
+      <th>Giá</th>
+      <th>Giảm giá</th>
+      <th>Số lượng</th>
+      <th>Tổng</th>
+      <th>Hành động</th>
+    </tr>
+  </thead>
+  <tbody style={{ background: "#212121", color: "#fff" }}>
+    {cartItems.map((item) => (
+      <tr key={item.productId} style={{ background: "#212121", color: "#fff" }}>
+        <td>
+          <input
+            type="checkbox"
+            checked={selectedItems.includes(item.productId)}
+            onChange={() => handleSelectItem(item.productId)}
+            style={{ accentColor: "#43a047" }}
+          />
+        </td>
+        <td>
+          <img
+            src={
+              item.avatar
+                ? item.avatar.startsWith("http")
                   ? item.avatar
                   : `${API_BASE_URL}/api/Product/image/${item.avatar.replace("/images/", "")}`
-                  : "https://via.placeholder.com/200x200?text=No+Image"
-                    }                                   
-                    alt={item.productName}
-                      width="80"
-                      style={{ borderRadius: 8, border: '2px solid #43a047' }}
-                    />
-                  </td>
-                  <td data-label="Tên sản phẩm">{item.productName}</td>
-                  <td data-label="Giá" style={{ color: '#e53935', fontWeight: 700 }}>{item.price.toLocaleString()} đ</td>
-                  <td data-label="Giảm giá" style={{ color: '#43a047', fontWeight: 600 }}>{item.discount}%</td>
-                  <td data-label="Số lượng">
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      min="1"
-                      onChange={(e) => handleQuantityChange(item.productId, parseInt(e.target.value))}
-                      className="form-control"
-                      style={{ width: "80px", background: '#212121', color: '#fff', border: '1px solid #43a047', borderRadius: 8 }}
-                    />
-                  </td>
-                  <td data-label="Tổng" style={{ color: '#43a047', fontWeight: 700 }}>{(item.priceAfterDiscount * item.quantity).toLocaleString()} đ</td>
-                  <td data-label="Hành động">
-                    <button className="btn btn-outline-danger d-flex align-items-center gap-1" style={{ borderRadius: 8, fontWeight: 500,background:'#212121', color: '#fff', border: '1px solid #e53935' }} onClick={() => handleRemove(item.productId)}>
-                      <FaTrashAlt style={{ color: 'inherit', fontSize: 16 }} className="navbar-icon" /> Xoá
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                : "https://via.placeholder.com/200x200?text=No+Image"
+            }
+            alt={item.productName}
+            width="80"
+            style={{
+              borderRadius: 8,
+              border: "2px solid #43a047",
+            }}
+          />
+        </td>
+        <td>{item.productName}</td>
+        <td style={{ color: "#FF4D4D", fontWeight: 700 }}>{item.price.toLocaleString()} ₫</td>
+        <td style={{ color: "#4CAF50", fontWeight: 600 }}>{item.discount}%</td>
+        <td>
+          <input
+            type="number"
+            value={item.quantity}
+            min="1"
+            onChange={(e) => handleQuantityChange(item.productId, parseInt(e.target.value) || 1)}
+            className="form-control"
+            style={{
+              width: "80px",
+              background: "#212121",
+              color: "#fff",
+              border: "1px solid #43a047",
+              borderRadius: 8,
+            }}
+          />
+        </td>
+        <td style={{ color: "#4CAF50", fontWeight: 700 }}>
+          {(item.priceAfterDiscount * item.quantity).toLocaleString()} ₫
+        </td>
+        <td>
+          <button
+            className="btn d-flex align-items-center gap-1"
+            style={{
+              borderRadius: 8,
+              background: "#212121",
+              color: "#fff",
+              border: "1px solid #FF4D4D",
+            }}
+            onClick={() => handleRemove(item.productId)}
+          >
+            <FaTrashAlt /> Xoá
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+
           <div className="cart-summary mt-3">
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
               <button

@@ -1,0 +1,158 @@
+/* ===============================
+   Checkout Page - Dark Mode CSS
+   =============================== */
+
+/* Tổng thể */
+.checkout-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 16px;
+  color: #fff;
+}
+
+/* ===== BẢNG CHECKOUT DARK MODE ===== */
+.checkout-table {
+  width: 100%;
+  background: #23272a !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  border: 1px solid #333 !important;
+}
+
+.checkout-table thead {
+  background: #1a1a1a !important;
+  color: #fff !important;
+}
+
+.checkout-table thead th {
+  background: #1a1a1a !important;
+  color: #fff !important;
+  border-bottom: 1px solid #333 !important;
+  padding: 12px;
+}
+
+.checkout-table tbody tr {
+  background: #23272a !important;
+  color: #fff !important;
+}
+
+.checkout-table td {
+  background: #23272a !important;
+  color: #fff !important;
+  padding: 12px;
+  border-color: #333 !important;
+}
+
+/* Ảnh sản phẩm */
+.checkout-table img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #43a047;
+}
+
+/* ===== STYLE GIÁ ===== */
+.price {
+  color: #e53935 !important;
+  font-weight: 700;
+}
+
+.discount {
+  color: #43a047 !important;
+  font-weight: 600;
+}
+
+.total {
+  color: #43a047 !important;
+  font-weight: 700;
+}
+
+/* ===== INPUT / BUTTON ===== */
+.checkout-table input[type="number"] {
+  width: 80px;
+  background: #111 !important;
+  color: #fff !important;
+  border: 1px solid #43a047 !important;
+  text-align: center;
+  border-radius: 8px;
+}
+
+/* Button chung */
+.checkout-btn {
+  background: #43a047;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  transition: 0.25s;
+  font-weight: 600;
+}
+
+.checkout-btn:hover {
+  background: #2e7d32;
+}
+
+/* Nút xoá */
+.remove-btn {
+  background: #e53935;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  transition: 0.25s;
+}
+
+.remove-btn:hover {
+  background: #b71c1c;
+}
+
+/* ===== TỔNG TIỀN ===== */
+.checkout-summary {
+  margin-top: 20px;
+  background: #1a1a1a;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  color: #fff;
+}
+
+.checkout-summary h4 {
+  margin-bottom: 12px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  /* Ẩn bảng, dùng card */
+  .checkout-table {
+    display: none;
+  }
+
+  /* Card mobile */
+  .checkout-card {
+    background: #23272a;
+    color: #fff;
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    border: 1px solid #333;
+  }
+
+  .checkout-card img {
+    width: 100%;
+    max-height: 180px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #43a047;
+  }
+
+  .checkout-summary {
+    text-align: center;
+  }
+
+  .checkout-summary button {
+    width: 100%;
+  }
+}
